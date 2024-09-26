@@ -10,4 +10,4 @@
 ### ⚠️ WIP ⚠️
 
 ## Security
-If you believe you have found a vulnerability in DashMC, we highly encourage you to responsible disclose this. Please do NOT open a public issue. Thank you.
+If you believe you have found a vulnerability in DashMC, we highly encourage you to disclose this responsibly. Please do NOT open a public issue, as you will expose the issue. Thank you.

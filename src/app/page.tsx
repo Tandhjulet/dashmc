@@ -27,7 +27,7 @@ const LIChip = memo(function Element(props: HTMLAttributes<HTMLLIElement>) {
 
 export default function Home() {
   return (
-    <div className="flex flex-col mx-auto max-w-[1200px] items-center pt-32">
+    <main className="flex flex-col mx-auto max-w-[1250px] items-center pt-32 px-6">
 		<section id="hero" className="flex flex-col items-center">
 			<a href="#" className="z-20">
 				<h2 className="uppercase text-xl text-blue-600 font-bold">
@@ -81,7 +81,7 @@ export default function Home() {
 				Vi genopfinder det klassiske
 			</h2>
 			
-			<ul className="columns-2 gap-16 mt-12 w-full max-w-[1500px]">
+			<ul className="columns-1 xl:columns-2 gap-16 mt-12 w-full max-w-[1500px]">
 				<LIChip className="bg-blue-700 h-[36rem] mb-10 relative">
 					<h4 className="text-gray-300 font-semibold">VI GENFINDER GLÆDEN</h4>
 					<h3 className="text-white font-bold text-4xl my-3">
@@ -108,13 +108,13 @@ export default function Home() {
 				<LIChip className="bg-blue-700 h-[36rem] relative">
 					<h4 className="text-gray-300 font-semibold">I SIKKERHED</h4>
 					<h3 className="text-white font-bold text-4xl my-3">
-						Vi indsamler ingen personlige oplysninger. Du kan være sikker på, at du og din data er i sikkerhed hos DashMC.
+						Vi indsamler ingen personlige oplysninger. Du kan være sikker på, at dig og dine data er i sikkerhed hos DashMC.
 					</h3>
 
 					<FaLock className="absolute size-[25rem] bottom-0 left-0 text-blue-400 -translate-x-1/4 translate-y-1/4 rotate-45" />
 				</LIChip>
 			</ul>
 		</section>
-	</div>
+	</main>
   );
 }
