@@ -7,6 +7,7 @@
   </a>
 </p>
 
-## Front page for dashMC
+### ⚠️ WIP ⚠️
 
-
+## Security
+If you believe you have found a vulnerability in DashMC, we highly encourage you to responsible disclose this. Please do NOT open a public issue. Thank you.
