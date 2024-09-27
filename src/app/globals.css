@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.prose h1 {
+  @apply text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold tracking-tight mt-6 mb-2 text-blue-600;
+}
+
+.prose h3 {
+  @apply text-lg font-semibold tracking-tight mt-6 mb-2 text-blue-600;
+}
+
+.prose h4 {
+  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+}

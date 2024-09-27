@@ -2,8 +2,8 @@ import Image from "next/image";
 import { HTMLAttributes, memo } from "react";
 import { FaLock, FaQuestion } from "react-icons/fa6";
 import { FiArrowUpRight } from "react-icons/fi";
+import { IoGameController } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
-import { SlGameController } from "react-icons/sl";
 
 export const metadata = {
 	title: 'DashMC | Hjem',
@@ -33,7 +33,7 @@ export default function Home() {
 				<h2 className="uppercase text-xl text-blue-600 font-bold">
 					Se det seneste nyt
 					<span className="inline-block">
-					<FiArrowUpRight />
+						<FiArrowUpRight />
 					</span>
 				</h2>
 			</a>
@@ -88,7 +88,7 @@ export default function Home() {
 						Vi hos DashMC tilbyder dig en nyfortolket version af old-school gamemodes - så du kan opleve nydelsen om igen!
 					</h3>
 
-					<SlGameController className="absolute size-[25rem] bottom-0 right-0 text-blue-400 translate-x-1/4 translate-y-1/4" />
+					<IoGameController className="absolute size-[25rem] bottom-0 right-0 text-blue-400 translate-x-1/4 translate-y-1/4 rotate-[315deg]" />
 				</LIChip>
 
 				<LIChip className="h-[26rem] border-4 border-gray-300">
