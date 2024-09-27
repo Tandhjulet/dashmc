@@ -25,7 +25,7 @@ export default function Rules() {
 			source.data.description.join(" ") : source.data.description;
 
 	return (
-		<main className="min mx-auto max-w-[1200px] pt-16">
+		<main className="min mx-auto max-w-[1200px] pt-28">
 			<h1 className="text-3xl font-bold">{source.data.title}</h1>
 			<h2>
 				Senest opdateret:{" "}
