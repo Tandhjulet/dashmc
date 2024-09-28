@@ -40,7 +40,7 @@ export default function Home() {
 			<h1 className="text-7xl font-black text-gray-900 leading-[4rem] z-10">DashMC</h1>
 
 			<div className="flex flex-col md:flex-row mt-6 gap-3 md:gap-6 whitespace-nowrap">
-				<a href="#" className="py-4 px-7 rounded-full border border-gray-500 inline-flex items-center gap-4">
+				<a href="https://forum.dashmc.net/" className="py-4 px-7 rounded-full border border-gray-500 inline-flex items-center gap-4">
 					<FaQuestion className="size-6 shrink-0" />
 					
 					<span className="font-semibold text-lg">
@@ -48,7 +48,7 @@ export default function Home() {
 					</span>
 				</a>
 
-				<a href="#" className="py-4 px-7 rounded-full bg-blue-600 inline-flex items-center gap-4">
+				<a href="https://butik.dashmc.net/" className="py-4 px-7 rounded-full bg-blue-600 inline-flex items-center gap-4">
 					<MdStorefront className="size-6 text-white shrink-0" />
 					
 					<span className="text-white font-semibold text-lg">
@@ -80,14 +80,14 @@ export default function Home() {
 			<h3 className="text-xl font-bold text-blue-700">
 				HVORFOR OS?
 			</h3>
-			<h2 className="text-4xl phone:text-5xl font-bold text-gray-800 text-center">
+			<h2 className="text-4xl phone:text-5xl font-bold text-gray-800 text-center phone:px-6">
 				Vi genopfinder det klassiske
 			</h2>
 			
-			<ul className="columns-1 md:columns-2 gap-16 mt-6 phone:mt-12 w-full max-w-[90%] md:max-w-[1500px]">
+			<ul className="columns-1 md:columns-2 gap-8 xl:gap-16 mt-6 phone:mt-12 w-full max-w-[90%] md:max-w-[1500px] px-6">
 				<LIChip className="bg-blue-700 md:h-[36rem] mb-10 relative pb-32 md:pb-0">
 					<h4 className="text-gray-300 font-semibold">VI GENFINDER GLÆDEN</h4>
-					<h3 className="text-white font-bold text-3xl phone:text-4xl my-3 relative z-10">
+					<h3 className="text-white font-bold text-3xl lg:text-4xl my-3 relative z-10">
 						Vi hos DashMC tilbyder dig en nyfortolket version af old-school gamemodes - så du kan opleve nydelsen om igen!
 					</h3>
 
@@ -96,21 +96,21 @@ export default function Home() {
 
 				<LIChip className="md:h-[26rem] border-4 border-gray-300 mb-10 md:mb-0">
 					<h4 className="text-gray-700 font-semibold">I TRYGGE HÆNDER</h4>
-					<h3 className="text-gray-800 font-bold text-3xl phone:text-4xl my-3">
+					<h3 className="text-gray-800 font-bold text-3xl lg:text-4xl my-3">
 						Udviklingsholdet bag DashMC står med mange års teoretisk og praktisk erfaring - DashMC er ikke vores første hit!
 					</h3>
 				</LIChip>
 
 				<LIChip className="md:h-[26rem] bg-gray-200 mb-10">
 					<h4 className="text-gray-700 font-semibold">SKRÆDDERSYEDE SPILOPLEVELSER</h4>
-					<h3 className="text-gray-800 font-bold text-2xl phone:text-3xl my-3">
+					<h3 className="text-gray-800 font-bold text-2xl phone:text-[1.8rem] my-3">
 						Vi stræber efter at vores spillere skal have den bedst mulige oplevelse, og vi er derfor altid åbne for idéer og forslag, der ofte vil implementeres. Vi lytter altid til jer!
 					</h3>
 				</LIChip>
 
 				<LIChip className="bg-blue-700 md:h-[36rem] relative pb-28 md:pb-0">
 					<h4 className="text-gray-300 font-semibold">I SIKKERHED</h4>
-					<h3 className="text-white font-bold text-3xl phone:text-4xl my-3 z-10 relative">
+					<h3 className="text-white font-bold text-3xl lg:text-4xl my-3 z-10 relative">
 						Vi indsamler ingen personlige oplysninger. Du kan være sikker på, at dig og dine data er i sikkerhed hos DashMC.
 					</h3>
 

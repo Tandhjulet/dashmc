@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { baseUrl } from "./sitemap";
 import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 
 const poppins = Poppins({
 	weight: ["500", "600", "700", "800", "900"],
