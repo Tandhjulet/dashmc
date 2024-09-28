@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { HTMLAttributes, memo } from "react";
-import { FaLock, FaQuestion } from "react-icons/fa6";
+import { FaLock } from "react-icons/fa6";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IoGameController } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
+import { PiChatsCircleDuotone } from "react-icons/pi";
 
 export const metadata = {
 	title: 'DashMC | Hjem',
@@ -41,7 +42,7 @@ export default function Home() {
 
 			<div className="flex flex-col md:flex-row mt-6 gap-3 md:gap-6 whitespace-nowrap">
 				<a href="https://forum.dashmc.net/" className="py-4 px-7 rounded-full border border-gray-500 inline-flex items-center gap-4">
-					<FaQuestion className="size-6 shrink-0" />
+					<PiChatsCircleDuotone className="size-6 shrink-0" />
 					
 					<span className="font-semibold text-lg">
 						Besøg forummet
