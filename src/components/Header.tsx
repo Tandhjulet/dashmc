@@ -6,15 +6,12 @@ export default function Header() {
 		<header className="flex w-full py-2 bg-white/90 fixed top-0 z-50 backdrop-blur-md">
 			<nav className="inline-flex mx-auto w-full max-w-[1200px] justify-between items-center text-sm">
 				<div className="inline-flex items-center gap-3 w-[200px]">
-					<a href="#" className="font-semibold">
-						FORUM
-						<span className="inline-block">
-							<FiArrowUpRight />
-						</span>
-					</a>
-
 					<a href="/rules" className="font-semibold">
 						REGLER
+					</a>
+
+					<a href="#" className="font-semibold">
+						FORUM
 						<span className="inline-block">
 							<FiArrowUpRight />
 						</span>
