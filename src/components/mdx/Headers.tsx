@@ -18,7 +18,10 @@ export function createHeading(level: number) {
 	  return React.createElement(
 		`h${level}`,
 		{
-			id: slug
+			id: slug,
+			style: {
+				textAlign: "start"
+			}
 		},
 		[
 		  React.createElement('a', {

@@ -25,19 +25,19 @@ export default function Rules() {
 			source.data.description.join(" ") : source.data.description;
 
 	return (
-		<main className="mx-auto max-w-[1200px] pt-28">
-			<h1 className="text-3xl font-bold">{source.data.title}</h1>
-			<h2>
+		<main className="px-3 xl:px-0 md:mx-auto max-w-[1200px] pt-28">
+			<h1 className="text-3xl font-bold text-center sm:text-start">{source.data.title}</h1>
+			<h2 className="text-center sm:text-start">
 				Senest opdateret:{" "}
 				<strong className="text-blue-600">{new Date(source.data.lastUpdated).toLocaleDateString()}</strong>
 			</h2>
-			<p className="mt-3">
+			<p className="mt-3 text-center sm:text-start">
 				{description}
 			</p>
 
 			<hr className="my-6 mt-5" />
 
-			<article className="prose">
+			<article className="prose text-justify sm:text-start">
 				<MDXRemote
 					source={source.content}
 					components={components}

@@ -10,7 +10,7 @@ export function Collapsible({
 	children,
 }: Props) {
 	return (
-		<details className="bg-gray-100 rounded-xl my-3 group select-text">
+		<details className="bg-gray-100 rounded-xl my-3 group select-text text-start">
 			<summary className="list-none inline-flex justify-between items-center w-full cursor-pointer p-3 ">
 				<span className="text-lg font-bold text-blue-600">{title}</span>
 
