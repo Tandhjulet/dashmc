@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { FiArrowUpRight } from "react-icons/fi";
 import PhoneHeader from "./PhoneHeader";
-import { LuUser2 } from "react-icons/lu";
 import ThemeButton from "./ThemeButton";
 
 export default async function Header() {
@@ -44,10 +43,6 @@ export default async function Header() {
 					</a>
 
 					<ThemeButton />
-
-					<button>
-						<LuUser2 className="size-6 text-gray-800 rounded-full dark:text-gray-200" />
-					</button>
 				</div>
 			</nav>
 			<nav className="sm:hidden inline-flex w-full justify-between items-center text-sm">
