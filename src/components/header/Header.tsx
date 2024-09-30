@@ -1,10 +1,15 @@
-import Image from "next/image";
-import { FiArrowUpRight, FiSun } from "react-icons/fi";
-import PhoneHeader from "./PhoneHeader";
+"use server";
 
-export default function Header() {
+import Image from "next/image";
+import { FiArrowUpRight } from "react-icons/fi";
+import PhoneHeader from "./PhoneHeader";
+import { LuUser2 } from "react-icons/lu";
+import ThemeButton from "./ThemeButton";
+
+export default async function Header() {
+
 	return (
-		<header className="flex w-full py-2 bg-white/90 fixed top-0 z-50 backdrop-blur-md">
+		<header className="flex w-full py-2 bg-white/90 dark:bg-[#121212]/90 fixed top-0 z-50 backdrop-blur-md">
 			<nav className="hidden sm:inline-flex mx-auto w-full max-w-[1200px] justify-between items-center text-sm">
 				<div className="inline-flex items-center gap-3 grow basis-0 ml-6">
 					<a href="/rules" className="font-semibold">
@@ -38,8 +43,10 @@ export default function Header() {
 						</span>
 					</a>
 
+					<ThemeButton />
+
 					<button>
-						<FiSun className="size-6 text-gray-800" />
+						<LuUser2 className="size-6 text-gray-800 rounded-full dark:text-gray-200" />
 					</button>
 				</div>
 			</nav>

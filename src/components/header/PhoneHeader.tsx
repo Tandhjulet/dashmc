@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";

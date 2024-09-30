@@ -3,7 +3,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 
 export default function Footer() {
 	return (
-		<footer className="bg-gray-200/60 w-full max-w-[1200px] mb-0 xl:mb-10 mt-16 phone:mt-32 p-5 mx-auto rounded-2xl">
+		<footer className="bg-gray-200/60 w-full max-w-[1200px] mb-0 xl:mb-10 mt-16 phone:mt-32 p-5 mx-auto rounded-2xl dark:bg-gray-800/25">
 			<div className="w-full flex flex-col py-3 items-center gap-2">
 				<a href="/" className="text-2xl font-extrabold text-blue-600">DashMC</a>
 				
@@ -27,7 +27,7 @@ export default function Footer() {
 					</a>
 				</nav>
 				
-				<span className="text-gray-800 text-sm text-center my-4">
+				<span className="text-gray-800 text-sm text-center my-4 dark:text-gray-500">
 					DashMC &copy; 2024
 					<br />
 					Alle rettigheder forbeholdes

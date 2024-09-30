@@ -4,6 +4,7 @@ import "./globals.css";
 import { baseUrl } from "./sitemap";
 import Footer from '@/components/Footer';
 import Header from '@/components/header/Header';
+import { ThemeProvider } from 'next-themes';
 
 const poppins = Poppins({
 	weight: ["500", "600", "700", "800", "900"],
@@ -46,9 +47,11 @@ export default function RootLayout({
 			<body
 				className={`${poppins.className} antialiased min-h-screen`}
 			>
-				<Header />
-				{children}
-				<Footer />
+				<ThemeProvider attribute='class'>
+					<Header />
+					{children}
+					<Footer />
+				</ThemeProvider>
 			</body>
 		</html>
 	);

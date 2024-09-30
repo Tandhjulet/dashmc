@@ -38,13 +38,13 @@ export default function Home() {
 					</span>
 				</h2>
 			</a>
-			<h1 className="text-7xl font-black text-gray-900 leading-[4rem] z-10">DashMC</h1>
+			<h1 className="dark:text-gray-100 text-7xl font-black text-gray-900 leading-[4rem] z-10">DashMC</h1>
 
 			<div className="flex flex-col md:flex-row mt-6 gap-3 md:gap-6 whitespace-nowrap">
-				<a href="https://forum.dashmc.net/" className="py-4 px-7 rounded-full border border-gray-500 inline-flex items-center gap-4">
-					<PiChatsCircleDuotone className="size-6 shrink-0" />
+				<a href="https://forum.dashmc.net/" className="py-4 px-7 rounded-full border border-gray-800 inline-flex items-center gap-4">
+					<PiChatsCircleDuotone className="size-6 shrink-0 dark:text-gray-400" />
 					
-					<span className="font-semibold text-lg">
+					<span className="font-semibold text-lg dark:text-white">
 						Besøg forummet
 					</span>
 				</a>
@@ -58,7 +58,7 @@ export default function Home() {
 				</a>
 			</div>
 
-			<p className="my-6 text-sm text-center max-w-[80%] md:max-w-full">
+			<p className="my-6 text-sm text-center max-w-[80%] md:max-w-full dark:text-white">
 				<strong className="text-blue-600 font-semibold">
 					DashMC.net
 				</strong> er et minecraft servernetværk, der tilbyder både skyblock og kitpvp.{" "}
@@ -81,11 +81,11 @@ export default function Home() {
 			<h3 className="text-xl font-bold text-blue-700">
 				HVORFOR OS?
 			</h3>
-			<h2 className="text-4xl phone:text-5xl font-bold text-gray-800 text-center phone:px-6">
+			<h2 className="dark:text-white text-4xl phone:text-5xl font-bold text-gray-800 text-center phone:px-6">
 				Vi genopfinder det klassiske
 			</h2>
 			
-			<ul className="columns-1 md:columns-2 gap-8 xl:gap-16 mt-6 phone:mt-12 w-full max-w-[90%] md:max-w-[1500px] px-6">
+			<ul className="columns-1 md:columns-2 gap-8 xl:gap-16 mt-6 phone:mt-12 w-full max-w-[90%] md:max-w-[1500px]">
 				<LIChip className="bg-blue-700 md:h-[36rem] mb-10 relative pb-32 md:pb-0">
 					<h4 className="text-gray-300 font-semibold">VI GENFINDER GLÆDEN</h4>
 					<h3 className="text-white font-bold text-3xl lg:text-4xl my-3 relative z-10">
@@ -95,16 +95,16 @@ export default function Home() {
 					<IoGameController className="absolute size-[25rem] bottom-0 right-0 text-blue-400 translate-x-1/4 translate-y-1/4 rotate-[315deg] z-0" />
 				</LIChip>
 
-				<LIChip className="md:h-[26rem] border-4 border-gray-300 mb-10 md:mb-0">
-					<h4 className="text-gray-700 font-semibold">I TRYGGE HÆNDER</h4>
-					<h3 className="text-gray-800 font-bold text-3xl lg:text-4xl my-3">
+				<LIChip className="md:h-[26rem] border-4 border-gray-300 mb-10 md:mb-0 dark:border-gray-800/50">
+					<h4 className="text-gray-700 font-semibold dark:text-gray-500">I TRYGGE HÆNDER</h4>
+					<h3 className="text-gray-800 font-bold text-3xl lg:text-4xl my-3 dark:text-gray-200">
 						Udviklingsholdet bag DashMC står med mange års teoretisk og praktisk erfaring - DashMC er ikke vores første hit!
 					</h3>
 				</LIChip>
 
-				<LIChip className="md:h-[26rem] bg-gray-200 mb-10">
-					<h4 className="text-gray-700 font-semibold">SKRÆDDERSYEDE SPILOPLEVELSER</h4>
-					<h3 className="text-gray-800 font-bold text-2xl phone:text-[1.8rem] my-3">
+				<LIChip className="md:h-[26rem] bg-gray-200 mb-10 dark:bg-gray-800/50">
+					<h4 className="text-gray-700 font-semibold dark:text-gray-500">SKRÆDDERSYEDE SPILOPLEVELSER</h4>
+					<h3 className="text-gray-800 font-bold text-2xl phone:text-[1.8rem] my-3 dark:text-gray-200">
 						Vi stræber efter at vores spillere skal have den bedst mulige oplevelse, og vi er derfor altid åbne for idéer og forslag, der ofte vil implementeres. Vi lytter altid til jer!
 					</h3>
 				</LIChip>
