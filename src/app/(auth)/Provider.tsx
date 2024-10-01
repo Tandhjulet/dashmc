@@ -33,7 +33,7 @@ export const Provider = memo(function Provider(props: Props & HTMLAttributes<HTM
 	return (
 		<button
 			{...rest}
-			className="px-4 py-3 inline-flex gap-2 justify-center items-center border-gray-800 border rounded-lg w-full text-lg"
+			className="dark:border-gray-500 px-4 py-3 inline-flex gap-2 justify-center items-center border-gray-800 border rounded-lg w-full text-lg"
 			onClick={(e) => {
 				if(onClick)
 					onClick(e);

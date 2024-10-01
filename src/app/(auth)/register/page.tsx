@@ -4,10 +4,10 @@ import { Provider } from "../Provider";
 export default function Register() {
 	return (
 		<>
-			<h1 className="text-3xl font-semibold text-gray-800 text-center">
+			<h1 className="dark:text-white text-3xl font-semibold text-gray-800 text-center">
 				Opret en konto
 			</h1>
-			<p className="text-center">
+			<p className="text-center dark:text-gray-200">
 				Har du allerede en konto? {" "}
 				<a href="/login" className="text-blue-600 underline">
 					Log ind
