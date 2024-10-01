@@ -1,10 +1,12 @@
 "use server";
 
 import Image from "next/image";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiLogIn } from "react-icons/fi";
 import PhoneHeader from "./PhoneHeader";
 import ThemeButton from "./ThemeButton";
 import { AiOutlineUser } from "react-icons/ai";
+import Popper from "../Popper/Popper";
+import { RiUserAddLine } from "react-icons/ri";
 
 export default async function Header() {
 
@@ -44,10 +46,28 @@ export default async function Header() {
 					</a>
 
 					<ThemeButton />
+					
+					<Popper
+						popover={(
+							<div className="flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
+								<a href="/login" className="hover:bg-gray-100 p-2 rounded-md pr-5">
+									<FiLogIn className="inline-block mr-3 size-4 my-auto" />
+									Log ind
+								</a>
 
-					<a href="/login" className="font-semibold">
-						<AiOutlineUser className="size-6" />
-					</a>
+								<hr className="opacity-40" />
+
+								<a href="/register" className="hover:bg-gray-100 p-2 rounded-md pr-5">
+									<RiUserAddLine className="inline-block mr-3 size-4 my-auto" />
+									Registrer
+								</a>
+							</div>
+						)}
+					>
+						<a href="/login" className="font-semibold">
+							<AiOutlineUser className="size-6" />
+						</a>
+					</Popper>
 				</div>
 			</nav>
 			<nav className="sm:hidden inline-flex w-full justify-between items-center text-sm">
