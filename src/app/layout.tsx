@@ -2,8 +2,6 @@ import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
 import "./globals.css";
 import { baseUrl } from "./sitemap";
-import Footer from '@/components/Footer';
-import Header from '@/components/header/Header';
 import { ThemeProvider } from 'next-themes';
 
 const poppins = Poppins({
@@ -48,9 +46,7 @@ export default function RootLayout({
 				className={`${poppins.className} antialiased min-h-screen`}
 			>
 				<ThemeProvider attribute='class'>
-					<Header />
 					{children}
-					<Footer />
 				</ThemeProvider>
 			</body>
 		</html>

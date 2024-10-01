@@ -11,7 +11,7 @@ function readMDXFile(filePath: string) {
 }
 
 export function readRules() {
-	return readMDXFile(path.join(process.cwd(), 'src', 'app', 'rules', 'rules.mdx'))
+	return readMDXFile(path.join(process.cwd(), 'src', 'app', '(general)', 'rules', 'rules.mdx'))
 }
 
 // ---- CUSTOM MDX COMPONENTS ----

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FiArrowUpRight } from "react-icons/fi";
 import PhoneHeader from "./PhoneHeader";
 import ThemeButton from "./ThemeButton";
+import { AiOutlineUser } from "react-icons/ai";
 
 export default async function Header() {
 
@@ -43,6 +44,10 @@ export default async function Header() {
 					</a>
 
 					<ThemeButton />
+
+					<a href="/login" className="font-semibold">
+						<AiOutlineUser className="size-6" />
+					</a>
 				</div>
 			</nav>
 			<nav className="sm:hidden inline-flex w-full justify-between items-center text-sm">
