@@ -1,0 +1,30 @@
+// Changed something? Remember to `npm exec prisma migrate dev`,
+// to generate a migration file and regenerate the prisma client
+
+datasource db {
+    provider	= "mysql"
+    url			= env("DATABASE_URL")
+}
+
+generator client {
+    provider	= "prisma-client-js"
+}
+
+model User {
+    id			String		@id @default(cuid())
+
+    email		String		@unique
+	username	String		
+	discordId	String?		@unique
+	role		Role		@default(USER)
+
+    createdAt	DateTime	@default(now())
+    updatedAt	DateTime	@updatedAt
+}
+
+enum Role {
+	USER
+	HELPER
+	MOD
+	ADMIN
+}

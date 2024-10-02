@@ -2,7 +2,7 @@ import { Poppins } from 'next/font/google'
 import type { Metadata } from "next";
 import "./globals.css";
 import { baseUrl } from "./sitemap";
-import { ThemeProvider } from 'next-themes';
+import Providers from './providers';
 
 const poppins = Poppins({
 	weight: ["500", "600", "700", "800", "900"],
@@ -45,9 +45,9 @@ export default function RootLayout({
 			<body
 				className={`${poppins.className} antialiased min-h-screen`}
 			>
-				<ThemeProvider attribute='class'>
+				<Providers>
 					{children}
-				</ThemeProvider>
+				</Providers>
 			</body>
 		</html>
 	);

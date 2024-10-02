@@ -4,7 +4,6 @@ import { HTMLAttributes, memo, useMemo } from "react";
 import { signIn } from "next-auth/react"
 import { BsDiscord, BsGoogle, BsQuestionLg } from "react-icons/bs";
 
-
 interface Props {
 	providerType: string,
 	providerName: string;
@@ -38,7 +37,7 @@ export const Provider = memo(function Provider(props: Props & HTMLAttributes<HTM
 				if(onClick)
 					onClick(e);
 
-				signIn(providerType)
+				signIn(providerType);
 			}}
 		>
 			<Icon className="size-6" />
