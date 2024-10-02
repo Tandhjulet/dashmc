@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 export default function ChangeTheme() {
-	const { setTheme, theme } = useTheme();
+	const { setTheme, resolvedTheme } = useTheme();
 	const [ mounted, setMounted ] = useState(false);
 	
 	useEffect(() => {
@@ -20,9 +20,9 @@ export default function ChangeTheme() {
 
 	return (
 		<button onClick={() => {
-			setTheme(theme === "dark" ? "light" : "dark");
+			setTheme(resolvedTheme === "dark" ? "light" : "dark");
 		}}>
-			{theme === "dark" ? (
+			{resolvedTheme === "dark" ? (
 				<FiMoon className="size-6 text-gray-200" />
 			) : (
 				<FiSun className="size-6 text-gray-800" />

@@ -7,7 +7,7 @@ import { MdStorefront } from "react-icons/md";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 
 export const metadata = {
-	title: 'DashMC | Hjem',
+	title: 'Hjem',
 	description: 'DashMC er en minecraft server udviklet til spilleren. Vi står klar til at byde dig velkommen!',
 }
 

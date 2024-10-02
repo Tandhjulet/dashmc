@@ -1,3 +1,4 @@
+import Image from "next/image"
 import React from "react"
 import { IoArrowUndoSharp } from "react-icons/io5"
 
@@ -9,6 +10,14 @@ export default function Layout({
 	return (
 		<div className="h-screen overflow-y-hidden flex flex-row p-4 gap-6">
 			<div className="w-1/2 rounded-2xl overflow-clip relative">
+				<Image
+					src={"/background.png"}
+					width={1355}
+					height={959}
+					alt="DashMC Logo"
+					className="h-full aspect-square object-cover "
+				/>
+				
 				<div className="bg-blue-600 h-full w-full" />
 
 				<a

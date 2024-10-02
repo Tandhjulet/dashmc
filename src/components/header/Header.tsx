@@ -50,14 +50,14 @@ export default async function Header() {
 					<Popper
 						popover={(
 							<div className="flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
-								<a href="/login" className="hover:bg-gray-100 p-2 rounded-md pr-5">
+								<a href="/login" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50">
 									<FiLogIn className="inline-block mr-3 size-4 my-auto" />
 									Log ind
 								</a>
 
-								<hr className="opacity-40" />
+								<hr className="opacity-40 dark:border-t-gray-800" />
 
-								<a href="/register" className="hover:bg-gray-100 p-2 rounded-md pr-5">
+								<a href="/register" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50">
 									<RiUserAddLine className="inline-block mr-3 size-4 my-auto" />
 									Registrer
 								</a>
