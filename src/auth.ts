@@ -16,6 +16,9 @@ export const authConfig = {
 			}
 		}
 	})],
+	callbacks: {
+		
+	}
 } satisfies NextAuthConfig 
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)

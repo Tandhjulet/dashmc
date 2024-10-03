@@ -14,7 +14,10 @@ export default function Verify() {
 	}, []);
 
 	if(username) {
-		return <AwaitingVerification />
+		return <AwaitingVerification callback={(res) => {
+			if(!res)
+				setUsername(undefined);
+		}} username={username} />
 	}
 
 	return (
