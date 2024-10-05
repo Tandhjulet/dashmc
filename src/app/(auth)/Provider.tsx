@@ -37,7 +37,7 @@ export const Provider = memo(function Provider(props: Props & HTMLAttributes<HTM
 				if(onClick)
 					onClick(e);
 
-				signIn(providerType);
+				signIn(providerType, { redirectTo: "/verify" });
 			}}
 		>
 			<Icon className="size-6" />

@@ -3,17 +3,21 @@ import { authConfig } from "./auth";
 
 const { auth } = NextAuth(authConfig);
 
-const PROTECTED: {[id: string]: string} = {
-	"/verify": "/login",
-}
+const PROTECTED: string[] = ["/test"];
 
 export default auth((req) => {
 	const { nextUrl } = req;
 
 	const isAuth = !!req.auth;
 
-	if(!isAuth && PROTECTED[nextUrl.pathname]) {
-		return Response.redirect(new URL(PROTECTED[nextUrl.pathname], req.url));
+	const isProtected = PROTECTED.includes(nextUrl.pathname);
+
+	if(!isAuth && isProtected) {
+		return Response.redirect(new URL("/login", req.url));
+	} else if(isAuth && isProtected && !req?.auth?.user?.username) {
+		return Response.redirect(
+				new URL("/verify?prevUrl=" + encodeURIComponent(nextUrl.pathname), req.url)
+			);
 	}
 })
 

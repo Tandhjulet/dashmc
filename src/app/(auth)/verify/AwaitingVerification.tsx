@@ -1,5 +1,7 @@
+import React from "react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
+import { FaArrowRight } from "react-icons/fa6";
 
 const CharChip = memo(function CharChip({
 	letter,
@@ -22,6 +24,9 @@ export default function AwaitingVerification({
 }) {
 	const [timer, setTimer] = useState(10*60);
 	const [code, setCode] = useState<string[]>(new Array(6).fill("."));
+
+	const [verifying, setVerifying] = useState(false);
+	const [result, setResult] = useState<boolean>();
 
 	const generateNewCode = useCallback(() => {
 		const newCode = Math.floor(Math.random()*(10**6)).toString();
@@ -53,6 +58,24 @@ export default function AwaitingVerification({
 
 		return `${minutes.padStart(2, "0")}:${seconds.padEnd(2, "0")}`
 	}, [timer]);
+
+	const checkVerify = useCallback(() => {
+		setVerifying(true);
+		setTimeout(() => {
+			const isVerified = true;
+
+			setResult(isVerified);
+			setVerifying(false);
+
+			if(!isVerified) {
+				setTimeout(() => {
+					setResult(undefined);
+				}, 500);
+			} else {
+				callback(true);
+			}
+		}, 500);
+	}, [callback]);
 
 	return (
 		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
@@ -92,7 +115,25 @@ export default function AwaitingVerification({
 				Din kode udløber om <strong>{countdown}</strong>.
 			</p>
 			
-			
+			<button
+				className="mt-10 px-6 py-4 text-white font-semibold rounded-md transition-colors duration-300 ease-in-out"
+				style={{
+					backgroundColor: result === false ? "#dc2626" : "#2563eb"
+				}}
+				onClick={checkVerify}
+			>
+				{verifying ? (
+					<>
+						Indlæser...
+						<AiOutlineLoading className="size-6 text-white animate-spin inline ml-4" />
+					</>
+				) : (
+					<>
+						Verificer
+						<FaArrowRight className="inline ml-4" />
+					</>
+				)}
+			</button>
 		</div>
 	)
 }
