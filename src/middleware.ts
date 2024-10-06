@@ -1,11 +1,15 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth";
 
+if(!process.env.OTP_VERIFICATION_TOKEN) {
+	throw new Error("OTP_VERIFICATION_TOKEN not present in env file!")
+}
+
 const { auth } = NextAuth(authConfig);
 
 const PROTECTED: string[] = ["/test"];
 
-export default auth((req) => {
+export default auth(async (req) => {
 	const { nextUrl } = req;
 
 	const isAuth = !!req.auth;
@@ -19,8 +23,29 @@ export default auth((req) => {
 				new URL("/verify?prevUrl=" + encodeURIComponent(nextUrl.pathname), req.url)
 			);
 	}
+
+	const isApiRoute = nextUrl.pathname.startsWith("/api");
+	if(isApiRoute) {
+		const headers = new Headers(req.headers);
+
+		let authHeader = headers.get("Authorization");
+		if(headers.get("Authorization")?.startsWith("Bearer ")) {
+			authHeader = authHeader!.substring("Bearer ".length);
+		}
+
+		// Only trusted parties should be able to verify codes.
+		// Let's check if authorization is valid.
+		if((req.method === "PUT" &&
+			nextUrl.pathname.startsWith("/api/verify/code") &&
+			authHeader !== process.env.OTP_VERIFICATION_TOKEN
+		)) {
+			return Response.json({
+				message: "Incorrect authorization supplied."
+			}, { status: 401 })
+		}
+	}
 })
 
 export const config = {
-	matcher: ['/((?!api|_next/static|_next/image|icon.ico|manifest.webmanifest).*)'],
+	matcher: ['/((?!_next/static|_next/image|icon.ico|manifest.webmanifest).*)'],
 };

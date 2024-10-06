@@ -1,22 +1,18 @@
 "use server";
 
 import { auth } from "@/auth";
-import { prisma } from "@/prisma/prisma";
 import { redirect } from "next/navigation";
 import VerifyUsername from "./VerifyUsername";
+import { baseUrl } from "@/app/sitemap";
 
-export default async function Verify() {
+export default async function Verify({
+	searchParams
+}: {
+	searchParams?: { [key: string]: string };
+}) {
 	const session = await auth();
 	if(session && session.user?.email) {
-		const email = session.user.email;
-		const userExists = await prisma.user
-			.findFirst({
-				where: {
-					email: {
-						equals: email
-					}
-				}
-			});
+		const userExists = session.user.username;
 
 		if(userExists) {
 			redirect("/");
@@ -24,7 +20,12 @@ export default async function Verify() {
 			return <VerifyUsername callback={(res) => {
 				"use server";
 				if(res) {
-					redirect("/");
+
+					// Ensures redirects can only happen to local pages
+					redirect(new URL(
+						decodeURIComponent((searchParams?.prevUrl) ?? "/"),
+						baseUrl,
+					).pathname);
 				}
 			}} />
 		}

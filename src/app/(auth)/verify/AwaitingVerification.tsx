@@ -1,7 +1,7 @@
+import { OTPCode } from "@/app/api/verify/code/route";
 import React from "react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
-import { FaArrowRight } from "react-icons/fa6";
 
 const CharChip = memo(function CharChip({
 	letter,
@@ -25,18 +25,22 @@ export default function AwaitingVerification({
 	const [timer, setTimer] = useState(10*60);
 	const [code, setCode] = useState<string[]>(new Array(6).fill("."));
 
-	const [verifying, setVerifying] = useState(false);
-	const [result, setResult] = useState<boolean>();
+	const generateCode = useCallback(async () => {
+		const body = JSON.stringify({
+			username,
+		})
 
-	const generateNewCode = useCallback(() => {
-		const newCode = Math.floor(Math.random()*(10**6)).toString();
-		setCode(newCode.padStart(6, "0").split(""));
+		const res: OTPCode = await (await fetch("/api/verify/code", {
+			method: "POST",
+			body,
+		})).json()
+
+		setCode(res.code.padStart(6, "0").split(""));
 		setTimer(10*60);
-	}, []);
+	}, [username]);
 
 	useEffect(() => {
-		generateNewCode();
-		setTimer(10*60);
+		generateCode();
 
 		const intervalId = setInterval(() => {
 			setTimer((prev) => {
@@ -50,32 +54,30 @@ export default function AwaitingVerification({
 		}, 1000);
 
 		return () => clearInterval(intervalId);
-	}, [callback, generateNewCode]);
+	}, [callback, generateCode]);
+
+	useEffect(() => {
+		async function checkIfVerified() {
+			const res = await (await fetch("/api/verify/code", {
+					method: "PATCH",
+					body: JSON.stringify({ code: code.join("") })
+				}
+			)).json();
+
+			if(res?.exists === true && res?.hasBeenVerified === true)
+				callback(true);
+		}
+
+		const intervalId = setInterval(() => checkIfVerified(), 2500);
+		return () => clearInterval(intervalId);
+	}, [code, callback])
 
 	const countdown = useMemo(() => {
 		const minutes = Math.floor(timer / 60).toString();
 		const seconds = (timer % 60).toString();
 
-		return `${minutes.padStart(2, "0")}:${seconds.padEnd(2, "0")}`
+		return `${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`
 	}, [timer]);
-
-	const checkVerify = useCallback(() => {
-		setVerifying(true);
-		setTimeout(() => {
-			const isVerified = true;
-
-			setResult(isVerified);
-			setVerifying(false);
-
-			if(!isVerified) {
-				setTimeout(() => {
-					setResult(undefined);
-				}, 500);
-			} else {
-				callback(true);
-			}
-		}, 500);
-	}, [callback]);
 
 	return (
 		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
@@ -114,26 +116,6 @@ export default function AwaitingVerification({
 			<p className="max-w-[500px] text-center">
 				Din kode udløber om <strong>{countdown}</strong>.
 			</p>
-			
-			<button
-				className="mt-10 px-6 py-4 text-white font-semibold rounded-md transition-colors duration-300 ease-in-out"
-				style={{
-					backgroundColor: result === false ? "#dc2626" : "#2563eb"
-				}}
-				onClick={checkVerify}
-			>
-				{verifying ? (
-					<>
-						Indlæser...
-						<AiOutlineLoading className="size-6 text-white animate-spin inline ml-4" />
-					</>
-				) : (
-					<>
-						Verificer
-						<FaArrowRight className="inline ml-4" />
-					</>
-				)}
-			</button>
 		</div>
 	)
 }

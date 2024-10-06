@@ -1,7 +1,7 @@
 import { readRules } from "@/lib/mdx";
 import { MetadataRoute } from "next";
 
-export const baseUrl = "http://128.0.10.23:80";
+export const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://dashmc.net";
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	let rulesLastEdited = new Date();
