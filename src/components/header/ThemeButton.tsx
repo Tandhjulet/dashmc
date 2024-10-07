@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { AiOutlineReload } from "react-icons/ai";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 export default function ChangeTheme() {
@@ -14,7 +15,9 @@ export default function ChangeTheme() {
 
 	if(!mounted) 
 		return (
-			<button className="size-6" />
+			<button className="size-6">
+				<AiOutlineReload className="size-6 text-gray-600 animate-spin" />
+			</button>
 		)
 	
 

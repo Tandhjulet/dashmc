@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { authConfig } from "./auth";
+import authConfig from "./auth.config";
 
 if(!process.env.OTP_VERIFICATION_TOKEN) {
 	throw new Error("OTP_VERIFICATION_TOKEN not present in env file!")
@@ -29,8 +29,8 @@ export default auth(async (req) => {
 		const headers = new Headers(req.headers);
 
 		let authHeader = headers.get("Authorization");
-		if(headers.get("Authorization")?.startsWith("Bearer ")) {
-			authHeader = authHeader!.substring("Bearer ".length);
+		if(authHeader?.startsWith("Bearer ")) {
+			authHeader = authHeader.substring("Bearer ".length);
 		}
 
 		// Only trusted parties should be able to verify codes.

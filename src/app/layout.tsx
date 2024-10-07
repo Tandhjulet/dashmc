@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { baseUrl } from "./sitemap";
 import Providers from './providers';
+import { auth } from '@/auth';
 
 const poppins = Poppins({
 	weight: ["500", "600", "700", "800", "900"],
@@ -35,17 +36,21 @@ export const metadata: Metadata = {
 	}
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const session = await auth();
+
 	return (
 		<html lang="en">
 			<body
 				className={`${poppins.className} antialiased min-h-screen`}
 			>
-				<Providers>
+				<Providers
+					session={session}
+				>
 					{children}
 				</Providers>
 			</body>

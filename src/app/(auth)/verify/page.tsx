@@ -19,8 +19,7 @@ export default async function Verify({
 		} else {
 			return <VerifyUsername callback={(res) => {
 				"use server";
-				if(res) {
-
+				if(res.exists) {
 					// Ensures redirects can only happen to local pages
 					redirect(new URL(
 						decodeURIComponent((searchParams?.prevUrl) ?? "/"),

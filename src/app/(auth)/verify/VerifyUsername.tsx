@@ -4,11 +4,12 @@ import { useCallback, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import AwaitingVerification from "./AwaitingVerification";
+import { OTPCode } from "@/app/api/verify/code/route";
 
 export default function VerifyUsername({
 	callback,
 }: {
-	callback?: (success: boolean) => void;
+	callback?: (success: OTPCode & {exists: true} | {exists: false}) => void;
 }) {
 	const [username, setUsername] = useState<string>();
 
@@ -19,16 +20,16 @@ export default function VerifyUsername({
 
 	if(username) {
 		return <AwaitingVerification callback={(res) => {
-			if(!res) setUsername(undefined);
+			if(!res.exists) setUsername(undefined);
 			if(callback) callback(res);
 		}} username={username} />
 	}
 
 	return (
 		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
-			<IoCheckmarkCircleSharp className="size-32 text-green-600 mb-6" />
-			<h1 className="text-3xl font-bold text-gray-800">Verificer dit ingame-navn</h1>
-			<p className="max-w-[500px] text-center">
+			<IoCheckmarkCircleSharp className="size-32 text-green-600 dark:text-green-500 mb-6" />
+			<h1 className="text-3xl font-bold text-gray-800 dark:text-white">Verificer dit ingame-navn</h1>
+			<p className="max-w-[500px] text-center dark:text-gray-100">
 				For at du kan oprette dig på DashMCs hjemmeside, skal vi bruge dit minecraft-brugernavn.
 			</p>
 			
@@ -42,7 +43,7 @@ export default function VerifyUsername({
 					id="username"
 					name="username"
 					placeholder="Brugernavn"
-					className="p-4 h-min bg-gray-200 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2"
+					className="p-4 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 
 					required
 					pattern=".{3,}"
