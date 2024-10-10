@@ -29,9 +29,9 @@ export default function Layout({
 				</a>
 			</div>
 
-			<div className="my-auto p-20 w-1/2 max-h-[calc(100%-5rem*2)]">
+			<main className="my-auto p-20 w-1/2 max-h-[calc(100%-5rem*2)]">
 				{children}
-			</div>
+			</main>
 		</div>
 	)
   }

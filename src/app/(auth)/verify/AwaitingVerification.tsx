@@ -82,6 +82,7 @@ export default function AwaitingVerification({
 			if(res?.exists === true && res?.hasBeenVerified === true) {
 				await update({
 					code: res.code,
+					uuid: res.uuid!,
 				});
 				callback(res);
 			}

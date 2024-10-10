@@ -30,3 +30,30 @@ enum Role {
 	MOD
 	ADMIN
 }
+
+// FORMS
+
+enum FieldType {
+	Section
+	Checkbox
+	TextArea
+}
+
+model Fields {
+	id			Int			@id @default(autoincrement())
+	form		Form		@relation(fields: [formId], references: [id])
+	formId		String			
+
+	title		String
+	subtitle	String?
+	required	Boolean		@default(false)
+	type		FieldType	@default(TextArea)
+}
+
+model Form {
+	id			String		@id @default(cuid())
+
+	name		String		@unique
+	category 	String
+	fields		Fields[]
+}

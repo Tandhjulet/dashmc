@@ -10,6 +10,7 @@ export const authOptions = {
 		async jwt({ token, user, trigger, session }) {
 			if(trigger === "update") {
 				const code: string = session.code;
+				const uuid: string = session.uuid;
 				
 				// Verify input
 				const associatedWith = await client.get(`otp:${code}`);
@@ -17,7 +18,7 @@ export const authOptions = {
 				if(!associatedWith)
 					return token;
 				const otpCode: OTPCode = JSON.parse(associatedWith)
-				if(!otpCode.uuid || !otpCode.hasBeenVerified)
+				if(!otpCode.uuid || !otpCode.hasBeenVerified || otpCode.uuid !== uuid)
 					return token;
 
 				const persistedUserData = await prisma.user.findFirst({
@@ -32,6 +33,7 @@ export const authOptions = {
 
 				token.username = persistedUserData?.username;
 				token.uuid = persistedUserData?.gameUUID;
+				token.role = persistedUserData.role;
 				return token;
 			}
 
@@ -46,11 +48,13 @@ export const authOptions = {
 
 			token.username = persistedUserData?.username;
 			token.uuid = persistedUserData?.gameUUID;
+			token.role = persistedUserData?.role;
 			return token;
 		},
 		async session({ session, token }) {
 			session.user.username = token.username;
 			session.user.uuid = token.uuid;
+			session.user.role = token.role;
 			return session;
 		}
 	}
