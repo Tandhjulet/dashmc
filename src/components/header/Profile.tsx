@@ -16,9 +16,9 @@ export default function Profile() {
 			<Popper
 				popover={(
 					<div className="flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
-						<Link href="/login" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
+						<Link href="/dashboard" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
 							<FiLogIn className="inline-block mr-3 size-4 my-auto" />
-							Administrer
+							Oversigt
 						</Link>
 
 						<hr className="opacity-40 dark:border-t-gray-800" />

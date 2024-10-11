@@ -51,6 +51,7 @@ function useNavButtons(props: {
 	} = props;
 
 	const router = useRouter();
+	const path = usePathname();
 
 	const NavButton = useCallback(function NavButton(props: (CategoryProps | ButtonProps & {isAdmin: boolean})) {
 		const {
@@ -88,6 +89,9 @@ function useNavButtons(props: {
 									body: JSON.stringify(body),
 								})).json().then((res) => {
 									if(res.success) {
+										if("/apply/" + props.cuid === path) 
+											router.push("/dashboard");
+										
 										router.refresh();
 									}
 								});
@@ -114,7 +118,7 @@ function useNavButtons(props: {
 				<FaChevronDown className={`text-gray-600 transition-transform ease-in-out`} />
 			</div>
 		)
-	}, [router])
+	}, [router, path])
 
 	const renderButtons = useCallback((buttons: (ButtonProps | CategoryProps)[]) => {
 		return buttons.map((button, i) => {			
@@ -228,11 +232,16 @@ export default function VerticalNavbar({
 	const createForm = useCallback(async (e: FormData) => {
 		const category = e.get("category"),
 			  name = e.get("name"),
+			  subtitle = e.get("subtitle"),
 			  visible = e.get("visibility") === "on";
+
+		if(!category || !name || !subtitle)
+			return;
 
 		const body = {
 			category,
 			name,
+			subtitle,
 			visible
 		};
 
@@ -315,6 +324,19 @@ export default function VerticalNavbar({
 						<div className="mt-6 grid grid-cols-2 gap-5">
 							<input
 								autoComplete="one-time-code"
+								id="name"
+								name="name"
+								placeholder="Navn"
+								type="text"
+								className="p-4 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
+
+								required
+								autoFocus
+								pattern=".{3,}"
+							/>
+
+							<input
+								autoComplete="one-time-code"
 								id="category"
 								name="category"
 								placeholder="Kategori"
@@ -323,21 +345,21 @@ export default function VerticalNavbar({
 
 								required
 								pattern=".{3,}"
-								autoFocus
 								enterKeyHint="next"
 							/>
 
-							<input
-								autoComplete="one-time-code"
-								id="name"
-								name="name"
-								placeholder="Navn"
-								type="text"
-								className="p-4 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
+							<textarea
+								placeholder="Beskrivelse"
+								rows={3}
+								
+								id="subtitle"
+								name="subtitle"
+								
+								className="col-span-2 p-4 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 
 								required
-								pattern=".{3,}"
 							/>
+
 
 							<div className="flex items-start mb-6">
 								<input

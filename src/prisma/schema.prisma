@@ -17,11 +17,13 @@ model User {
 	username	String		
 	gameUUID	String		
 
-	discordId	String?		@unique
+	discordId	String?		
 	role		Role		@default(USER)
 
     createdAt	DateTime	@default(now())
     updatedAt	DateTime	@updatedAt
+
+	forms		Form[]
 }
 
 enum Role {
@@ -54,6 +56,14 @@ model Form {
 	id			String		@id @default(cuid())
 
 	name		String		@unique
+	subtitle	String
+
+	createdBy	User		@relation(fields: [ownerId], references: [id])
+	ownerId		String
+	
 	category 	String
 	fields		Fields[]
+
+	createdAt	DateTime	@default(now())
+    updatedAt	DateTime	@updatedAt
 }

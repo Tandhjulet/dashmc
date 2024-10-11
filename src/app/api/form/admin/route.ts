@@ -4,14 +4,15 @@ import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
-	const { name, fields, category }: {
+	const { name, fields, subtitle, category }: {
 		name: string,
+		subtitle: string,
 		fields?: Field[],
 		category: string;
 	} = await req.json();
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN) {
+	if(session?.user?.role !== Role.ADMIN || !session.user.email) {
 		return Response.json(
 			{ success: false },
 			{
@@ -20,7 +21,21 @@ export async function POST(req: Request) {
 		);
 	}
 
-	const form = new Form(name, category, fields);
+	const form = new Form(name, subtitle, category);
+	const couldAttach = await form.attachOwner({
+		email: session.user.email
+	});
+	if(!couldAttach) {
+		return Response.json(
+			{success: false},
+			{
+				status: 500,
+			}
+		)
+	}
+
+	if(fields)
+		form.fields = fields;
 	const id = form.save();
 
 	revalidateTag("form");
