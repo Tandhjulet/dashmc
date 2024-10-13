@@ -1,15 +1,23 @@
 import { auth } from "@/auth";
-import { Field, Form } from "@/lib/forms/Form";
+import { Form } from "@/lib/forms/Form";
 import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
-	const { name, fields, subtitle, category }: {
+	const { name, subtitle, category }: {
 		name: string,
 		subtitle: string,
-		fields?: Field[],
 		category: string;
 	} = await req.json();
+
+	if(!name || !subtitle || !category) {
+		return Response.json(
+			{success: false},
+			{
+				status: 400,
+			}
+		)
+	}
 
 	const session = await auth();
 	if(session?.user?.role !== Role.ADMIN || !session.user.email) {
@@ -33,9 +41,7 @@ export async function POST(req: Request) {
 			}
 		)
 	}
-
-	if(fields)
-		form.fields = fields;
+	
 	const id = form.save();
 
 	revalidateTag("form");

@@ -160,6 +160,7 @@ export class Form {
 
 		this.cuid = savedForm.id;
 		this._dirty = false;
+		this._virtual = false;
 
 		return savedForm.id;
 	}

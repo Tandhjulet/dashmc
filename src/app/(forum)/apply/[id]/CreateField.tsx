@@ -3,6 +3,7 @@
 import useModal from "@/components/Modal";
 import { IForm } from "@/lib/forms/Form";
 import { $Enums } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export default function CreateField({
@@ -10,21 +11,40 @@ export default function CreateField({
 }: {
 	form: IForm,
 }) {
+	const router = useRouter();
 	const {
 		showModal,
+		hideModal,
 		Modal
 	} = useModal();
 
 	const createField = useCallback(async (e: FormData) => {
 		const name = e.get("name"),
-			  description = e.get("description"),
+			  subtitle = e.get("subtitle"),
 			  type = e.get("type"),
 			  required = e.get("required");
 
-		if(!name || !description || !type)
+		if(!name || !subtitle || !type)
 			return;
 
-	}, []);
+		const body = {
+			title: name,
+			subtitle,
+			type,
+			required: required === "on",
+			formCuid: form.cuid,
+		};
+
+		(await fetch("/api/form/admin/field", {
+			method: "POST",
+			body: JSON.stringify(body),
+		})).json().then((res) => {
+			if(res.success) {
+				hideModal();
+				router.refresh();
+			}
+		});
+	}, [hideModal, router, form]);
 	
 	return (
 		<>
@@ -86,8 +106,8 @@ export default function CreateField({
 						placeholder="Beskrivelse"
 						rows={3}
 						
-						id="description"
-						name="description"
+						id="subtitle"
+						name="subtitle"
 						
 						className="col-span-2 p-4 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 

@@ -7,7 +7,7 @@ if(!process.env.OTP_VERIFICATION_TOKEN) {
 
 const { auth } = NextAuth(authConfig);
 
-const PROTECTED: string[] = ["/test"];
+const PROTECTED: string[] = ["/dashboard"];
 
 export default auth(async (req) => {
 	const { nextUrl } = req;
