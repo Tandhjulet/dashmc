@@ -5,7 +5,7 @@ import { Field, FieldWithId, IField } from "./Field";
 export interface IForm {
 	title: string;
 	subtite: string;
-	fields: IField[];
+	fields: FieldWithId<IField>[];
 
 	category: string;
 	isVirtual: boolean;
@@ -13,6 +13,9 @@ export interface IForm {
 
 	owner?: User;
 	ownerCUID?: string;
+
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 
 export interface FormData {
@@ -71,6 +74,7 @@ export class Form {
 			},
 			include: {
 				fields: true,
+				submissions: false,
 				createdBy: true,
 			}
 		})
@@ -177,6 +181,9 @@ export class Form {
 
 			owner: this.createdBy,
 			ownerCUID: this.creatorCUID,
+
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
 		}
 	}
 

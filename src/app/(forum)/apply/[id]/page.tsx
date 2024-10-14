@@ -6,6 +6,18 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { FaEye } from "react-icons/fa6";
 import CreateField from "./CreateField";
+import { FormFields } from "./Field";
+
+function parseDate(date: string | Date) {
+	if(typeof date === "string")
+		date = new Date(date);
+
+	return date.toLocaleDateString("da-DK", {
+		year: "numeric",
+		month: "short",
+		day: "2-digit",
+	});
+}
 
 export async function generateStaticParams() {
 	return (await Form.getAllForms()).map((form) => {
@@ -36,23 +48,33 @@ export default async function Application({
 
 	return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto p-12">
-			<main className="w-full h-fit bg-gray-800/30 col-span-3 px-4 prose rounded-l-md">
-				<h1>
+			<main className="w-full h-fit bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
+				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
 					{form.title}
 				</h1>
 				<span className="text-gray-300">
 					{form.subtite}
 				</span>
 
-				<hr className="my-4 border-t-gray-700/60" />
+				<hr className="mt-4 border-t-gray-700/60" />
+				
+				<FormFields
+					formCuid={form.cuid!}
+					fields={form.fields}
+					isAdmin={session?.user?.role === "ADMIN"}
+				/>
 
 				{session?.user?.role === Role.ADMIN && <CreateField form={form} />}
 
-				<button className="float-right w-fit my-4 px-4 py-2 active:translate-y-[1px] border border-blue-900/40 hover:bg-blue-600/5 rounded-xl text-blue-600">
+				<button
+					className="float-right w-fit my-4 px-4 py-2 active:translate-y-[1px] border border-blue-900/40 hover:bg-blue-600/5 rounded-xl text-blue-600"
+					form="main-form"
+					type="submit"
+				>
 					Send svar
 				</button>
 			</main>
-			<aside className="w-full bg-gray-800/30 col-span-1 sticky top-0 rounded-r-md">
+			<aside className="h-fit w-full bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
 				<div className="flex flex-col items-center m-4 gap-2">
 					<span className="text-gray-700 text-sm mb-1">
 						<FaEye className="inline me-2" />
@@ -62,7 +84,7 @@ export default async function Application({
 					<Image
 						width={96}
 						height={96}
-						src={`https://minotar.net/helm/Tandhjulet/64.png`}
+						src={`https://minotar.net/helm/${form.owner?.gameUUID}/64.png`}
 						alt="Skin of form maker"
 
 						className="rounded-3xl"
@@ -73,7 +95,7 @@ export default async function Application({
 						Lavet af
 						<br />
 						<strong className="text-base">
-							Tandhjulet
+							{form.owner?.username}
 						</strong>
 					</span>
 
@@ -82,7 +104,7 @@ export default async function Application({
 							Oprettet:
 							<br />
 							<strong className="text-base">
-								9. sep, 2024
+								{parseDate(form.createdAt!)}
 							</strong>
 						</span>
 
@@ -90,7 +112,7 @@ export default async function Application({
 							Opdateret:
 							<br />
 							<strong className="text-base">
-								9. sep, 2024
+							{parseDate(form.updatedAt!)}
 							</strong>
 						</span>
 					</div>

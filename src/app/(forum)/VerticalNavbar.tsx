@@ -225,7 +225,6 @@ export default function VerticalNavbar({
 	const [selected, setSelected] = useState<ButtonProps>(defaultSelected);
 
 	useEffect(() => {
-		console.log("selected has updated!")
 		setSelected(defaultSelected);
 	}, [defaultSelected]);
 

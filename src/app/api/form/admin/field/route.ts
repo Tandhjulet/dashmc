@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 	}: {
 		title: string;
 		required: boolean;
-		subtitle: string;
+		subtitle?: string;
 		type: $Enums.FieldType;
 		formCuid: string;
 	} = await req.json();
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 			}
 		)
 	}
-
+	
 	const session = await auth();
 	if(session?.user?.role !== Role.ADMIN) {
 		return Response.json(
@@ -45,5 +45,31 @@ export async function POST(req: Request) {
 	return Response.json({
 		success: true,
 		id: savedField?.id,
+	})
+}
+
+export async function DELETE(req: Request) {
+	const {
+		id,
+	}: {
+		id: number,
+	} = await req.json();
+
+	const session = await auth();
+	if(session?.user?.role !== Role.ADMIN) {
+		return Response.json(
+			{ success: false },
+			{
+				status: 401,
+			}
+		);
+	}
+
+	await Field.delete(id);
+
+	revalidateTag("specific_form");
+
+	return Response.json({
+		success: true,
 	})
 }

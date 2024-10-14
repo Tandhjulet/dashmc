@@ -33,7 +33,7 @@ export const authOptions = {
 
 				token.username = persistedUserData?.username;
 				token.uuid = persistedUserData?.gameUUID;
-				token.role = persistedUserData.role;				
+				token.role = persistedUserData.role;
 				return token;
 			}
 

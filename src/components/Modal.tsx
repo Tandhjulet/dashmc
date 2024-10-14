@@ -2,10 +2,18 @@
 
 import { HTMLAttributes, useCallback, useState } from "react";
 
-export default function useModal() {
+export default function useModal(props?: {
+	onClose: () => void;
+}) {
+	const onClose = props?.onClose;
+
 	const [shown, setShown] = useState<boolean>(false);
 
-	const hideModal = useCallback(() => setShown(false), []);
+	const hideModal = useCallback(() => {
+		if(onClose)
+			onClose();
+		setShown(false);
+	}, [onClose]);
 	const showModal = useCallback(() => setShown(true), []);
 
 	const Modal = useCallback((props: HTMLAttributes<HTMLDivElement>) => (
@@ -17,6 +25,8 @@ export default function useModal() {
 				className="top-0 left-0 absolute w-screen h-screen bg-gray-600/5 backdrop-grayscale z-40"
 				onClick={() => {
 					setShown(false);
+					if(onClose)
+						onClose();
 				}}
 			/>
 
@@ -32,7 +42,7 @@ export default function useModal() {
 				{props.children}
 			</div>
 		</div>
-	), [shown])
+	), [shown, onClose])
 
 	return {
 		hideModal,

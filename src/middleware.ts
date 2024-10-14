@@ -7,15 +7,14 @@ if(!process.env.OTP_VERIFICATION_TOKEN) {
 
 const { auth } = NextAuth(authConfig);
 
-const PROTECTED: string[] = ["/dashboard"];
+const PROTECTED: string = '/(dashboard|apply).*';
 
 export default auth(async (req) => {
 	const { nextUrl } = req;
 
 	const isAuth = !!req.auth;
 
-	const isProtected = PROTECTED.includes(nextUrl.pathname);
-
+	const isProtected = nextUrl.pathname.match(PROTECTED);
 	if(!isAuth && isProtected) {
 		return Response.redirect(new URL("/login", req.url));
 	} else if(isAuth && isProtected && !req?.auth?.user?.username) {

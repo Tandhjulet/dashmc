@@ -22,7 +22,6 @@ export class Field {
 	private _dirty: boolean;
 	private _virtual: boolean;
 
-
 	static async persist(field: IField, formCuid: string): Promise<FieldWithId<IField>> {
 		return await prisma.fields.create({
 			data: {
@@ -30,6 +29,15 @@ export class Field {
 				formId: formCuid,
 			}
 		})
+	}
+
+	static async delete(id: number): Promise<FieldWithId<IField>> {
+		const field = await prisma.fields.delete({
+			where: {
+				id: id,
+			}
+		})
+		return field;
 	}
 
 	constructor(title: string, type: $Enums.FieldType, formCuid: string, subtitle?: string, required?: boolean, id: number = -1) {
