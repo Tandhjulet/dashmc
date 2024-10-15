@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
 import Popper from "../popper/Popper";
-import { RiUserAddLine } from "react-icons/ri";
+import { RiStackLine, RiUserAddLine, RiUserForbidLine } from "react-icons/ri";
 import { FiLogIn } from "react-icons/fi";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function Profile() {
 				popover={(
 					<div className="flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
 						<Link href="/dashboard" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
-							<FiLogIn className="inline-block mr-3 size-4 my-auto" />
+							<RiStackLine className="inline-block mr-3 size-4 my-auto" />
 							Oversigt
 						</Link>
 
@@ -29,7 +29,7 @@ export default function Profile() {
 							}}
 							className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center text-red-600 dark:text-red-400"
 						>
-							<RiUserAddLine className="inline-block mr-3 size-4 my-auto" />
+							<RiUserForbidLine className="inline-block mr-3 size-4 my-auto" />
 							Log ud
 						</button>
 					</div>
