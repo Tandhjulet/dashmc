@@ -18,16 +18,15 @@ export async function generateStaticParams() {
 	});
 }
 
-const getSubmission = unstable_cache(
-	async (id: string) => {
+const getSubmission = (id: string) => unstable_cache(
+	async () => {
 		const submission = await Submission.fromId(id);
 		if(!submission)
 			notFound();
 		return submission?.toJSON();
-	},
-	['submission'],
-	{ revalidate: false, tags: ['submission'] }
-)
+	}, [`get-submission:${id}`],
+	{ revalidate: false, tags: [`submission:${id}`] }
+)()
 
 export default async function View({
 	params,
@@ -39,6 +38,7 @@ export default async function View({
 		redirect("/");
 	
 	const submission = await getSubmission(params.id);
+	
 	if(!submission.userId)
 		throw new Error("userId missing");
 
@@ -107,7 +107,7 @@ export default async function View({
 
 						<span className="text-end text-sm my-2">
 							<StatusChip
-								submissionId={submission.id!}
+								submissionId={params.id}
 								status={submission.status}
 								isAdmin={session.user.role === "ADMIN"}
 							/>
@@ -118,7 +118,7 @@ export default async function View({
 						<>
 							<hr className="opacity-15 w-full my-3 z-0" />
 							<div className="text-start">
-								<DeleteButton submissionId={submission.id!} />
+								<DeleteButton submissionId={params.id} />
 							</div>
 						</>	
 					)}

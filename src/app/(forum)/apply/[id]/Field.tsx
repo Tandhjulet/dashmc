@@ -302,6 +302,7 @@ export function FormFields({
 		})).json().then((res) => {
 			if(res.success) {
 				router.push("/dashboard");
+				router.refresh();
 			}
 		})
 	}, [fields, router, formCuid]);

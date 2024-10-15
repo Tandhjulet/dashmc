@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 	
 	const id = await form.save();
 
-	revalidateTag("form");
+	revalidateTag('form');
 
 	return Response.json({
 		success: !!id,
@@ -67,7 +67,8 @@ export async function DELETE(req: Request) {
 
 	const success = await Form.delete(id);
 
-	revalidateTag("form");
+	revalidateTag('form');
+	revalidateTag(`form:${id}`)
 
 	return Response.json({
 		success,

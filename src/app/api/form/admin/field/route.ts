@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 	const field = new Field(title, type, formCuid, subtitle, required);
 	const savedField = await field.save();
 
-	revalidateTag("specific_form");
+	revalidateTag(`form:${formCuid}`);
 
 	return Response.json({
 		success: true,
@@ -65,9 +65,9 @@ export async function DELETE(req: Request) {
 		);
 	}
 
-	await Field.delete(id);
+	const field = await Field.delete(id);
 
-	revalidateTag("specific_form");
+	revalidateTag(`form:${field.formId}`);
 
 	return Response.json({
 		success: true,

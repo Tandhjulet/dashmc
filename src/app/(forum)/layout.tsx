@@ -7,8 +7,7 @@ const getAllForms = unstable_cache(
 	async () => {
 		const form = await Form.getAllForms();
 		return form;
-	},
-	['forms'],
+	}, [],
 	{ revalidate: false, tags: ['form'] }
 )
 

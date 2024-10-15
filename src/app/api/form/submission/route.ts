@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { Form } from "@/lib/forms/Form";
 import { ISubmissionField } from "@/lib/forms/Submission";
 import { prisma } from "@/prisma/prisma";
+import { revalidateTag } from "next/cache";
 
 function validate(form: Form, submission: {[id: number]: string}): false | ISubmissionField[] {
 	const submissionKeys = Object.keys(submission);
@@ -74,7 +75,6 @@ export async function POST(req: Request) {
 		);
 	}
 
-
 	const form = await Form.fromId(formCuid);
 	if(!form) {
 		return Response.json(
@@ -108,6 +108,11 @@ export async function POST(req: Request) {
 			}
 		}
 	})
+
+	revalidateTag(`submission:${submitted.id}`);
+
+	console.log("reevaluating tag: user:" + user.id)
+	revalidateTag(`user:${user.id}`);
 
 	return Response.json({
 		success: true,
@@ -153,7 +158,14 @@ export async function DELETE(req: Request) {
 		}
 	})
 
-	await prisma.$transaction([deleteFields, deleteSubmission]);
+	const deleted = await prisma.$transaction([deleteFields, deleteSubmission]);
+
+	console.log("submissionId: ", submissionId);
+	console.log("dashboard id: ", deleted[1].userId);
+	console.log("executed by id: ", session.user.dbId);
+
+	revalidateTag(`submission:${submissionId}`);
+	revalidateTag(`user:${deleted[1].userId}`);
 	
 	return Response.json(
 		{success: true}

@@ -18,15 +18,15 @@
   @apply text-lg font-medium tracking-tight mt-6 mb-2;
 }
 
-body::-webkit-scrollbar {
+.thin-scrollbar::-webkit-scrollbar {
   width: 9px;
 }
 
-body::-webkit-scrollbar-thumb {
+.thin-scrollbar::-webkit-scrollbar-thumb {
   @apply rounded-full bg-gray-400;
 }
 
-body::-webkit-scrollbar-thumb:hover {
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-600;
 }
 

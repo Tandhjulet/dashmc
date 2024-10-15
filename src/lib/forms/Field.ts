@@ -8,6 +8,7 @@ export interface IField {
 	subtitle: string | null;
 	required: boolean;
 	type: $Enums.FieldType;
+	formId?: string;
 }
 
 export class Field {

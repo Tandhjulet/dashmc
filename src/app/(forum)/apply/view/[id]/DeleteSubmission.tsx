@@ -18,6 +18,7 @@ export default function DeleteButton({ submissionId }: Props) {
 		})).json().then((res) => {
 			if(res.success) {
 				router.push("/dashboard");
+				router.refresh();
 			}
 		});
 

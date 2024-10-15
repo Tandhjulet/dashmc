@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/prisma/prisma";
 import { $Enums } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function PUT(req: Request) {
 	const {
@@ -28,7 +28,7 @@ export async function PUT(req: Request) {
 		)
 	}
 
-	await prisma.submission.update({
+	const deleted = await prisma.submission.update({
 		where: {
 			id: submissionId,
 		},
@@ -36,7 +36,9 @@ export async function PUT(req: Request) {
 			status: status
 		}
 	});
-	revalidatePath("/apply/view/" + submissionId);
+	
+	revalidateTag(`submission:${submissionId}`);
+	revalidateTag(`user:${deleted.userId}`);
 
 	return Response.json(
 		{ success: true }

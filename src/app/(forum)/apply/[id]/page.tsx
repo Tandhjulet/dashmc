@@ -17,16 +17,15 @@ export async function generateStaticParams() {
 	});
 }
 
-const getForm = unstable_cache(
-	async (id: string) => {
+const getForm = (id: string) => unstable_cache(
+	async () => {
 		const form = await Form.fromId(id);
 		if(!form)
 			notFound();
 		return form?.toJSON();
-	},
-	['form'],
-	{ revalidate: false, tags: ['specific_form', 'form'] }
-)
+	}, [`get-form:${id}`],
+	{ revalidate: false, tags: [`form:${id}`] }
+)();
 
 export default async function Application({
 	params,

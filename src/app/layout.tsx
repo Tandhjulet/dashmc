@@ -46,7 +46,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${poppins.className} antialiased min-h-screen overflow-x-hidden`}
+				className={`${poppins.className} antialiased min-h-screen overflow-x-hidden thin-scrollbar`}
 			>
 				<Providers
 					session={session}
