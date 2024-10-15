@@ -16,6 +16,11 @@ export default function Register() {
 
 			<div className="mx-auto flex flex-col w-[60%] gap-4 py-10">
 				<Provider
+					providerName="Google"
+					providerType="google"
+				/>
+
+				<Provider
 					providerName="Discord"
 					providerType="discord"
 				/>

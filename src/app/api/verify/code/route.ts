@@ -60,6 +60,7 @@ export async function PATCH(req: Request) {
 				email: session.user.email,
 				username: parsed.forAccount,
 				gameUUID: parsed.uuid!,
+				discordId: session.user.discordId,
 			}
 		})
 	}

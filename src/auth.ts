@@ -31,6 +31,7 @@ export const authOptions = {
 					return token;
 				}
 
+				token.discordId = persistedUserData.discordId ?? undefined;
 				token.dbId = persistedUserData?.id;
 				token.username = persistedUserData?.username;
 				token.uuid = persistedUserData?.gameUUID;
@@ -46,6 +47,7 @@ export const authOptions = {
 					email: { equals: user.email }
 				}
 			})
+			token.discordId = persistedUserData?.discordId ?? undefined;
 			token.dbId = persistedUserData?.id;
 			token.username = persistedUserData?.username;
 			token.uuid = persistedUserData?.gameUUID;
@@ -53,12 +55,22 @@ export const authOptions = {
 			return token;
 		},
 		async session({ session, token }) {
+			session.user.discordId = token.discordId;
 			session.user.dbId = token.dbId;
 			session.user.username = token.username;
 			session.user.uuid = token.uuid;
 			session.user.role = token.role;
 			return session;
+		},
+		async signIn({ account, profile }) {
+			if(account?.provider === "discord" && !profile?.verified) {
+				return false;
+			}
+			return true;
 		}
+	},
+	pages: {
+		error: "/error"
 	}
 } satisfies NextAuthConfig 
 

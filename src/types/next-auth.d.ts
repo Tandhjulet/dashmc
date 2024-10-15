@@ -4,13 +4,14 @@ import { $Enums } from "@prisma/client"
 import { DefaultUser } from 'next-auth';
 declare module 'next-auth' {
     interface DefaultSession {
-        user?: DefaultUser & { username?: string, uuid?: string, role?: $Enums.Role, dbId?: string };
+        user?: DefaultUser & { username?: string, uuid?: string, role?: $Enums.Role, dbId?: string, discordId?: string };
     }
     interface User extends DefaultUser {
         username?: string;
 		uuid?: string;
 		role?: $Enums.Role;
 		dbId?: string;
+		discordId?: string;
     }
 }
 
@@ -22,5 +23,6 @@ declare module "next-auth/jwt" {
 		uuid?: string;
 		role?: $Enums.Role
 		dbId?: string;
+		discordId?: string;
 	}
 }
