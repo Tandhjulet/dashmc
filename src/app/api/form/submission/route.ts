@@ -114,3 +114,48 @@ export async function POST(req: Request) {
 		id: submitted.id
 	})
 }
+
+export async function DELETE(req: Request) {
+	const {
+		submissionId
+	}: {
+		submissionId: string,
+	} = await req.json();
+
+	if(!submissionId) {
+		return Response.json(
+			{ success: false },
+			{
+				status: 400,
+			}
+		)
+	}
+
+	const session = await auth();
+	if(session?.user?.role !== "ADMIN") {
+		return Response.json(
+			{ success: false },
+			{
+				status: 401,
+			}
+		)
+	}
+
+	const deleteSubmission = prisma.submission.delete({
+		where: {
+			id: submissionId
+		},
+	})
+
+	const deleteFields = prisma.submissionField.deleteMany({
+		where: {
+			submissionId: submissionId,
+		}
+	})
+
+	await prisma.$transaction([deleteFields, deleteSubmission]);
+	
+	return Response.json(
+		{success: true}
+	)
+}

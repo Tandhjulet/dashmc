@@ -55,14 +55,18 @@ export class Form {
 		if(!cuid)
 			return false;
 
-		await prisma.form.delete({
+		const deleteForm = prisma.form.delete({
 			where: {
 				id: cuid
-			},
-			include: {
-				fields: true,
+			}
+		});
+		const deleteFields = prisma.fields.deleteMany({
+			where: {
+				formId: cuid,
 			}
 		})
+
+		await prisma.$transaction([deleteFields, deleteForm]);
 
 		return true;
 	}

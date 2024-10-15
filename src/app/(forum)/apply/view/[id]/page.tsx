@@ -6,8 +6,9 @@ import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { FormFields } from "../../[id]/Field";
 import Image from "next/image";
-import { FaEye } from "react-icons/fa6";
 import { parseDate } from "@/lib/helpers";
+import { StatusChip } from "./StatusChip";
+import DeleteButton from "./DeleteSubmission";
 
 export async function generateStaticParams() {
 	return (await Submission.getAllSubmissions()).map((submission) => {
@@ -41,7 +42,6 @@ export default async function View({
 	if(!submission.userId)
 		throw new Error("userId missing");
 
-	console.log(submission.userId !== session.user?.dbId, session.user?.role === "USER")
 	if(
 		!session.user?.dbId || (
 		submission.userId !== session.user?.dbId &&
@@ -96,7 +96,7 @@ export default async function View({
 						</strong>
 					</span>
 
-					<div className="grid grid-cols-2 w-full mt-2">
+					<div className="grid grid-cols-2 w-full mt-2 z-10">
 						<span className="text-gray-300 text-start text-sm">
 							Oprettet:
 							<br />
@@ -105,14 +105,23 @@ export default async function View({
 							</strong>
 						</span>
 
-						<span className="text-gray-300 text-end text-sm">
-							Status:
-							<br />
-							<strong className="text-base">
-								{submission.status}
-							</strong>
+						<span className="text-end text-sm my-2">
+							<StatusChip
+								submissionId={submission.id!}
+								status={submission.status}
+								isAdmin={session.user.role === "ADMIN"}
+							/>
 						</span>
 					</div>
+
+					{session.user.role === "ADMIN" && (
+						<>
+							<hr className="opacity-15 w-full my-3 z-0" />
+							<div className="text-start">
+								<DeleteButton submissionId={submission.id!} />
+							</div>
+						</>	
+					)}
 				</div>
 			</aside>
 		</div>
