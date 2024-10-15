@@ -11,16 +11,16 @@ export interface IField {
 }
 
 export class Field {
-	private _id: number = -1;
-	private form?: string;
+	protected _id: number = -1;
+	protected form?: string;
 
-	private _title: string;
-	private _type: $Enums.FieldType;
-	private _subtitle?: string;
-	private _required: boolean;
+	protected _title: string;
+	protected _type: $Enums.FieldType;
+	protected _subtitle?: string;
+	protected _required: boolean;
 
-	private _dirty: boolean;
-	private _virtual: boolean;
+	protected _dirty: boolean;
+	protected _virtual: boolean;
 
 	static async persist(field: IField, formCuid: string): Promise<FieldWithId<IField>> {
 		return await prisma.fields.create({

@@ -265,7 +265,7 @@ export default function VerticalNavbar({
 	});
 
 	return (
-		<div className="h-screen w-[300px] fixed top-0 left-0 bg-gray-800/30 px-5">
+		<div className="h-screen w-[300px] fixed top-0 left-0 bg-gray-800/30 px-5 z-50">
 			<nav className="flex flex-col gap-2 py-2 h-full">
 				<Link
 					href={"/dashboard"}

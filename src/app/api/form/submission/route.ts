@@ -1,10 +1,11 @@
 import { auth } from "@/auth";
 import { Form } from "@/lib/forms/Form";
+import { ISubmissionField } from "@/lib/forms/Submission";
 import { prisma } from "@/prisma/prisma";
 
-function validate(form: Form, submission: {[id: number]: string}): false | {answer: string, fieldId: number}[] {
+function validate(form: Form, submission: {[id: number]: string}): false | ISubmissionField[] {
 	const submissionKeys = Object.keys(submission);
-	const fields: {answer: string, fieldId: number}[] = []
+	const fields: ISubmissionField[] = []
 
 	let i = 0;
 	for(const field of form.fields) {
@@ -23,8 +24,11 @@ function validate(form: Form, submission: {[id: number]: string}): false | {answ
 
 		if(submission[field.id] && submission[field.id] !== "")
 			fields.push({
-				fieldId: field.id,
 				answer: submission[field.id],
+				required: field.required,
+				subtitle: field.subtitle,
+				title: field.title,
+				type: field.type,
 			})
 	}
 
@@ -47,7 +51,7 @@ export async function POST(req: Request) {
 	}
 
 	const session = await auth();
-	if(!session?.user?.email) {
+	if(!session?.user?.dbId) {
 		return Response.json(
 			{ success: false },
 			{
@@ -58,7 +62,7 @@ export async function POST(req: Request) {
 
 	const user = await prisma.user.findUnique({
 		where: {
-			email: session.user.email,
+			id: session.user.dbId,
 		}
 	});
 	if(!user) {
@@ -92,8 +96,11 @@ export async function POST(req: Request) {
 
 	const submitted = await prisma.submission.create({
 		data: {
-			formId: formCuid,
+			category: form.category,
+			name: form.title,
+			subtitle: form.subtitle,
 			userId: user.id,
+			status: "Waiting",
 			fields: {
 				createMany: {
 					data: fields

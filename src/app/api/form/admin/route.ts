@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 	}
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN || !session.user.email) {
+	if(session?.user?.role !== Role.ADMIN || !session.user.dbId) {
 		return Response.json(
 			{ success: false },
 			{
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
 	const form = new Form(name, subtitle, category);
 	const couldAttach = await form.attachOwner({
-		email: session.user.email
+		id: session.user.dbId
 	});
 	if(!couldAttach) {
 		return Response.json(
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 		)
 	}
 	
-	const id = form.save();
+	const id = await form.save();
 
 	revalidateTag("form");
 

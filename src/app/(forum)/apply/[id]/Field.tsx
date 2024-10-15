@@ -1,18 +1,21 @@
 "use client";
 
 import { FieldWithId, IField } from "@/lib/forms/Field";
+import { ISubmissionField } from "@/lib/forms/Submission";
 import { useRouter } from "next/navigation";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { BsTrash } from "react-icons/bs";
 
 interface Props {
-	field: FieldWithId<IField>,
+	field: FieldWithId<IField | ISubmissionField>,
 	isAdmin: boolean,
 	deleteField: (field: FieldWithId<IField>) => void;
 	fieldId: number;
+	isReadOnly: boolean;
+	value?: string;
 }
 
-function TextArea({ field, isAdmin, deleteField, fieldId }: Props) {
+function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
 	return (
 		<div className="my-3">
 			<h2 className="text-lg font-bold text-blue-600 relative">
@@ -26,6 +29,7 @@ function TextArea({ field, isAdmin, deleteField, fieldId }: Props) {
 					<button
 						className="absolute right-0 top-1/2 -translate-y-1/2"
 						onClick={() => deleteField(field)}
+						type="button"
 					>
 						<BsTrash className="text-gray-600 hover:text-red-600 size-5" />
 					</button>
@@ -38,6 +42,9 @@ function TextArea({ field, isAdmin, deleteField, fieldId }: Props) {
 				form="main-form"
 				name={`textarea_${fieldId}`}
 				required={field.required}
+
+				readOnly={isReadOnly}
+				defaultValue={value}
 
 				className="mt-3 w-full p-2 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
@@ -60,6 +67,7 @@ function Section({ field, isAdmin, deleteField }: Props) {
 				<button
 					className="absolute right-0 top-0"
 					onClick={() => deleteField(field)}
+					type="button"
 				>
 					<BsTrash className="text-gray-600 hover:text-red-600 size-5" />
 				</button>
@@ -70,25 +78,40 @@ function Section({ field, isAdmin, deleteField }: Props) {
 	)
 }
 
-function Checkbox({ field, isAdmin, deleteField, fieldId }: Props) {
+function Checkbox({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
 	return (
 		<div className="flex items-start my-3 relative">
 			<input
 				type="checkbox"
-				className="size-4 my-auto"
+				className="size-4 mt-1"
 
 				form="main-form"
 				name={`checkbox_${fieldId}`}
 				required={field.required}
+
+				readOnly={isReadOnly}
+
+				defaultChecked={value === "on"}
 			/>
-			<label className="ms-2 text-[1rem] text-gray-300">
+			<label className="ms-2 text-[1rem] text-blue-600 font-semibold max-w-[70%] leading-6">
 				{field.title}
+				{field.required && (
+					<span className="text-xs text-red-600 align-top">*</span>
+				)}
+
+				{field.subtitle && (
+					<small className="text-gray-300 font-normal">
+						<br />
+						{field.subtitle}
+					</small>
+				)}
 			</label>
 
 			{isAdmin && (
 				<button
 					className="absolute right-0 top-1/2 -translate-y-1/2 shrink-0"
 					onClick={() => deleteField(field)}
+					type="button"
 				>
 					<BsTrash className="text-gray-600 hover:text-red-600 size-5" />
 				</button>
@@ -97,7 +120,7 @@ function Checkbox({ field, isAdmin, deleteField, fieldId }: Props) {
 	)
 }
 
-function Text({ field, isAdmin, deleteField, fieldId }: Props) {
+function Text({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
 	return (
 		<div className="my-3">
 			<h2 className="text-lg font-bold text-blue-600 relative">
@@ -111,6 +134,7 @@ function Text({ field, isAdmin, deleteField, fieldId }: Props) {
 					<button
 						className="absolute right-0 top-1/2 -translate-y-1/2"
 						onClick={() => deleteField(field)}
+						type="button"
 					>
 						<BsTrash className="text-gray-600 hover:text-red-600 size-5" />
 					</button>
@@ -123,6 +147,9 @@ function Text({ field, isAdmin, deleteField, fieldId }: Props) {
 				form="main-form"
 				name={`text_${fieldId}`}
 				required={field.required}
+
+				readOnly={isReadOnly}
+				defaultValue={value}
 				
 				className="mt-3 w-full p-2 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
@@ -130,7 +157,7 @@ function Text({ field, isAdmin, deleteField, fieldId }: Props) {
 	)
 }
 
-function Radio({ field, isAdmin, deleteField, fieldId }: Props) {
+function Radio({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
 	const radioElements = field.subtitle?.split("\0\n*");
 
 	return (
@@ -148,6 +175,7 @@ function Radio({ field, isAdmin, deleteField, fieldId }: Props) {
 					<button
 						className="absolute right-0 top-1/2 -translate-y-1/2 shrink-0"
 						onClick={() => deleteField(field)}
+						type="button"
 					>
 						<BsTrash className="text-gray-600 hover:text-red-600 size-5" />
 					</button>
@@ -170,6 +198,9 @@ function Radio({ field, isAdmin, deleteField, fieldId }: Props) {
 							form="main-form"
 
 							required={field.required}
+
+							disabled={isReadOnly}
+							defaultChecked={element === value}
 						/>
 						<label htmlFor={`radio_${i}_${fieldId}`} className="ms-2">
 							{element}
@@ -181,13 +212,14 @@ function Radio({ field, isAdmin, deleteField, fieldId }: Props) {
 	)
 }
 
-export const Field = memo(function Field({ field, isAdmin }: {
-	field: FieldWithId<IField>,
+export const Field = memo(function Field({ field, isAdmin, isReadOnly }: {
+	field: FieldWithId<IField | ISubmissionField>,
 	isAdmin: boolean,
+	isReadOnly: boolean,
 }) {
 	const router = useRouter();
 
-	const deleteField = useCallback(async (field: FieldWithId<IField>) => {
+	const deleteField = useCallback(async (field: FieldWithId<IField | ISubmissionField>) => {
 		(await fetch("/api/form/admin/field", {
 			method: "DELETE",
 			body: JSON.stringify({ id: field.id }),
@@ -198,11 +230,19 @@ export const Field = memo(function Field({ field, isAdmin }: {
 		})
 	}, [router])
 
+	const value = useMemo(() => {
+		if("answer" in field) 
+			return field.answer as string;
+		return undefined;
+	}, [field])
+
 	const props = {
 		isAdmin,
 		field,
 		deleteField,
-		fieldId: field.id
+		fieldId: field.id,
+		isReadOnly,
+		value,
 	}
 
 	switch(field.type) {
@@ -227,11 +267,13 @@ export const Field = memo(function Field({ field, isAdmin }: {
 export function FormFields({
 	formCuid,
 	fields,
-	isAdmin
+	isAdmin,
+	isReadOnly = false,
 }: {
 	formCuid: string,
-	fields: FieldWithId<IField>[],
-	isAdmin: boolean
+	fields: FieldWithId<IField | ISubmissionField>[],
+	isAdmin: boolean,
+	isReadOnly: boolean,
 }) {
 	const router = useRouter();
 
@@ -262,18 +304,17 @@ export function FormFields({
 				router.push("/dashboard");
 			}
 		})
-		
-
-	}, [fields, router]);
+	}, [fields, router, formCuid]);
 
 	return (
 		<form
 			id="main-form"
-			action={formSubmit}
+			action={isReadOnly ? undefined : formSubmit}
 		>
 			{fields.map((field, i) => (
 				<Field
-					isAdmin={isAdmin}
+					isAdmin={isAdmin && !isReadOnly}
+					isReadOnly={isReadOnly}
 					field={field}
 					key={i}
 				/>

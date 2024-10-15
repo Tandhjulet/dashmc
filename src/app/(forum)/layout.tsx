@@ -23,7 +23,7 @@ export default async function Layout({
 	return (
 		<>
 			<VerticalNavbar forms={forms} />
-			<div className="pl-[300px] w-full h-full">
+			<div className="pl-[300px] w-full h-full z-30">
 				{children}
 			</div>
 		</>

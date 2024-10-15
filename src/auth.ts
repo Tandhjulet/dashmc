@@ -31,6 +31,7 @@ export const authOptions = {
 					return token;
 				}
 
+				token.dbId = persistedUserData?.id;
 				token.username = persistedUserData?.username;
 				token.uuid = persistedUserData?.gameUUID;
 				token.role = persistedUserData.role;
@@ -45,13 +46,14 @@ export const authOptions = {
 					email: { equals: user.email }
 				}
 			})
-
+			token.dbId = persistedUserData?.id;
 			token.username = persistedUserData?.username;
 			token.uuid = persistedUserData?.gameUUID;
 			token.role = persistedUserData?.role;
 			return token;
 		},
 		async session({ session, token }) {
+			session.user.dbId = token.dbId;
 			session.user.username = token.username;
 			session.user.uuid = token.uuid;
 			session.user.role = token.role;

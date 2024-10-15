@@ -74,7 +74,6 @@ export class Form {
 			},
 			include: {
 				fields: true,
-				submissions: false,
 				createdBy: true,
 			}
 		})
