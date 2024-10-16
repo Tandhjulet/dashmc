@@ -8,14 +8,15 @@ export default function Layout({
 	children: React.ReactNode
   }) {
 	return (
-		<div className="h-screen overflow-y-hidden flex flex-row p-4 gap-6">
-			<div className="w-1/2 rounded-2xl overflow-clip relative">
+		<div className="h-screen overflow-y-hidden flex flex-row py-4 lg:px-4 gap-6">
+			<div className="w-1/2 rounded-2xl overflow-clip relative hidden lg:block">
 				<Image
 					src={"/background.png"}
 					width={1355}
 					height={959}
 					alt="DashMC Logo"
-					className="h-full aspect-square object-cover "
+					className="h-full aspect-square object-cover"
+					priority
 				/>
 				
 				<div className="bg-blue-600 h-full w-full" />
@@ -29,7 +30,7 @@ export default function Layout({
 				</a>
 			</div>
 
-			<main className="my-auto p-20 w-1/2 max-h-[calc(100%-5rem*2)]">
+			<main className="my-auto lg:p-20 w-full lg:w-1/2 max-h-[calc(100%-5rem*2)]">
 				{children}
 			</main>
 		</div>

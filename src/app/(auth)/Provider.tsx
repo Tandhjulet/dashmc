@@ -40,7 +40,7 @@ export const Provider = memo(function Provider(props: Props & HTMLAttributes<HTM
 				signIn(providerType, { redirectTo: "/verify" });
 			}}
 		>
-			<Icon className="size-6" />
+			<Icon className="size-6 shrink-0" />
 			{providerName}
 		</button>
 	)

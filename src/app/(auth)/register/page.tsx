@@ -1,9 +1,20 @@
 import React from "react";
 import { Provider } from "../Provider";
+import Image from "next/image";
 
 export default function Register() {
 	return (
 		<>
+			<Image
+				src={"/image.png"}
+				width={128}
+				height={128}
+				alt="DashMC Logo"
+				priority
+
+				className="lg:hidden mx-auto"
+			/>
+
 			<h1 className="dark:text-white text-3xl font-semibold text-gray-800 text-center">
 				Opret en konto
 			</h1>
@@ -14,7 +25,7 @@ export default function Register() {
 				</a>
 			</p>
 
-			<div className="mx-auto flex flex-col w-[60%] gap-4 py-10">
+			<div className="mx-auto flex flex-col min-w-[300px] w-[60%] gap-4 py-10">
 				<Provider
 					providerName="Google"
 					providerType="google"

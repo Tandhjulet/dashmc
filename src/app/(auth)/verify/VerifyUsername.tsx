@@ -32,7 +32,7 @@ export default function VerifyUsername({
 	}
 
 	return (
-		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
+		<div className="w-full flex flex-col items-center justify-center mb-[8rem] text-center">
 			<IoCheckmarkCircleSharp className="size-32 text-green-600 dark:text-green-500 mb-6" />
 			<h1 className="text-3xl font-bold text-gray-800 dark:text-white">Verificer dit ingame-navn</h1>
 			<p className="max-w-[500px] text-center dark:text-gray-100">

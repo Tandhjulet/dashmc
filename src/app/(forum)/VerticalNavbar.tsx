@@ -13,10 +13,10 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "reac
 import { BsTrash } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa6";
 import { FiMoon, FiSun, FiUser } from "react-icons/fi";
-import { IoHomeOutline } from "react-icons/io5";
+import { IoClose, IoHomeOutline } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import { PiStack } from "react-icons/pi";
-import { RiExchange2Line, RiUserForbidLine } from "react-icons/ri";
+import { RiExchange2Line, RiMenu3Fill, RiUserForbidLine } from "react-icons/ri";
 
 const defaultButtons: ButtonProps[] = [
 	{
@@ -67,7 +67,7 @@ function useNavButtons(props: {
 			return (
 				<Link
 					href={props.redirectTo}
-					className={`inline-flex items-center p-4 bg-gray-300/50 hover:bg-gray-300/70 dark:bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 dark:hover:bg-gray-700/40 group relative`}
+					className={`inline-flex items-center p-4 bg-gray-300/50 hover:bg-gray-300/70 dark:bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 dark:hover:bg-gray-700/40 group/button relative`}
 				>
 					<Icon className={`size-6 shrink-0 ${props.isSelected ? "text-blue-600" : "text-gray-700 dark:text-gray-200"}`} />
 					<span className={`${props.isSelected ? "text-blue-600 font-semibold" : "text-black dark:text-white"}`}>
@@ -78,7 +78,7 @@ function useNavButtons(props: {
 	
 					{props.isAdmin && (
 						<button
-							className="group-hover:opacity-100 opacity-0 size-6 absolute right-1"
+							className="group-hover/button:opacity-100 opacity-0 size-6 absolute right-1"
 							onClick={async (e) => {
 								e.stopPropagation();
 								e.preventDefault();
@@ -274,10 +274,95 @@ export default function VerticalNavbar({
 		setMounted(true);
 	}, []);
 
+	const [ show, setShow ] = useState(false);
+
 	return (
 		<>
-			<div className="h-screen w-[300px] fixed top-0 left-0 bg-gray-200/50 border-gray-300/20 dark:bg-gray-800/30 px-5 z-50 border-r dark:border-gray-700/20">
-				<nav className="flex flex-col gap-2 py-2 h-full">
+			{/* HORIZONTAL PHONE HEADER */}
+			<div className="sm:hidden z-50 h-[100px] w-full fixed top-0 left-0 bg-white/70 dark:bg-[#121212]/70 backdrop-blur-md flex flex-row items-center justify-between">
+				<Link href="/dashboard" className="ml-6 z-50">
+					<Image
+						src={"/image.png"}
+						width={64}
+						height={64}
+						alt="DashMC Logo"
+
+						className="select-none"
+					/>
+				</Link>
+
+				<button
+					className="mr-6"
+					onClick={() => setShow(prev => !prev)}
+					aria-hidden={!show}
+				>
+					<RiMenu3Fill className="size-6 text-gray-800 dark:text-gray-300 z-50" />
+				</button>
+
+				{show && (
+					<div className="flex flex-col w-screen h-screen absolute top-0 left-0 z-40 bg-white dark:bg-[#121212]">
+						<div className="h-[100px] w-full flex items-center justify-end">
+							<button
+								className="mr-6"
+								onClick={() => setShow(prev => !prev)}
+								aria-hidden={show}
+							>
+								<IoClose className="size-6 text-gray-800 dark:text-gray-300 z-50" />
+							</button>
+						</div>
+
+						<ul className="font-semibold basis-0 grow overflow-y-auto px-5">
+							{renderButtons(buttons)}
+						</ul>
+
+						<div className="mt-2 flex flex-col gap-2 px-4">
+							{mounted && (
+								<button onClick={() => {
+									setTheme(resolvedTheme === "dark" ? "light" : "dark");
+								}} className="inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full">
+									{resolvedTheme === "dark" ? (
+										<FiMoon className="size-4 text-gray-200 mr-3" />
+									) : (
+										<FiSun className="size-4 text-gray-800 mr-3" />
+									)}
+									Skift tema
+								</button>
+							)}
+
+							<Link href="/" className="inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full">
+								<IoHomeOutline className="inline-block mr-3 size-4 my-auto" />
+								Forside
+							</Link>
+
+							<hr className="opacity-60 dark:border-t-gray-800 my-2" />
+
+							<button
+								onClick={() => {
+									signOut({ redirectTo: "/" });
+								}}
+								className="inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full text-red-600 dark:text-red-400"
+							>
+								<RiUserForbidLine className="inline-block mr-3 size-4 my-auto" />
+								Log ud
+							</button>
+							
+							<span className="py-2 text-gray-400 dark:text-gray-700 text-sm">
+								<strong
+									className="dark:text-gray-800"
+								>
+									DashMC
+								</strong> &copy; 2024
+							</span>
+						</div>
+					</div>
+				)}
+			</div>
+
+			{/* LAPTOP / DESKTOP HEADER */}
+			<div
+				className="transition-all group hidden sm:max-xl:hover:max-w-[300px] sm:block h-screen w-screen max-w-[100px] xl:max-w-[300px] fixed top-0 left-0 bg-gray-200/50 border-gray-300/20 dark:bg-[#15171b] px-5 z-50 border-r dark:border-gray-700/20"
+			>
+				<nav className="flex flex-col py-2 items-center h-full">
 					<Link
 						href={"/dashboard"}
 						className="select-none bg-[radial-gradient(#2563eb69_0%,transparent_75%)] dark:bg-[radial-gradient(#2563eb32_0%,transparent_75%)]"
@@ -288,88 +373,88 @@ export default function VerticalNavbar({
 							height={256}
 							alt="DashMC Logo"
 
-							className="p-4 max-w-[220px] mx-auto"
+							className="max-w-[220px] mx-auto size-[80px] group-hover:size-[220px] xl:size-[220px] xl:p-4 sm:max-xl:group-hover:p-4 transition-all"
 							priority
 						/>
 					</Link>
-
-					<hr className="border-gray-300 dark:border-gray-700" />
 					
-					<div>
-						{renderButtons(buttons)}
-					</div>
+					<div className="flex flex-col gap-2 py-2 h-full w-full opacity-100 sm:max-xl:opacity-0 group-hover:opacity-100 transition-opacity duration-0 group-hover:duration-300 group-hover:delay-75">
+						<hr className="border-gray-300 dark:border-gray-700" />
+						
+						<div className="basis-0 grow overflow-y-auto h-full extra-thin-scrollbar pr-1">
+							{renderButtons(buttons)}
+						</div>
 
-					<div className="grow" />
-
-					{data?.user?.role === Role.ADMIN && (
-						<button
-							className={`inline-flex items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-red-800/5 border border-red-600/85 dark:border-red-600/70`}
-							onClick={showModal}
-						>
-							<RiExchange2Line className={`size-6 text-red-600 dark:text-red-600/70`} />
-							<span className={`font-semibold text-red-600 dark:text-red-600`}>
-								Opret ny
-							</span>
-						</button>
-					)}
-
-					<Popper
-						popover={(
-							<div className="w-[257px] flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
-								{mounted && (
-									<button onClick={() => {
-										setTheme(resolvedTheme === "dark" ? "light" : "dark");
-									}} className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
-										{resolvedTheme === "dark" ? (
-											<FiMoon className="size-4 text-gray-200 mr-3" />
-										) : (
-											<FiSun className="size-4 text-gray-800 mr-3" />
-										)}
-										Skift tema
-									</button>
-								)}
-
-								<Link href="/" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
-									<IoHomeOutline className="inline-block mr-3 size-4 my-auto" />
-									Forside
-								</Link>
-
-								<hr className="opacity-40 dark:border-t-gray-800" />
-
-								<button
-									onClick={() => {
-										signOut({ redirectTo: "/" });
-									}}
-									className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center text-red-600 dark:text-red-400"
-								>
-									<RiUserForbidLine className="inline-block mr-3 size-4 my-auto" />
-									Log ud
-								</button>
-							</div>
+						{data?.user?.role === Role.ADMIN && (
+							<button
+								className={`inline-flex items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mb-2 hover:bg-red-800/5 border border-red-600/85 dark:border-red-600/70`}
+								onClick={showModal}
+							>
+								<RiExchange2Line className={`size-6 text-red-600 dark:text-red-600/70`} />
+								<span className={`font-semibold text-red-600 dark:text-red-600`}>
+									Opret ny
+								</span>
+							</button>
 						)}
-						direction="up"
-					>
-						<button
-							className={`inline-flex border-gray-400/70 items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-gray-700/5 border dark:border-gray-700/70`}
+
+						<Popper
+							popover={(
+								<div className="w-[257px] flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
+									{mounted && (
+										<button onClick={() => {
+											setTheme(resolvedTheme === "dark" ? "light" : "dark");
+										}} className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
+											{resolvedTheme === "dark" ? (
+												<FiMoon className="size-4 text-gray-200 mr-3" />
+											) : (
+												<FiSun className="size-4 text-gray-800 mr-3" />
+											)}
+											Skift tema
+										</button>
+									)}
+
+									<Link href="/" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
+										<IoHomeOutline className="inline-block mr-3 size-4 my-auto" />
+										Forside
+									</Link>
+
+									<hr className="opacity-40 dark:border-t-gray-800" />
+
+									<button
+										onClick={() => {
+											signOut({ redirectTo: "/" });
+										}}
+										className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center text-red-600 dark:text-red-400"
+									>
+										<RiUserForbidLine className="inline-block mr-3 size-4 my-auto" />
+										Log ud
+									</button>
+								</div>
+							)}
+							direction="up"
 						>
-							<Image
-								src={`https://minotar.net/helm/${data?.user?.uuid}/24.png`}
-								width={24}
-								height={24}
-								alt="Profile"
-								priority
+							<button
+								className={`inline-flex border-gray-400/70 items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full hover:bg-gray-700/5 border dark:border-gray-700/70`}
+							>
+								<Image
+									src={`https://minotar.net/helm/${data?.user?.uuid}/24.png`}
+									width={24}
+									height={24}
+									alt="Profile"
+									priority
 
-								className="cursor-pointer"
-							/>
-							<span className={`font-semibold text-gray-900 dark:text-gray-300`}>
-								{data?.user?.username}
-							</span>
-						</button>
-					</Popper>
+									className="cursor-pointer"
+								/>
+								<span className={`font-semibold text-gray-900 dark:text-gray-300`}>
+									{data?.user?.username}
+								</span>
+							</button>
+						</Popper>
 
-					<span className="text-gray-400 dark:text-gray-700 text-sm">
-						DashMC &copy; 2024
-					</span>
+						<span className="text-gray-400 dark:text-gray-700 text-sm">
+							DashMC &copy; 2024
+						</span>
+					</div>
 				</nav>
 
 				{data?.user?.role === Role.ADMIN && (

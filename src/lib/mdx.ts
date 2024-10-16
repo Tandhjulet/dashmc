@@ -14,6 +14,10 @@ export function readRules() {
 	return readMDXFile(path.join(process.cwd(), 'src', 'app', '(general)', 'rules', 'rules.mdx'))
 }
 
+export function readPrivacyPolicy() {
+	return readMDXFile(path.join(process.cwd(), 'src', 'app', '(general)', 'privacy', 'privacy.mdx'))
+}
+
 // ---- CUSTOM MDX COMPONENTS ----
 
 export const components = {

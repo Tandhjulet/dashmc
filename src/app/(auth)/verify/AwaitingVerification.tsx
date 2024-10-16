@@ -117,7 +117,7 @@ export default function AwaitingVerification({
 	}, [timer]);
 
 	return (
-		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
+		<div className="w-full flex flex-col items-center justify-center mb-[8rem] text-center px-2">
 			<AiOutlineLoading className="size-32 text-blue-600 mb-6 animate-spin" />
 			<h1 className="text-3xl font-bold text-gray-800 mt-10 dark:text-gray-200">
 				Skriv verifikationskoden i {verify}
@@ -162,7 +162,7 @@ export default function AwaitingVerification({
 				</button>
 			</p>
 
-			<div className="inline-flex w-[500px] my-2">
+			<div className="w-[500px] my-2 hidden phone:inline-flex">
 				{code.map((char, i) => <CharChip letter={char} key={i} />)}
 			</div>
 

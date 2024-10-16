@@ -5,13 +5,16 @@ import { AiOutlineUser } from "react-icons/ai";
 import Popper from "../popper/Popper";
 import { RiStackLine, RiUserAddLine, RiUserForbidLine } from "react-icons/ri";
 import { FiLogIn } from "react-icons/fi";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { Session } from "next-auth";
 
-export default function Profile() {
-	const { data } = useSession();
-
-	if(data?.user?.uuid) {
+export default function Profile({
+	session,
+}: {
+	session: Session | null
+}) {
+	if(session?.user?.uuid) {
 		return (
 			<Popper
 				popover={(
@@ -36,7 +39,7 @@ export default function Profile() {
 				)}
 			>
 				<Image
-					src={`https://minotar.net/helm/${data.user.uuid}/24.png`}
+					src={`https://minotar.net/helm/${session.user.uuid}/24.png`}
 					width={24}
 					height={24}
 					alt="Profile"

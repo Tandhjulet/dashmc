@@ -57,8 +57,8 @@ export default async function View({
 	}
 
 	return (
-		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto p-12">
-			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
+		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto py-12 px-2 phone:px-6 sm:px-12">
+			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-4 lg:col-span-3 px-4 rounded-md shrink">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
 					{submission.name}
 				</h1>
@@ -76,7 +76,7 @@ export default async function View({
 				/>
 
 			</main>
-			<aside className="h-fit w-full bg-gray-300/30 dark:bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
+			<aside className="hidden lg:block h-fit w-full bg-gray-300/30 dark:bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
 				<div className="flex flex-col items-center m-4 gap-2">
 					<Image
 						width={96}

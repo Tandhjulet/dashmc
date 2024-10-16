@@ -86,6 +86,7 @@ export async function POST(req: Request) {
 	}
 
 	const fields = validate(form, submission);
+	console.log(fields);
 	if(fields === false || fields.length === 0)
 		return Response.json(
 			{ success: false },

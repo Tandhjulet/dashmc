@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 
@@ -7,24 +8,28 @@ export default function Footer() {
 			<div className="w-full flex flex-col py-3 items-center gap-2">
 				<a href="/" className="text-2xl font-extrabold text-blue-600">DashMC</a>
 				
-				<nav className="mx-12 w-full max-w-[300px] flex justify-between">
-					<a href="/rules" className="font-medium rounded-2xl">
+				<nav className="mx-12 w-full max-w-[400px] flex justify-between">
+					<Link href="/rules" className="font-medium rounded-2xl">
 						Regler
-					</a>
+					</Link>
 
-					<a href="https://forum.dashmc.net/" target="_blank" className="font-medium rounded-2xl">
+					<Link href="/dashboard" target="_blank" className="font-medium rounded-2xl">
 						Forum
 						<span className="inline-block">
 							<FiArrowUpRight />
 						</span>
-					</a>
+					</Link>
 
-					<a href="https://butik.dashmc.net/" target="_blank" className="font-medium rounded-2xl">
+					<Link href="/privacy" className="font-medium rounded-2xl">
+						Privatliv
+					</Link>
+
+					<Link href="https://butik.dashmc.net/" target="_blank" className="font-medium rounded-2xl">
 						Butik
 						<span className="inline-block">
 							<FiArrowUpRight />
 						</span>
-					</a>
+					</Link>
 				</nav>
 				
 				<span className="text-gray-800 text-sm text-center my-4 dark:text-gray-500">
