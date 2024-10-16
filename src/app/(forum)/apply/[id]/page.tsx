@@ -37,15 +37,15 @@ export default async function Application({
 
 	return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto p-12">
-			<main className="w-full h-fit bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
+			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
 					{form.title}
 				</h1>
-				<span className="text-gray-300">
+				<span className="text-gray-800 dark:text-gray-300">
 					{form.subtite}
 				</span>
 
-				<hr className="mt-4 border-t-gray-700/60" />
+				<hr className="mt-4 border-t-gray-400/60 dark:border-t-gray-700/60" />
 				
 				<FormFields
 					formCuid={form.cuid!}
@@ -64,9 +64,9 @@ export default async function Application({
 					Send svar
 				</button>
 			</main>
-			<aside className="h-fit w-full bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
+			<aside className="h-fit w-full bg-gray-300/30 dark:bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
 				<div className="flex flex-col items-center m-4 gap-2">
-					<span className="text-gray-700 text-sm mb-1">
+					<span className="text-gray-500 dark:text-gray-700 text-sm mb-1">
 						<FaEye className="inline me-2" />
 						Synlig for alle
 					</span>
@@ -81,7 +81,7 @@ export default async function Application({
 
 						priority
 					/>
-					<span className="text-gray-300 text-center text-sm">
+					<span className="text-gray-800 dark:text-gray-300 text-center text-sm">
 						Lavet af
 						<br />
 						<strong className="text-base">
@@ -90,7 +90,7 @@ export default async function Application({
 					</span>
 
 					<div className="grid grid-cols-2 w-full mt-2">
-						<span className="text-gray-300 text-start text-sm">
+						<span className="text-gray-800 dark:text-gray-300 text-start text-sm">
 							Oprettet:
 							<br />
 							<strong className="text-base">
@@ -98,7 +98,7 @@ export default async function Application({
 							</strong>
 						</span>
 
-						<span className="text-gray-300 text-end text-sm">
+						<span className="text-gray-800 dark:text-gray-300 text-end text-sm">
 							Opdateret:
 							<br />
 							<strong className="text-base">
@@ -108,7 +108,7 @@ export default async function Application({
 					</div>
 				</div>
 
-				<button className="float-right w-fit m-4 px-4 py-2 active:translate-y-[1px] border border-red-900/40 hover:bg-red-600/5 rounded-xl text-red-600">
+				<button className="float-right w-fit m-4 px-4 py-2 active:translate-y-[1px] border border-red-700/70 dark:border-red-900/40 hover:bg-red-600/5 rounded-xl text-red-600">
 					Rediger
 				</button>
 			</aside>

@@ -73,7 +73,7 @@ function useRadio() {
 				>
 					<input
 						ref={inputRef}
-						className="outline-none py-3 border-b border-gray-700 w-full focus:border-blue-600"
+						className="outline-none py-3 border-b border-gray-400 dark:border-gray-700 w-full focus:border-blue-600 bg-transparent"
 						placeholder="Opret nyt"
 						enterKeyHint="done"
 						type="text"
@@ -162,7 +162,7 @@ export default function CreateField({
 				<h1 className="text-blue-600 font-bold text-lg">
 					Opret nyt felt
 				</h1>
-				<p className="text-gray-200">
+				<p className="text-gray-900 dark:text-gray-200">
 					Definer hvordan feltet skal se ud.
 				</p>
 
@@ -198,11 +198,11 @@ export default function CreateField({
 						required
 						
 					>
-						<option value={"Vælg type"} disabled className="bg-[#121212]">Vælg type</option>
+						<option value={"Vælg type"} disabled className="bg-[#f5f5f5] dark:bg-[#121212]">Vælg type</option>
 
 						{Object.values($Enums.FieldType).map((type, i) => {
 							return (
-								<option value={type} key={i} className="bg-[#121212]">
+								<option value={type} key={i} className="bg-[#f5f5f5] dark:bg-[#121212]">
 									{type}
 								</option>
 							)
@@ -232,7 +232,7 @@ export default function CreateField({
 							type="checkbox"
 							className="size-5"
 						/>
-						<label htmlFor="required" className="ms-2 text-sm text-gray-300">
+						<label htmlFor="required" className="ms-2 text-sm text-black dark:text-gray-300">
 							Feltet er påkrævet en besvarelse (*)
 						</label>
 					</div>
@@ -241,7 +241,7 @@ export default function CreateField({
 						<button
 							form="create-field"
 							type="submit"
-							className="px-4 py-2 bg-blue-600 rounded-lg float-right group-invalid:opacity-70 group-invalid:pointer-events-none"
+							className="px-4 py-2 bg-blue-600 rounded-lg float-right group-invalid:opacity-70 group-invalid:pointer-events-none text-white"
 						>
 							Gem
 						</button>

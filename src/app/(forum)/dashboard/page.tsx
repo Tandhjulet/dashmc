@@ -9,7 +9,6 @@ import { parseDate } from "@/lib/helpers";
 import { IconBaseProps } from "react-icons/lib";
 import { MdShield, MdStorefront } from "react-icons/md";
 import { FaChevronRight, FaDiscord, FaHeart, FaRegAddressCard } from "react-icons/fa6";
-import Footer from "@/components/Footer";
 import { FiArrowUpRight } from "react-icons/fi";
 import { BsCheck, BsX } from "react-icons/bs";
 import Image from "next/image";
@@ -66,25 +65,25 @@ export default async function Dashboard() {
 
 	return (
 		<div className="px-20 py-12">
-			<span className="text-xl text-gray-300">
+			<span className="text-xl text-gray-700 dark:text-gray-300">
 				Velkommen
 			</span>
 			<h1 className="text-4xl font-extrabold">
 				{user?.username}
 			</h1>
-			<span className="text-gray-600">
+			<span className="text-gray-400 dark:text-gray-600">
 				({user?.gameUUID})
 			</span>
 
 			<div className="grid grid-cols-3 my-6 h-full gap-6">
-				<div className="col-span-2 bg-gray-800/25 p-4 rounded-lg">
+				<div className="col-span-2 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
 					<h3 className="font-semibold">Ansøgninger</h3>
-					<hr className="my-3 opacity-25" />
+					<hr className="my-3 border-black dark:border-white opacity-25" />
 
 					<div className="h-[280px] flex flex-col gap-3 overflow-y-auto thin-scrollbar pr-2">
 						{user?.submissions.length === 0 ? (
 							<div className="h-[225px] flex justify-center items-center">
-								<span className="text-gray-400">
+								<span className="text-gray-700 dark:text-gray-400">
 									Du har ingen ansøgninger
 								</span>	
 							</div>
@@ -94,7 +93,7 @@ export default async function Dashboard() {
 								className="w-full"
 								href={"/apply/view/" + submission.id}
 							>
-								<div className="p-4 bg-gray-800/15 rounded-lg grid grid-cols-3 w-full items-center">
+								<div className="p-4 bg-gray-400/15 dark:bg-gray-800/15 rounded-lg grid grid-cols-3 w-full items-center">
 									<div className="w-min">
 										<span className="text-blue-600 font-bold text-lg">
 											{submission.name}
@@ -104,7 +103,7 @@ export default async function Dashboard() {
 										</p>
 									</div>
 
-									<div className="text-center text-gray-600">
+									<div className="text-center text-gray-500 dark:text-gray-600">
 										{parseDate(submission.createdAt)}
 									</div>
 
@@ -122,21 +121,21 @@ export default async function Dashboard() {
 					</div>
 				</div>
 
-				<div className="col-span-1 bg-gray-800/25 p-4 rounded-lg flex flex-col gap-4">
+				<div className="col-span-1 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg flex flex-col gap-4">
 					{STATIC_LINKS.map(({ href, Icon, title, subtitle }, i) => (
 						<Link
 							href={href}
-							className="flex-1 basis-0 flex items-center gap-5 bg-blue-900/5 px-3 rounded-lg"
+							className="flex-1 basis-0 flex items-center gap-5 bg-blue-900/[0.075] dark:bg-blue-900/5 px-3 rounded-lg"
 							target="_blank"
 							key={i}
 						>
-							<div className="p-4 bg-blue-600/5 rounded-md">
+							<div className="p-4 bg-blue-900/10 dark:bg-blue-900/5 rounded-md">
 								<Icon className="shrink-0 size-6 text-blue-600" />
 							</div>
 
 							<span className="text-blue-600 font-extrabold">
 								{title}
-								<p className="text-white font-normal">
+								<p className="text-black dark:text-white font-normal">
 									{subtitle}
 								</p>
 							</span>
@@ -148,12 +147,12 @@ export default async function Dashboard() {
 					))}
 				</div>
 
-				<div className="bg-gray-800/25 p-4 rounded-lg h-full">
+				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg h-full">
 					<h3 className="font-semibold">Kontooplysninger</h3>
 					<hr className="my-3 opacity-25" />
 
 					<div className="grid grid-cols-2 gap-2">
-						<div className="inline-flex gap-2 items-center text-gray-400 col-start-1">
+						<div className="inline-flex gap-2 items-center text-gray-700 dark:text-gray-400 col-start-1">
 							<FaRegAddressCard className="inline my-auto size-4" />
 							<span className="text-[15px]">
 								Verificeret
@@ -163,7 +162,7 @@ export default async function Dashboard() {
 							<BsCheck className="size-6 text-blue-600" />
 						</div>
 
-						<div className="inline-flex gap-2 items-center text-gray-400 col-start-1">
+						<div className="inline-flex gap-2 items-center text-gray-700 dark:text-gray-400 col-start-1">
 							<FaDiscord className="inline my-auto size-4" />
 							<span className="text-[15px]">
 								Discord
@@ -177,7 +176,7 @@ export default async function Dashboard() {
 							)}
 						</div>
 
-						<div className="inline-flex gap-2 items-center text-gray-400 col-start-1">
+						<div className="inline-flex gap-2 items-center text-gray-700 dark:text-gray-400 col-start-1">
 							<MdShield className="inline my-auto size-4" />
 							<span className="text-[15px]">
 								Rolle
@@ -185,7 +184,7 @@ export default async function Dashboard() {
 
 							<div className="grow" />
 							<span className="text-xs">
-								<RoleChip role={user?.role!} />
+								<RoleChip role={user?.role} />
 							</span>
 						</div>
 
@@ -201,12 +200,12 @@ export default async function Dashboard() {
 								className="cursor-pointer"
 							/>
 
-							<span className="text-gray-400 font-bold text-sm">{user?.username}</span>
+							<span className="text-gray-700 dark:text-gray-400 font-bold text-sm">{user?.username}</span>
 						</div>
 					</div>
 					
 					<div className="text-center text-xs mt-7">
-						Er noget ikke som det skal være?
+						Er der noget galt?
 						<br />
 						<span className="text-blue-600">
 							Kontakt en moderator eller over på discorden
@@ -214,10 +213,10 @@ export default async function Dashboard() {
 					</div>
 				</div>
 
-				<div className="bg-gray-800/25 p-4 rounded-lg h-full">
+				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg h-full">
 				</div>
 
-				<div className="bg-gray-800/25 p-4 rounded-lg col-start-3">
+				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg col-start-3">
 					<div className="w-full flex flex-col py-2 items-center gap-2">
 						<a href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</a>
 

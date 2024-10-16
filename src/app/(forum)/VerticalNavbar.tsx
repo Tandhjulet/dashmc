@@ -5,17 +5,18 @@ import Popper from "@/components/popper/Popper";
 import { Role } from "@prisma/client";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BsTrash } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa6";
-import { FiLogIn, FiUser } from "react-icons/fi";
+import { FiMoon, FiSun, FiUser } from "react-icons/fi";
 import { IoHomeOutline } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import { PiStack } from "react-icons/pi";
-import { RiExchange2Line, RiUserAddLine, RiUserForbidLine } from "react-icons/ri";
+import { RiExchange2Line, RiUserForbidLine } from "react-icons/ri";
 
 const defaultButtons: ButtonProps[] = [
 	{
@@ -66,10 +67,10 @@ function useNavButtons(props: {
 			return (
 				<Link
 					href={props.redirectTo}
-					className={`inline-flex items-center p-4 bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-gray-700/40 group relative`}
+					className={`inline-flex items-center p-4 bg-gray-300/50 hover:bg-gray-300/70 dark:bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 dark:hover:bg-gray-700/40 group relative`}
 				>
-					<Icon className={`size-6 shrink-0 ${props.isSelected ? "text-blue-600" : "text-gray-200"}`} />
-					<span className={`${props.isSelected ? "text-blue-600 font-semibold" : "text-white"}`}>
+					<Icon className={`size-6 shrink-0 ${props.isSelected ? "text-blue-600" : "text-gray-700 dark:text-gray-200"}`} />
+					<span className={`${props.isSelected ? "text-blue-600 font-semibold" : "text-black dark:text-white"}`}>
 						{title}
 					</span>
 	
@@ -108,16 +109,16 @@ function useNavButtons(props: {
 
 		return (
 			<div
-				className={`inline-flex items-center p-4 bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full mt-4 pointer-events-none select-none`}
+				className={`inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full mt-4 pointer-events-none select-none`}
 			>
-				<Icon className={`size-6 text-gray-200 shrink-0`} />
-				<span className={`text-white`}>
+				<Icon className={`size-6 text-gray-700 dark:text-gray-200 shrink-0`} />
+				<span className={`text-black dark:text-white`}>
 					{title}
 				</span>
 	
 				<div className="grow" />
 				
-				<FaChevronDown className={`text-gray-600 transition-transform ease-in-out`} />
+				<FaChevronDown className={`text-gray-500 dark:text-gray-600`} />
 			</div>
 		)
 	}, [router, path])
@@ -133,7 +134,7 @@ function useNavButtons(props: {
 			
 						{button.sub.length > 0 && (
 							<div className={`w-[calc(100%-24px)] ml-auto relative`}>
-								<div className="absolute h-[calc(100%-0.5rem)] -left-3 top-2 bg-gray-700/50 w-[1px]" />
+								<div className="absolute h-[calc(100%-0.5rem)] -left-3 top-2 bg-gray-300 dark:bg-gray-700/50 w-[1px]" />
 		
 								{renderButtons(button.sub)}
 							</div>
@@ -266,13 +267,15 @@ export default function VerticalNavbar({
 		selected,
 	});
 
+	const { setTheme, resolvedTheme } = useTheme();
+
 	return (
 		<>
-			<div className="h-screen w-[300px] fixed top-0 left-0 bg-gray-800/30 px-5 z-50 border-r border-gray-700/20">
+			<div className="h-screen w-[300px] fixed top-0 left-0 bg-gray-200/50 border-gray-300/20 dark:bg-gray-800/30 px-5 z-50 border-r dark:border-gray-700/20">
 				<nav className="flex flex-col gap-2 py-2 h-full">
 					<Link
 						href={"/dashboard"}
-						className="select-none bg-[radial-gradient(#2563eb39_0%,transparent_75%)]"
+						className="select-none bg-[radial-gradient(#2563eb69_0%,transparent_75%)] dark:bg-[radial-gradient(#2563eb32_0%,transparent_75%)]"
 					>
 						<Image
 							src={"/image.png"}
@@ -285,7 +288,7 @@ export default function VerticalNavbar({
 						/>
 					</Link>
 
-					<hr className="border-gray-700" />
+					<hr className="border-gray-300 dark:border-gray-700" />
 					
 					<div>
 						{renderButtons(buttons)}
@@ -295,11 +298,11 @@ export default function VerticalNavbar({
 
 					{data?.user?.role === Role.ADMIN && (
 						<button
-							className={`inline-flex items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-red-800/5 border border-red-600/70`}
+							className={`inline-flex items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-red-800/5 border border-red-600/85 dark:border-red-600/70`}
 							onClick={showModal}
 						>
-							<RiExchange2Line className={`size-6 text-red-600/70`} />
-							<span className={`font-semibold text-red-600`}>
+							<RiExchange2Line className={`size-6 text-red-600 dark:text-red-600/70`} />
+							<span className={`font-semibold text-red-600 dark:text-red-600`}>
 								Opret ny
 							</span>
 						</button>
@@ -308,6 +311,17 @@ export default function VerticalNavbar({
 					<Popper
 						popover={(
 							<div className="w-[257px] flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
+								<button onClick={() => {
+									setTheme(resolvedTheme === "dark" ? "light" : "dark");
+								}} className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
+									{resolvedTheme === "dark" ? (
+										<FiMoon className="size-4 text-gray-200 mr-3" />
+									) : (
+										<FiSun className="size-4 text-gray-800 mr-3" />
+									)}
+									Skift tema
+								</button>
+
 								<Link href="/" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
 									<IoHomeOutline className="inline-block mr-3 size-4 my-auto" />
 									Forside
@@ -329,7 +343,7 @@ export default function VerticalNavbar({
 						direction="up"
 					>
 						<button
-							className={`inline-flex items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-gray-700/5 border border-gray-700/70`}
+							className={`inline-flex border-gray-400/70 items-center p-4 rounded-lg gap-2 whitespace-nowrap w-full mt-2 hover:bg-gray-700/5 border dark:border-gray-700/70`}
 						>
 							<Image
 								src={`https://minotar.net/helm/${data?.user?.uuid}/24.png`}
@@ -340,13 +354,13 @@ export default function VerticalNavbar({
 
 								className="cursor-pointer"
 							/>
-							<span className={`font-semibold text-gray-300`}>
+							<span className={`font-semibold text-gray-900 dark:text-gray-300`}>
 								{data?.user?.username}
 							</span>
 						</button>
 					</Popper>
 
-					<span className="text-gray-700 text-sm">
+					<span className="text-gray-400 dark:text-gray-700 text-sm">
 						DashMC &copy; 2024
 					</span>
 				</nav>

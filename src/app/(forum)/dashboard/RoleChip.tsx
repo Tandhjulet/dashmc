@@ -1,7 +1,7 @@
 import { $Enums } from "@prisma/client";
 import { memo } from "react";
 
-export const RoleChip = memo(function RoleChip({ role }: { role: $Enums.Role }) {
+export const RoleChip = memo(function RoleChip({ role }: { role?: $Enums.Role }) {
 	switch(role) {
 		case "ADMIN":
 			return (

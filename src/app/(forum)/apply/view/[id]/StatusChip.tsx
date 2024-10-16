@@ -25,7 +25,7 @@ const ChipInner = memo(function getInner({ status }: { status: $Enums.Submission
 			)
 		case "Waiting":
 			return (
-				<div className="bg-yellow-500/20 inline-flex items-center gap-2 text-yellow-500 px-2 py-1 rounded-lg">
+				<div className="bg-orange-500/20 dark:bg-yellow-500/20 inline-flex items-center gap-2 text-orange-500 dark:text-yellow-500 px-2 py-1 rounded-lg">
 					<IoCloudUploadOutline className="size-4" />
 					Venter
 				</div>

@@ -35,7 +35,7 @@ function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 					</button>
 				)}
 			</h2>
-			<p className="text-gray-200 text-sm max-w-[80%]">{field.subtitle}</p>
+			<p className="text-gray-800 dark:text-gray-200 text-sm max-w-[80%]">{field.subtitle}</p>
 
 			<textarea
 				rows={3}
@@ -46,7 +46,7 @@ function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 				readOnly={isReadOnly}
 				defaultValue={value}
 
-				className="mt-3 w-full p-2 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
+				className="mt-3 w-full p-2 h-min bg-gray-300/70 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
 		</div>
 	)
@@ -55,8 +55,8 @@ function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 function Section({ field, isAdmin, deleteField }: Props) {
 	return (
 		<div className="my-3 relative">
-			<div className={`opacity-50 separator ${isAdmin && "w-[calc(100%-32px)]"}`}>
-				<h2 className="font-bold text-gray-500 relative uppercase">
+			<div className={`opacity-90 dark:opacity-50 separator ${isAdmin && "w-[calc(100%-32px)]"}`}>
+				<h2 className="font-bold text-gray-800 dark:text-gray-500 relative uppercase">
 					{field.title}
 					{field.required && (
 						<span className="text-xs text-red-600 align-top">*</span>
@@ -73,7 +73,7 @@ function Section({ field, isAdmin, deleteField }: Props) {
 				</button>
 			)}
 
-			<p className="text-gray-500 text-sm text-center max-w-[70%] mx-auto">{field.subtitle}</p>
+			<p className={`text-gray-500 text-sm text-center max-w-[70%] mx-auto ${isAdmin && "pr-8"}`}>{field.subtitle}</p>
 		</div>
 	)
 }
@@ -100,7 +100,7 @@ function Checkbox({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 				)}
 
 				{field.subtitle && (
-					<small className="text-gray-300 font-normal">
+					<small className="text-gray-800 dark:text-gray-300 font-normal">
 						<br />
 						{field.subtitle}
 					</small>
@@ -140,7 +140,7 @@ function Text({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props
 					</button>
 				)}
 			</h2>
-			<p className="text-gray-200 text-sm max-w-[80%]">{field.subtitle}</p>
+			<p className="text-gray-800 dark:text-gray-200 text-sm max-w-[80%]">{field.subtitle}</p>
 
 			<textarea
 				rows={1}
@@ -151,7 +151,7 @@ function Text({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props
 				readOnly={isReadOnly}
 				defaultValue={value}
 				
-				className="mt-3 w-full p-2 h-min bg-gray-200 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
+				className="mt-3 w-full p-2 h-min bg-gray-300/70 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
 		</div>
 	)

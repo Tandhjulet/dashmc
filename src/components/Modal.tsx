@@ -22,7 +22,7 @@ export default function useModal(props?: {
 			className="top-0 left-0 absolute w-screen h-screen flex justify-center items-center"
 		>
 			<div
-				className="top-0 left-0 absolute w-screen h-screen bg-gray-600/5 backdrop-grayscale z-40"
+				className="top-0 left-0 absolute w-screen h-screen bg-gray-600/20 dark:bg-gray-600/5 backdrop-grayscale z-40"
 				onClick={() => {
 					setShown(false);
 					if(onClose)
@@ -32,7 +32,7 @@ export default function useModal(props?: {
 
 			<div
 				{...props}
-				className={`bg-[#121212] p-4 rounded-md ${props.className} z-50`}
+				className={`bg-[#f5f5f5] dark:bg-[#121212] p-4 rounded-md ${props.className} z-50`}
 				onClick={(e) => {
 					e.stopPropagation();
 					if(props.onClick)

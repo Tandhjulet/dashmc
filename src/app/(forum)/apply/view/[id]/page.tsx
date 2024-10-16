@@ -58,15 +58,15 @@ export default async function View({
 
 	return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto p-12">
-			<main className="w-full h-fit bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
+			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-3 px-4 rounded-md shrink">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
 					{submission.name}
 				</h1>
-				<span className="text-gray-300">
+				<span className="text-gray-800 dark:text-gray-300">
 					{submission.subtitle}
 				</span>
 
-				<hr className="mt-4 border-t-gray-700/60" />
+				<hr className="mt-4 border-t-gray-400/60 dark:border-t-gray-700/60" />
 				
 				<FormFields
 					formCuid={submission.id!}
@@ -76,7 +76,7 @@ export default async function View({
 				/>
 
 			</main>
-			<aside className="h-fit w-full bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
+			<aside className="h-fit w-full bg-gray-300/30 dark:bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
 				<div className="flex flex-col items-center m-4 gap-2">
 					<Image
 						width={96}
@@ -88,7 +88,7 @@ export default async function View({
 
 						priority
 					/>
-					<span className="text-gray-300 text-center text-sm">
+					<span className="text-gray-800 dark:text-gray-300 text-center text-sm">
 						Indsendt af
 						<br />
 						<strong className="text-base">
@@ -97,7 +97,7 @@ export default async function View({
 					</span>
 
 					<div className="grid grid-cols-2 w-full mt-2 z-10">
-						<span className="text-gray-300 text-start text-sm">
+						<span className="text-gray-800 dark:text-gray-300 text-start text-sm">
 							Oprettet:
 							<br />
 							<strong className="text-base">
@@ -116,7 +116,7 @@ export default async function View({
 
 					{session.user.role === "ADMIN" && (
 						<>
-							<hr className="opacity-15 w-full my-3 z-0" />
+							<hr className="dark:opacity-5 w-full my-3 z-0" />
 							<div className="text-start">
 								<DeleteButton submissionId={params.id} />
 							</div>
