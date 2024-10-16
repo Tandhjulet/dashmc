@@ -15,7 +15,6 @@
 
 ### ⚠️ WIP ⚠️
 - Ratelimit
-- Max size for answer field
 - Icon for forms
 
 ## Security

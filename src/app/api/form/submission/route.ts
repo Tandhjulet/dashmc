@@ -21,6 +21,12 @@ function validate(form: Form, submission: {[id: number]: string}): false | ISubm
 
 			if(!(radioElements.includes(submission[field.id])) && submission[field.id] != "")
 				return false;
+		} else if(field.type === "Text") {
+			if(submission[field.id].length > 600)
+				return false;
+		} else if(field.type === "TextArea") {
+			if(submission[field.id].length > 4000)
+				return false;
 		}
 
 		if(submission[field.id] && submission[field.id] !== "")

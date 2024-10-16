@@ -3,7 +3,7 @@
 import { FieldWithId, IField } from "@/lib/forms/Field";
 import { ISubmissionField } from "@/lib/forms/Submission";
 import { useRouter } from "next/navigation";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { BsTrash } from "react-icons/bs";
 
 interface Props {
@@ -16,6 +16,8 @@ interface Props {
 }
 
 function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
+	const [count, setCount] = useState<number>(value?.length ?? 0);
+	
 	return (
 		<div className="my-3">
 			<h2 className="text-lg font-bold text-blue-600 relative">
@@ -43,11 +45,16 @@ function TextArea({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 				name={`textarea_${fieldId}`}
 				required={field.required}
 
+				onChange={e => setCount(e.target.value.length)}
+
 				readOnly={isReadOnly}
 				defaultValue={value}
 
 				className="mt-3 w-full p-2 h-min bg-gray-300/70 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
+			<span className={`relative text-xs float-right -top-1 ${count > 4000 ? "text-red-600" : "text-gray-700"}`}>
+				{4000-count}
+			</span>
 		</div>
 	)
 }
@@ -121,6 +128,8 @@ function Checkbox({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: P
 }
 
 function Text({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props) {
+	const [count, setCount] = useState<number>(value?.length ?? 0);
+
 	return (
 		<div className="my-3">
 			<h2 className="text-lg font-bold text-blue-600 relative">
@@ -148,11 +157,16 @@ function Text({ field, isAdmin, deleteField, fieldId, isReadOnly, value }: Props
 				name={`text_${fieldId}`}
 				required={field.required}
 
+				onChange={e => setCount(e.target.value.length)}
+
 				readOnly={isReadOnly}
 				defaultValue={value}
 				
 				className="mt-3 w-full p-2 h-min bg-gray-300/70 dark:bg-gray-700/40 dark:placeholder:text-gray-500 rounded-lg outline-blue-600 placeholder:text-gray-600 basis-0 border-transparent border-2 focus-visible:outline outline-2"
 			/>
+			<span className={`relative text-xs float-right -top-1 ${count > 600 ? "text-red-600" : "text-gray-700"}`}>
+				{600-count}
+			</span>
 		</div>
 	)
 }
