@@ -9,6 +9,9 @@ export const authOptions = {
 	callbacks: {
 		async jwt({ token, user, trigger, session }) {
 			if(trigger === "update") {
+				if(!token.email)
+					return token;
+
 				const code: string = session.code;
 				const uuid: string = session.uuid;
 				
@@ -23,7 +26,8 @@ export const authOptions = {
 
 				const persistedUserData = await prisma.user.findFirst({
 					where: {
-						gameUUID: { equals: otpCode.uuid }
+						gameUUID: otpCode.uuid,
+						email: token.email,
 					}
 				})
 
@@ -47,7 +51,7 @@ export const authOptions = {
 					email: { equals: user.email }
 				}
 			})
-			token.discordId = persistedUserData?.discordId ?? undefined;
+			token.discordId = persistedUserData?.discordId ?? user.discordId;
 			token.dbId = persistedUserData?.id;
 			token.username = persistedUserData?.username;
 			token.uuid = persistedUserData?.gameUUID;

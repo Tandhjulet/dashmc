@@ -110,8 +110,6 @@ export async function POST(req: Request) {
 	})
 
 	revalidateTag(`submission:${submitted.id}`);
-
-	console.log("reevaluating tag: user:" + user.id)
 	revalidateTag(`user:${user.id}`);
 
 	return Response.json({

@@ -9,7 +9,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { BsTrash } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa6";
 import { FiMoon, FiSun, FiUser } from "react-icons/fi";
@@ -268,6 +268,11 @@ export default function VerticalNavbar({
 	});
 
 	const { setTheme, resolvedTheme } = useTheme();
+	const [mounted, setMounted] = useState(false);
+
+	useLayoutEffect(() => {
+		setMounted(true);
+	}, []);
 
 	return (
 		<>
@@ -311,16 +316,18 @@ export default function VerticalNavbar({
 					<Popper
 						popover={(
 							<div className="w-[257px] flex flex-col gap-1 px-2 py-2 text-nowrap text-[0.975rem]">
-								<button onClick={() => {
-									setTheme(resolvedTheme === "dark" ? "light" : "dark");
-								}} className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
-									{resolvedTheme === "dark" ? (
-										<FiMoon className="size-4 text-gray-200 mr-3" />
-									) : (
-										<FiSun className="size-4 text-gray-800 mr-3" />
-									)}
-									Skift tema
-								</button>
+								{mounted && (
+									<button onClick={() => {
+										setTheme(resolvedTheme === "dark" ? "light" : "dark");
+									}} className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
+										{resolvedTheme === "dark" ? (
+											<FiMoon className="size-4 text-gray-200 mr-3" />
+										) : (
+											<FiSun className="size-4 text-gray-800 mr-3" />
+										)}
+										Skift tema
+									</button>
+								)}
 
 								<Link href="/" className="hover:bg-gray-100 p-2 rounded-md pr-5 dark:hover:bg-gray-800/50 inline-flex items-center">
 									<IoHomeOutline className="inline-block mr-3 size-4 my-auto" />

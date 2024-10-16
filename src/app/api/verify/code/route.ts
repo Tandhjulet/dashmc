@@ -13,6 +13,16 @@ export interface OTPCode {
 export async function POST(req: Request) {
 	const { username } = await req.json();
 
+	const session = await auth();
+	if(!session?.user) {
+		return Response.json(
+			{success: false},
+			{
+				status: 401,
+			}
+		)
+	}
+
 	// Generate a unique code
 	let code: string;
 	do {
@@ -33,7 +43,28 @@ export async function POST(req: Request) {
 
 // Check if code is verified
 export async function PATCH(req: Request) {
-	const { code } = await req.json();
+	const { code }: {
+		code: string;
+	} = await req.json();
+
+	const session = await auth();
+	if(!session?.user) {
+		return Response.json(
+			{success: false},
+			{
+				status: 401,
+			}
+		)
+	}
+
+	if(code.length !== 6) {
+		return Response.json(
+			{success: false},
+			{
+				status: 400,
+			}
+		)
+	}
 
 	const result = await client.get(`otp:${code}`);
 

@@ -7,17 +7,15 @@ import { StatusChip } from "../apply/view/[id]/StatusChip";
 import { unstable_cache } from "next/cache";
 import { parseDate } from "@/lib/helpers";
 import { IconBaseProps } from "react-icons/lib";
-import { MdShield, MdStorefront } from "react-icons/md";
+import { MdOutlineFlipToFront, MdShield, MdStorefront } from "react-icons/md";
 import { FaChevronRight, FaDiscord, FaHeart, FaRegAddressCard } from "react-icons/fa6";
 import { FiArrowUpRight } from "react-icons/fi";
-import { BsCheck, BsX } from "react-icons/bs";
+import { BsCheck, BsClipboard2Check, BsX } from "react-icons/bs";
 import Image from "next/image";
 import { RoleChip } from "./RoleChip";
 
 const getUser = (id: string) => unstable_cache(
 	async () => {
-		console.log("reevaluating:");
-		console.log(id);
 		const user = await prisma.user.findUnique({
 			where: {
 				id,
@@ -44,12 +42,12 @@ const STATIC_LINKS: {
 }, {
 	href: "/",
 	title: "Forside",
-	Icon: MdStorefront,
+	Icon: MdOutlineFlipToFront,
 	subtitle: "Gå til forsiden"
 }, {
 	href: "/rules",
 	title: "Regler",
-	Icon: MdStorefront,
+	Icon: BsClipboard2Check,
 	subtitle: "Læs op på reglerne"
 }]
 
