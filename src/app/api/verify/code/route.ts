@@ -1,8 +1,10 @@
 import { auth } from "@/auth";
 import { client } from "@/lib/redis";
 import { prisma } from "@/prisma/prisma";
+import { revalidateTag } from "next/cache";
 
 export interface OTPCode {
+	email: string;
 	code: string;
 	forAccount: string;
 	hasBeenVerified: boolean;
@@ -23,7 +25,7 @@ export async function POST(req: Request) {
 	}
 
 	const session = await auth();
-	if(!session?.user) {
+	if(!session?.user || !session.user.email) {
 		return Response.json(
 			{success: false},
 			{
@@ -39,6 +41,7 @@ export async function POST(req: Request) {
 	} while(await client.get(`otp-${verify}:${code}`));
 
 	const res: OTPCode = {
+		email: session.user.email,
 		code,
 		forAccount: username,
 		hasBeenVerified: false,
@@ -67,7 +70,7 @@ export async function PATCH(req: Request) {
 	}
 
 	const session = await auth();
-	if(!session?.user) {
+	if(!session?.user || !session?.user.email) {
 		return Response.json(
 			{success: false},
 			{
@@ -99,30 +102,32 @@ export async function PATCH(req: Request) {
 	// The user has verified the account and fetched the
 	// current status. Let's persist it.
 	if(parsed.exists && parsed.hasBeenVerified) {
-		const session = await auth();
-		if(!session?.user)
-			return;
-		if(!session?.user.email)
-			throw new Error("Email not present");
+		// Verify that the user whom created the token is also the one
+		// trying to 'claim' it
+		if(session.user.email !== parsed.email)
+			return Response.json({success: false}, { status: 401 });
 
 		if(verify === "Minecraft") {
 			await prisma.user.create({
 				data: {
-					email: session.user.email,
+					email: parsed.email,
 					username: parsed.forAccount,
 					gameUUID: parsed.uuid!,
+
+					// session is safe since we validated against the email earlier
 					discordId: session.user.discordId,
 				}
 			})
 		} else if(verify === "Discord" && !session.user.discordId) {
 			await prisma.user.update({
 				where: {
-					email: session.user.email
+					email: parsed.email
 				},
 				data: {
 					discordId: parsed.uuid!,
 				}
 			})
+			revalidateTag(`user:${session.user.dbId}`);
 		}
 	}
 
