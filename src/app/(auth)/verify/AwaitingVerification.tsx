@@ -1,10 +1,11 @@
+"use client";
+
 import { OTPCode } from "@/app/api/verify/code/route";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { RxReload } from "react-icons/rx";
-
 
 const CharChip = memo(function CharChip({
 	letter,
@@ -26,13 +27,27 @@ const CharChip = memo(function CharChip({
 	)
 })
 
+interface DiscordVerify {
+	callback: (success: OTPCode & {exists: true} | {exists: false}) => void;
+	username: string;
+
+	verify: "Discord";
+}
+
+interface MinecraftVerify {
+	callback: (success: OTPCode & {exists: true} | {exists: false}) => void;
+	username: string;
+
+	verify: "Minecraft"
+}
+
+type Props = DiscordVerify | MinecraftVerify;
+
 export default function AwaitingVerification({
 	callback,
 	username,
-}: {
-	callback: (success: OTPCode & {exists: true} | {exists: false}) => void;
-	username: string;
-}) {
+	verify,
+}: Props) {
 	const { update } = useSession();
 
 	const [timer, setTimer] = useState(10*60);
@@ -41,6 +56,7 @@ export default function AwaitingVerification({
 	const generateCode = useCallback(async () => {
 		const body = JSON.stringify({
 			username,
+			verify,
 		})
 
 		const res: OTPCode = await (await fetch("/api/verify/code", {
@@ -50,7 +66,7 @@ export default function AwaitingVerification({
 
 		setCode(res.code.padStart(6, "0").split(""));
 		setTimer(10*60);
-	}, [username]);
+	}, [username, verify]);
 
 	useEffect(() => {
 		generateCode();
@@ -75,7 +91,7 @@ export default function AwaitingVerification({
 		async function checkIfVerified() {
 			const res: OTPCode & {exists: true} | {exists: false} = await (await fetch("/api/verify/code", {
 					method: "PATCH",
-					body: JSON.stringify({ code: code.join("") })
+					body: JSON.stringify({ code: code.join(""), verify })
 				}
 			)).json();
 
@@ -83,6 +99,7 @@ export default function AwaitingVerification({
 				await update({
 					code: res.code,
 					uuid: res.uuid!,
+					verify,
 				});
 				callback(res);
 			}
@@ -90,7 +107,7 @@ export default function AwaitingVerification({
 
 		const intervalId = setInterval(() => checkIfVerified(), 2500);
 		return () => clearInterval(intervalId);
-	}, [code, callback, update])
+	}, [code, callback, update, verify])
 
 	const countdown = useMemo(() => {
 		const minutes = Math.floor(timer / 60).toString();
@@ -103,12 +120,23 @@ export default function AwaitingVerification({
 		<div className="w-full flex flex-col items-center justify-center mb-[8rem]">
 			<AiOutlineLoading className="size-32 text-blue-600 mb-6 animate-spin" />
 			<h1 className="text-3xl font-bold text-gray-800 mt-10 dark:text-gray-200">
-				Skriv verifikationskoden i Minecraft
+				Skriv verifikationskoden i {verify}
 			</h1>
 			<p className="text-center dark:text-gray-200">
-				Ved at udføre dette tilkobler du minecraft-kontoen
-				<br />
-				<strong className="font-black text-blue-600 dark:text-blue-700">{username}</strong> til din profil.{" "}
+				{verify === "Minecraft" ? (
+					<>
+						Ved at udføre dette tilkobler du minecraft-kontoen
+						<br />
+						<strong className="font-black text-blue-600 dark:text-blue-700">{username}</strong> til din profil.
+					</>
+				) : (
+					<>
+						Ved at udføre dette tilkobler du din konto (<strong className="font-black text-blue-600 dark:text-blue-700">{username}</strong>)
+						til din discord-konto.
+					</>
+				)}
+				
+				{" "}
 				<button
 					className="text-blue-600 underline dark:text-blue-600"
 					onClick={() => callback({

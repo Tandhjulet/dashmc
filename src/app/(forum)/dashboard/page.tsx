@@ -62,7 +62,7 @@ export default async function Dashboard() {
 	const user = await getUser(session.user.dbId);
 
 	return (
-		<div className="px-20 py-12">
+		<div className="px-20 pt-14">
 			<span className="text-xl text-gray-700 dark:text-gray-300">
 				Velkommen
 			</span>
@@ -73,7 +73,7 @@ export default async function Dashboard() {
 				({user?.gameUUID})
 			</span>
 
-			<div className="grid grid-cols-3 my-6 h-full gap-6">
+			<div className="grid grid-cols-3 mt-12 h-full gap-6">
 				<div className="col-span-2 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
 					<h3 className="font-semibold">Ansøgninger</h3>
 					<hr className="my-3 border-black dark:border-white opacity-25" />
@@ -211,10 +211,7 @@ export default async function Dashboard() {
 					</div>
 				</div>
 
-				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg h-full">
-				</div>
-
-				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg col-start-3">
+				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
 					<div className="w-full flex flex-col py-2 items-center gap-2">
 						<a href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</a>
 
@@ -253,6 +250,40 @@ export default async function Dashboard() {
 							<FaHeart className="inline-block text-red-600 size-5 ml-1" />
 						</a>
 					</div>
+				</div>
+
+				<div className="bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg h-full flex flex-col items-center justify-center">
+					<div className={`p-2 ${user?.discordId ? "bg-green-500/30 dark:bg-green-500/20" : "bg-red-500/30 dark:bg-red-500/20"} rounded-md mb-2`}>
+						{user?.discordId ? (
+							<BsCheck className="size-8 text-green-600" />
+						) : (
+							<BsX className="size-8 text-red-500" />
+						)}
+					</div>
+					<span className="font-bold text-gray-800 dark:text-gray-200 text-center my-3">
+						Discord verifikation
+						<p className="text-sm font-normal dark:text-gray-300">
+							{user?.discordId ? "Du har forbundet din discord konto." : "Din discord konto er ikke blevet forbundet."}
+						</p>
+					</span>
+					
+					{user?.discordId ? (
+						<span className="mt-4 text-sm text-center text-gray-700 dark:text-gray-500">
+							Du er logget ind som:
+							<br />
+							<strong className="text-gray-800 dark:text-gray-400">
+								[ID] {user.discordId}
+							</strong>
+						</span>
+					) : (
+						<Link
+							className="px-3 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md mt-4"
+							href={"/verify/discord"}
+						>
+							<FaDiscord className="size-5 inline mr-2" />
+							Forbind discord
+						</Link>
+					)}
 				</div>
 				
 			</div>

@@ -17,16 +17,22 @@ export default async function Verify({
 		if(userExists) {
 			redirect("/");
 		} else {
-			return <VerifyUsername callback={(res) => {
-				"use server";
-				if(res.exists) {
-					// Ensures redirects can only happen to local pages
-					redirect(new URL(
-						decodeURIComponent((searchParams?.prevUrl) ?? "/"),
-						baseUrl,
-					).pathname);
-				}
-			}} />
+			return (
+				<VerifyUsername
+					callback={(res) => {
+						"use server";
+						if(res.exists) {
+							// Ensures redirects can only happen to local pages
+							redirect(new URL(
+								decodeURIComponent((searchParams?.prevUrl) ?? "/"),
+								baseUrl,
+							).pathname);
+						} else {
+							redirect("/verify");
+						}
+					}					
+				} />
+			)
 		}
 	} else {
 		redirect("/login");

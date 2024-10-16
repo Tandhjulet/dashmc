@@ -11,7 +11,16 @@ export interface OTPCode {
 
 // Generate OTP Code
 export async function POST(req: Request) {
-	const { username } = await req.json();
+	const { username, verify } = await req.json();
+
+	if(verify !== "Minecraft" && verify !== "Discord") {
+		return Response.json(
+			{success: false},
+			{
+				status: 400,
+			}
+		);
+	}
 
 	const session = await auth();
 	if(!session?.user) {
@@ -27,7 +36,7 @@ export async function POST(req: Request) {
 	let code: string;
 	do {
 		code = Math.floor(Math.random()*(10**6)).toString().padStart(6, "0");
-	} while(await client.get(`otp:${code}`));
+	} while(await client.get(`otp-${verify}:${code}`));
 
 	const res: OTPCode = {
 		code,
@@ -36,16 +45,26 @@ export async function POST(req: Request) {
 	}
 
 	// Save the OTP to redis with an expiry of 10 minutes
-	await client.setEx(`otp:${code}`, 600, JSON.stringify(res));
+	await client.setEx(`otp-${verify}:${code}`, 600, JSON.stringify(res));
 
 	return Response.json(res)
 }
 
 // Check if code is verified
 export async function PATCH(req: Request) {
-	const { code }: {
+	const { code, verify }: {
 		code: string;
+		verify: "Minecraft" | "Discord";
 	} = await req.json();
+
+	if(verify !== "Minecraft" && verify !== "Discord") {
+		return Response.json(
+			{success: false},
+			{
+				status: 400,
+			}
+		);
+	}
 
 	const session = await auth();
 	if(!session?.user) {
@@ -66,7 +85,7 @@ export async function PATCH(req: Request) {
 		)
 	}
 
-	const result = await client.get(`otp:${code}`);
+	const result = await client.get(`otp-${verify}:${code}`);
 
 	let parsed: OTPCode & {exists: true} | {exists: false};
 	if(result)
@@ -86,14 +105,25 @@ export async function PATCH(req: Request) {
 		if(!session?.user.email)
 			throw new Error("Email not present");
 
-		await prisma.user.create({
-			data: {
-				email: session.user.email,
-				username: parsed.forAccount,
-				gameUUID: parsed.uuid!,
-				discordId: session.user.discordId,
-			}
-		})
+		if(verify === "Minecraft") {
+			await prisma.user.create({
+				data: {
+					email: session.user.email,
+					username: parsed.forAccount,
+					gameUUID: parsed.uuid!,
+					discordId: session.user.discordId,
+				}
+			})
+		} else if(verify === "Discord" && !session.user.discordId) {
+			await prisma.user.update({
+				where: {
+					email: session.user.email
+				},
+				data: {
+					discordId: parsed.uuid!,
+				}
+			})
+		}
 	}
 
 	return Response.json(parsed)
@@ -103,15 +133,15 @@ export async function PATCH(req: Request) {
 // This is insecure by nature. Luckily, this is protected by our middleware
 // using a shared, trusted token between minecraft server and website
 export async function PUT(req: Request) {
-	const { code, username, uuid } = await req.json();
+	const { code, username, uuid, verify } = await req.json();
 	
-	const result = await client.get(`otp:${code}`);
+	const result = await client.get(`otp-${verify}:${code}`);
 
 	if(!result)
 		return Response.json({ success: false })
 
 	const parsed: OTPCode = JSON.parse(result);
-	if(parsed.forAccount !== username)
+	if(parsed.forAccount !== username && verify == "Minecraft")
 		return Response.json({ success: false })
 
 	const updated = JSON.stringify({
@@ -119,7 +149,7 @@ export async function PUT(req: Request) {
 		uuid,
 		hasBeenVerified: true,
 	})
-	await client.set(`otp:${code}`, updated, {
+	await client.set(`otp-${verify}:${code}`, updated, {
 		KEEPTTL: true
 	})
 

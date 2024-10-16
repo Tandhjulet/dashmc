@@ -158,10 +158,6 @@ export async function DELETE(req: Request) {
 
 	const deleted = await prisma.$transaction([deleteFields, deleteSubmission]);
 
-	console.log("submissionId: ", submissionId);
-	console.log("dashboard id: ", deleted[1].userId);
-	console.log("executed by id: ", session.user.dbId);
-
 	revalidateTag(`submission:${submissionId}`);
 	revalidateTag(`user:${deleted[1].userId}`);
 	

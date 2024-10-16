@@ -12,11 +12,15 @@ export const authOptions = {
 				if(!token.email)
 					return token;
 
+				const verify: "Discord" | "Minecraft" = session.verify;
+				if(verify !== "Discord" && verify !== "Minecraft")
+					return token;
+
 				const code: string = session.code;
 				const uuid: string = session.uuid;
 				
 				// Verify input
-				const associatedWith = await client.get(`otp:${code}`);
+				const associatedWith = await client.get(`otp-${verify}:${code}`);
 
 				if(!associatedWith)
 					return token;
@@ -24,12 +28,24 @@ export const authOptions = {
 				if(!otpCode.uuid || !otpCode.hasBeenVerified || otpCode.uuid !== uuid)
 					return token;
 
-				const persistedUserData = await prisma.user.findFirst({
-					where: {
-						gameUUID: otpCode.uuid,
-						email: token.email,
-					}
-				})
+				let persistedUserData;
+				if(verify === "Minecraft")
+					persistedUserData = await prisma.user.findFirst({
+						where: {
+							gameUUID: otpCode.uuid,
+							email: token.email,
+						}
+					})
+				else if(verify === "Discord") {
+					persistedUserData = await prisma.user.update({
+						where: {
+							email: token.email,
+						},
+						data: {
+							discordId: otpCode.uuid,
+						}
+					})
+				}
 
 				if(!persistedUserData) {
 					return token;

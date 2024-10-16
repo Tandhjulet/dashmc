@@ -8,14 +8,14 @@ export default {
 			return {
 				email: params.email,
 			}
-		}
+		},
 	}), Discord({
 		profile(params) {
 			return {
 				email: params.email,
 				discordId: params.id,
 			}
-		}
+		},
 	})],
 	callbacks: {
 		async session({ session, token }) {

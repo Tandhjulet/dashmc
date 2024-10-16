@@ -19,10 +19,16 @@ export default function VerifyUsername({
 	}, []);
 
 	if(username) {
-		return <AwaitingVerification callback={(res) => {
-			if(!res.exists) setUsername(undefined);
-			if(callback) callback(res);
-		}} username={username} />
+		return (
+			<AwaitingVerification
+				callback={(res) => {
+					if(!res.exists) setUsername(undefined);
+					if(callback) callback(res);
+				}}
+				username={username}
+				verify="Minecraft"
+			/>
+		)
 	}
 
 	return (
