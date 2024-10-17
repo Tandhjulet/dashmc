@@ -27,6 +27,15 @@ export interface FormData {
 	fields: IField[];
 }
 
+interface Update {
+	name?: string;
+	subtitle?: string;
+	category?: string;
+
+	icon?: string;
+	visible?: boolean;
+}
+
 export class Form {
 	protected cuid?: string;
 	protected _virtual: boolean;
@@ -75,6 +84,22 @@ export class Form {
 		await prisma.$transaction([deleteFields, deleteForm]);
 
 		return true;
+	}
+
+	static async update(cuid: string, toUpdate: Update) {
+		return await prisma.form.update({
+			where: {
+				id: cuid,
+			},
+			data: {
+				name: toUpdate.name,
+				category: toUpdate.category,
+				subtitle: toUpdate.subtitle,
+
+				icon: toUpdate.icon,
+				visible: toUpdate.visible,
+			}
+		})
 	}
 
 	static async fromId(cuid: string) {

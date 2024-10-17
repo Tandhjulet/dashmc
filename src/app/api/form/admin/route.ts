@@ -85,30 +85,20 @@ export async function PUT(req: Request) {
 		);
 	}
 
-	const form = await Form.fromId(formId);
-	if(!form) {
-		return Response.json(
-			{success: false},
-			{
-				status: 400,
-			}
-		)
-	}
-	form.name = name;
-	form.category = category;
-	form.subtitle = subtitle;
-
-	form.visible = visible;
-	form.icon = selectedIcon;
-	
-	const id = await form.save();
+	await Form.update(formId, {
+		name,
+		category,
+		icon: selectedIcon,
+		subtitle,
+		visible
+	});
 
 	revalidateTag('form');
-	revalidateTag(`form:${id}`);
+	revalidateTag(`form:${formId}`);
 
 	return Response.json({
-		success: !!id,
-		id,
+		success: !!formId,
+		id: formId,
 	});
 }
 
