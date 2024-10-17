@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { HTMLAttributes, memo } from "react";
 import { FaLock } from "react-icons/fa6";
-import { FiArrowUpRight } from "react-icons/fi";
 import { IoGameController } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
 import { PiChatsCircleDuotone } from "react-icons/pi";
@@ -32,10 +31,7 @@ export default function Home() {
 		<section id="hero" className="flex flex-col items-center">
 			<a href="#" className="z-20">
 				<h2 className="uppercase text-xl text-blue-600 font-bold">
-					Se det seneste nyt
-					<span className="inline-block">
-						<FiArrowUpRight />
-					</span>
+					VI ÅBNER DEN 25. OKTOBER
 				</h2>
 			</a>
 			<h1 className="dark:text-gray-100 text-7xl font-black text-gray-900 leading-[4rem] z-10">DashMC</h1>
@@ -61,9 +57,9 @@ export default function Home() {
 			<p className="my-6 text-sm text-center max-w-[80%] md:max-w-full dark:text-white">
 				<strong className="text-blue-600 font-semibold">
 					DashMC.net
-				</strong> er et minecraft servernetværk, der tilbyder både skyblock og kitpvp.{" "}
+				</strong> er et minecraft servernetværk, der tilbyder skyblock.{" "}
 				<br className="hidden md:block" />
-				Vi er fortsat under udvikling, men vi åbner dørene <strong className="font-semibold text-blue-600">i efterårsferien</strong>!
+				Vi er fortsat under udvikling, men vi åbner dørene <strong className="font-semibold text-blue-600">d. 25 oktober</strong>!
 			</p>
 		</section>
 

@@ -103,7 +103,7 @@ export async function POST(req: Request) {
 	const submitted = await prisma.submission.create({
 		data: {
 			category: form.category,
-			name: form.title,
+			name: form.name,
 			subtitle: form.subtitle,
 			userId: user.id,
 			status: "Waiting",
