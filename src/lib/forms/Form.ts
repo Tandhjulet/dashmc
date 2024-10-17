@@ -175,7 +175,7 @@ export class Form {
 				icon: this.icon,
 				visible: this.visible,
 				fields: {
-					set: this.fields,
+					connect: this.fields,
 				}
 			}
 		})
