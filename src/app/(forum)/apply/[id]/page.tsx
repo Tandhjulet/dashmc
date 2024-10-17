@@ -42,13 +42,13 @@ export default async function Application({
 
 	return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto py-12 px-2 phone:px-6 sm:px-12">
-			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-4 lg:col-span-3 px-4 rounded-md shrink">
+			<main className="overflow-clip w-full h-max bg-gray-300/30 dark:bg-gray-800/30 col-span-4 lg:col-span-3 px-4 rounded-md">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
 					{form.name}
 				</h1>
-				<span className="text-gray-800 dark:text-gray-300">
+				<p className="text-gray-800 dark:text-gray-300 text-wrap break-words">
 					{form.subtitle}
-				</span>
+				</p>
 
 				<hr className="mt-4 border-t-gray-400/60 dark:border-t-gray-700/60" />
 				

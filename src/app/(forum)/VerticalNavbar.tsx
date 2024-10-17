@@ -71,7 +71,7 @@ function useNavButtons(props: {
 		if(!isCategory) {
 			const ButtonIcon = "iconKey" in props ? (
 				<Icon
-					className={`p-0 size-6 shrink-0 ${props.isSelected ? "text-blue-600" : "text-gray-700 dark:text-gray-200"}`}
+					className={`!p-0 size-6 shrink-0 ${props.isSelected ? "text-blue-600" : "text-gray-700 dark:text-gray-200"}`}
 					iconKey={props.iconKey}
 				/>
 			) : (
@@ -94,7 +94,7 @@ function useNavButtons(props: {
 	
 					{props.isAdmin && (
 						<button
-							className="group-hover/button:opacity-100 opacity-0 size-6 absolute right-1"
+							className="group-hover/button:opacity-100 opacity-0 size-6 absolute right-1 hidden xl:block"
 							onClick={async (e) => {
 								e.stopPropagation();
 								e.preventDefault();
