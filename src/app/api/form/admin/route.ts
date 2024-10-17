@@ -4,13 +4,15 @@ import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
-	const { name, subtitle, category }: {
+	const { name, subtitle, category, visible, selectedIcon }: {
 		name: string,
 		subtitle: string,
-		category: string;
+		category: string,
+		visible: boolean,
+		selectedIcon: string,
 	} = await req.json();
 
-	if(!name || !subtitle || !category) {
+	if(!name || !subtitle || !category || !selectedIcon) {
 		return Response.json(
 			{success: false},
 			{
@@ -41,6 +43,8 @@ export async function POST(req: Request) {
 			}
 		)
 	}
+	form.visible = visible;
+	form.icon = selectedIcon;
 	
 	const id = await form.save();
 

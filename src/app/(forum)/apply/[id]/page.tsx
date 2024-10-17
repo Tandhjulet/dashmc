@@ -3,8 +3,8 @@ import { Form } from "@/lib/forms/Form";
 import { Role } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import { FaEye } from "react-icons/fa6";
+import { notFound, redirect } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import CreateField from "./CreateField";
 import { FormFields } from "./Field";
 import { parseDate } from "@/lib/helpers";
@@ -35,21 +35,25 @@ export default async function Application({
 	const session = await auth();
 	const form = await getForm(params.id);
 
+	if(form.visible !== true && session?.user?.role !== "ADMIN")
+		redirect("/dashboard");
+	
+
 	return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto py-12 px-2 phone:px-6 sm:px-12">
 			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-4 lg:col-span-3 px-4 rounded-md shrink">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">
-					{form.title}
+					{form.name}
 				</h1>
 				<span className="text-gray-800 dark:text-gray-300">
-					{form.subtite}
+					{form.subtitle}
 				</span>
 
 				<hr className="mt-4 border-t-gray-400/60 dark:border-t-gray-700/60" />
 				
 				<FormFields
-					formCuid={form.cuid!}
-					fields={form.fields}
+					formCuid={form.id!}
+					fields={form.fields ?? []}
 					isAdmin={session?.user?.role === "ADMIN"}
 					isReadOnly={false}
 				/>
@@ -66,9 +70,18 @@ export default async function Application({
 			</main>
 			<aside className="hidden lg:block h-fit w-full bg-gray-300/30 dark:bg-gray-800/30 col-span-1 sticky top-0 rounded-md shrink-0">
 				<div className="flex flex-col items-center m-4 gap-2">
-					<span className="text-gray-500 dark:text-gray-700 text-sm mb-1">
-						<FaEye className="inline me-2" />
-						Synlig for alle
+					<span className={`${form.visible === false ? "text-red-600 dark:text-red-600" : "text-gray-500 dark:text-gray-700"} text-sm mb-1`}>
+						{form.visible === false ? (
+							<>
+								<FaEyeSlash className="inline me-2" />
+								Usynlig
+							</>
+						) : (
+							<>
+								<FaEye className="inline me-2" />
+								Synlig for alle
+							</>
+						)}
 					</span>
 
 					<Image
@@ -107,10 +120,12 @@ export default async function Application({
 						</span>
 					</div>
 				</div>
-
-				<button className="float-right w-fit m-4 px-4 py-2 active:translate-y-[1px] border border-red-700/70 dark:border-red-900/40 hover:bg-red-600/5 rounded-xl text-red-600">
-					Rediger
-				</button>
+				
+				{session?.user?.role === "ADMIN" && (
+					<button className="float-right w-fit m-4 px-4 py-2 active:translate-y-[1px] border border-red-700/70 dark:border-red-900/40 hover:bg-red-600/5 rounded-xl text-red-600">
+						Rediger
+					</button>
+				)}
 			</aside>
 		</div>
 	)

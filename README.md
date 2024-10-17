@@ -16,6 +16,7 @@
 ### ⚠️ WIP ⚠️
 - Ratelimit
 - Icon for forms
+- Form visibility
 
 ## Security
 If you believe you have found a vulnerability in DashMC, we highly encourage you to disclose this responsibly. Please do NOT open a public issue, as you will expose the issue. Thank you.

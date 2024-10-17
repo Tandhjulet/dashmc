@@ -30,6 +30,8 @@ CREATE TABLE `Form` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `subtitle` VARCHAR(191) NOT NULL,
+    `icon` VARCHAR(191) NOT NULL,
+    `visible` BOOLEAN NOT NULL,
     `ownerId` VARCHAR(191) NOT NULL,
     `category` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -49,7 +51,6 @@ CREATE TABLE `Submission` (
     `status` ENUM('Waiting', 'Accepted', 'Rejected') NOT NULL DEFAULT 'Waiting',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
-    UNIQUE INDEX `Submission_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

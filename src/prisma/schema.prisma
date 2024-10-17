@@ -62,6 +62,9 @@ model Form {
 	name			String		@unique
 	subtitle		String
 
+	icon			String
+	visible			Boolean
+
 	createdBy		User		@relation(fields: [ownerId], references: [id])
 	ownerId			String
 	

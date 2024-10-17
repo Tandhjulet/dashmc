@@ -134,7 +134,7 @@ export default function CreateField({
 			subtitle: type === "Radio" ? elements.join("\0\n*") : subtitle,
 			type,
 			required: required === "on",
-			formCuid: form.cuid,
+			formCuid: form.id,
 		};
 
 		(await fetch("/api/form/admin/field", {
