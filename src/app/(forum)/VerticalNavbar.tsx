@@ -83,7 +83,7 @@ function useNavButtons(props: {
 			return (
 				<Link
 					href={props.redirectTo}
-					className={`inline-flex items-center p-4 bg-gray-300/50 hover:bg-gray-300/70 dark:bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 dark:hover:bg-gray-700/40 group/button relative`}
+					className={`overflow-clip inline-flex items-center p-4 bg-gray-300/50 hover:bg-gray-300/70 dark:bg-gray-700/20 rounded-lg gap-2 whitespace-nowrap w-full mt-2 dark:hover:bg-gray-700/40 group/button relative`}
 				>
 					{ButtonIcon}
 					<span className={`${props.isSelected ? "text-blue-600 font-semibold" : "text-black dark:text-white"}`}>
@@ -126,7 +126,7 @@ function useNavButtons(props: {
 
 		return (
 			<div
-				className={`inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full mt-4 pointer-events-none select-none`}
+				className={`overflow-clip  inline-flex items-center p-4 bg-gray-300/30 dark:bg-gray-700/10 rounded-lg gap-2 whitespace-nowrap w-full mt-4 pointer-events-none select-none`}
 			>
 				<props.Icon
 					className={`size-6 text-gray-700 dark:text-gray-200 shrink-0`}
