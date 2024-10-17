@@ -174,9 +174,6 @@ export class Form {
 				category: this.category,
 				icon: this.icon,
 				visible: this.visible,
-				fields: {
-					connect: this.fields,
-				}
 			}
 		})
 
