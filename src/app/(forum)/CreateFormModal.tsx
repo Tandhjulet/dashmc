@@ -4,11 +4,14 @@ import useIconPicker from "@/components/IconPicker/IconPicker";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
-export default function CreateFormModal({
-	hideModal,
-}: {
-	hideModal: () => void;
-}) {
+type Props = {hideModal: () => void} & ({type: "UPDATE", formId: string} | {type: "CREATE"})
+
+export default function CreateFormModal(props: Props) {
+	const {
+		hideModal,
+		type,
+	} = props;
+
 	const router = useRouter();
 	const [selectedIcon, setSelectedIcon] = useState<string>("FaUser");
 
@@ -21,7 +24,7 @@ export default function CreateFormModal({
 		if(!category || !name || !subtitle)
 			return;
 
-		const body = {
+		const body: {[id: string]: string | FormDataEntryValue | boolean} = {
 			category,
 			name,
 			subtitle,
@@ -29,8 +32,11 @@ export default function CreateFormModal({
 			selectedIcon
 		};
 
+		if(type === "UPDATE")
+			body["formId"] = props.formId;
+
 		(await fetch("/api/form/admin", {
-			method: "POST",
+			method: type === "CREATE" ? "POST" : "PUT",
 			body: JSON.stringify(body),
 		})).json()
 			.then((res) => {
@@ -40,7 +46,7 @@ export default function CreateFormModal({
 				}
 			}
 		)
-	}, [hideModal, selectedIcon, router]);
+	}, [hideModal, selectedIcon, router, type, props]);
 
 	const {
 		IconPicker,
@@ -56,9 +62,9 @@ export default function CreateFormModal({
 			noValidate
 			action={createForm}
 		>
-			<h1 className="text-xl font-semibold">Opret ny form</h1>
+			<h1 className="text-xl font-semibold">{type === "CREATE" ? "Opret ny" : "Rediger"} form</h1>
 			<span className="text-gray-400">
-				Du er ved at oprette en ny form.
+				Du er ved at {type === "CREATE" ? "oprette en ny" : "redigere en"} form.
 				Definer den venligst nedenfor.
 			</span>
 

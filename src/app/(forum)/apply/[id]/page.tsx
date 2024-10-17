@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import CreateField from "./CreateField";
 import { FormFields } from "./Field";
 import { parseDate } from "@/lib/helpers";
+import EditForm from "./EditForm";
 
 export async function generateStaticParams() {
 	return (await Form.getAllForms()).map((form) => {
@@ -122,9 +123,9 @@ export default async function Application({
 				</div>
 				
 				{session?.user?.role === "ADMIN" && (
-					<button className="float-right w-fit m-4 px-4 py-2 active:translate-y-[1px] border border-red-700/70 dark:border-red-900/40 hover:bg-red-600/5 rounded-xl text-red-600">
-						Rediger
-					</button>
+					<EditForm
+						formId={form.id!}
+					/>
 				)}
 			</aside>
 		</div>

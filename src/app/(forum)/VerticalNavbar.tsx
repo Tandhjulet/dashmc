@@ -451,7 +451,10 @@ export default function VerticalNavbar({
 
 				{data?.user?.role === Role.ADMIN && (
 					<Modal className="w-[500px]">
-						<CreateFormModal hideModal={hideModal} />
+						<CreateFormModal
+							hideModal={hideModal}
+							type="CREATE"
+						/>
 					</Modal>
 				)}
 			</div>

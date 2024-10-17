@@ -47,6 +47,7 @@ export default function useModal(props?: {
 	return {
 		hideModal,
 		showModal,
-		Modal
+		Modal,
+		shown
 	}
 }

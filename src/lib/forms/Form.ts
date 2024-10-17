@@ -32,9 +32,9 @@ export class Form {
 	protected _virtual: boolean;
 	protected _dirty: boolean;
 
-	protected _name: string;
-	protected _category: string;
-	protected _subtitle: string;
+	public name: string;
+	public category: string;
+	public subtitle: string;
 	protected _fields: FieldWithId<IField>[] = [];
 
 	public visible: boolean = true;
@@ -90,7 +90,7 @@ export class Form {
 		if(!persistedForm)
 			return null
 
-		const form = new Form(persistedForm.name, persistedForm.subtitle, persistedForm.category, cuid);
+		const form = new Form(persistedForm.name, persistedForm.subtitle, persistedForm.category);
 		form._virtual = false;
 		form._dirty = false;
 		
@@ -119,9 +119,9 @@ export class Form {
 	}
 
 	constructor(title: string, subtitle: string, category: string, creatorCUID?: string) {
-		this._name = title;
-		this._subtitle = subtitle;
-		this._category = category;
+		this.name = title;
+		this.subtitle = subtitle;
+		this.category = category;
 		this.creatorCUID = creatorCUID;
 
 		this._dirty = true;
@@ -152,7 +152,7 @@ export class Form {
 				id: this.cuid ?? "-1"
 			},
 			create: {
-				name: this.title,
+				name: this.name,
 				subtitle: this.subtitle,
 				category: this.category,
 				icon: this.icon,
@@ -169,7 +169,11 @@ export class Form {
 				}
 			},
 			update: {
-				name: this.title,
+				name: this.name,
+				subtitle: this.subtitle,
+				category: this.category,
+				icon: this.icon,
+				visible: this.visible,
 				fields: {
 					set: this.fields,
 				}
@@ -185,7 +189,7 @@ export class Form {
 
 	public toJSON(): IForm {
 		return {
-			name: this.title,
+			name: this.name,
 			subtitle: this.subtitle,
 			fields: this.fields,
 
@@ -208,21 +212,9 @@ export class Form {
 	get isVirtual() {
 		return this._virtual;
 	}
-	
-	get title()  {
-		return this._name;
-	}
-
-	get category()  {
-		return this._category;
-	}
 
 	get fields(): FieldWithId<IField>[] {
 		return this._fields;
-	}
-
-	get subtitle() {
-		return this._subtitle;
 	}
 
 	public async addField(field: IField | FieldWithId<IField>, formCuid?: string) {
