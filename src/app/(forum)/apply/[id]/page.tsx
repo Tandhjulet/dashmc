@@ -10,6 +10,8 @@ import { FormFields } from "./Field";
 import { parseDate } from "@/lib/helpers";
 import EditForm from "./EditForm";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
 	return (await Form.getAllForms()).map((form) => {
 		return {

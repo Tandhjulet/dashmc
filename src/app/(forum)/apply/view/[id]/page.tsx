@@ -1,5 +1,3 @@
-"use server";
-
 import { auth } from "@/auth";
 import { Submission } from "@/lib/forms/Submission";
 import { unstable_cache } from "next/cache";
@@ -9,6 +7,8 @@ import Image from "next/image";
 import { parseDate } from "@/lib/helpers";
 import { StatusChip } from "./StatusChip";
 import DeleteButton from "./DeleteSubmission";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
 	return (await Submission.getAllSubmissions()).map((submission) => {
