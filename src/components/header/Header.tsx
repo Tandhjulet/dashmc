@@ -18,7 +18,7 @@ export default async function Header() {
 						REGLER
 					</a>
 
-					<a href="https://forum.dashmc.net/" className="font-semibold">
+					<a href="https://dashmc.net/dashboard" className="font-semibold">
 						FORUM
 						<span className="inline-block">
 							<FiArrowUpRight />

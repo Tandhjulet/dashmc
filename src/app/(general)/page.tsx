@@ -37,7 +37,7 @@ export default function Home() {
 			<h1 className="dark:text-gray-100 text-7xl font-black text-gray-900 leading-[4rem] z-10">DashMC</h1>
 
 			<div className="flex flex-col md:flex-row mt-6 gap-3 md:gap-6 whitespace-nowrap">
-				<a href="https://forum.dashmc.net/" className="py-4 px-7 rounded-full border border-gray-800 inline-flex items-center gap-4">
+				<a href="https://dashmc.net/dashboard" className="py-4 px-7 rounded-full border border-gray-800 inline-flex items-center gap-4">
 					<PiChatsCircleDuotone className="size-6 shrink-0 dark:text-gray-400" />
 					
 					<span className="font-semibold text-lg dark:text-white">
