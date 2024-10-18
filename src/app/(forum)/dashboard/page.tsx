@@ -75,7 +75,16 @@ export default async function Dashboard() {
 
 			<div className="flex flex-col lg:grid grid-cols-3 mt-12 h-full gap-6 max-sm:px-5">
 				<div className="col-span-2 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
-					<h3 className="font-semibold">Ansøgninger</h3>
+					<h3 className="font-semibold">
+						Ansøgninger
+						<Link
+							className="float-right text-blue-600"
+							href="/apply/admin"
+						>
+							Se alle
+							<FiArrowUpRight className="inline align-text-top" />
+						</Link>
+					</h3>
 					<hr className="my-3 border-black dark:border-white opacity-25" />
 
 					<div className="max-lg:max-h-[280px] lg:h-[280px] flex flex-col gap-3 overflow-y-auto thin-scrollbar pr-2">

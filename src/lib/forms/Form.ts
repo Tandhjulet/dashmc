@@ -59,7 +59,7 @@ export class Form {
 		const forms = await prisma.form.findMany({
 			include: {
 				fields: false,
-				createdBy: false,
+				createdBy: true,
 			}
 		})
 

@@ -3,7 +3,7 @@ import VerticalNavbar from "./VerticalNavbar"
 import { unstable_cache } from "next/cache";
 import { Form } from "@/lib/forms/Form";
 
-const getAllForms = unstable_cache(
+export const getAllForms = unstable_cache(
 	async () => {
 		const form = await Form.getAllForms();
 		return form;

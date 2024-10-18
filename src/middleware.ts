@@ -43,6 +43,13 @@ export default auth(async (req) => {
 			}, { status: 401 })
 		}
 	}
+
+	if(nextUrl.pathname.startsWith("/apply/admin")) {
+		if(req.auth?.user?.role !== "ADMIN")
+			Response.json({
+				message: "Insufficient authorization supplied."
+			}, { status: 401 });
+	}
 })
 
 export const config = {

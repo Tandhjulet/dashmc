@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma/prisma";
 import { FieldWithId, IField } from "./Field";
-import { $Enums, User } from "@prisma/client";
+import { $Enums, Prisma, User } from "@prisma/client";
 
 export interface ISubmissionField extends IField {
 	answer: string;
@@ -38,11 +38,33 @@ export class Submission {
 	private _fields: FieldWithId<ISubmissionField>[] = [];
 	private _virtual: boolean = true;
 
-	static async getAllSubmissions() {
+	static PAGE_SIZE = 3;
+
+	static async getSubmissionsFromCursor(cursor?: string, backwards?: boolean, filter?: Prisma.SubmissionWhereInput) {
 		return await prisma.submission.findMany({
+			// arbitrary page size
+			take: backwards ? -Submission.PAGE_SIZE : Submission.PAGE_SIZE,
+			// skip one so the next set doesnt include previous
+			skip: cursor ? 1 : 0,
+
+			cursor: cursor ? { id: cursor } : undefined,
+			orderBy: {
+				createdAt: "desc",
+			},
+			where: filter,
+
+			include: {
+				user: true,
+			}
+		})
+	}
+
+	static async getAllSubmissions(where?: Prisma.SubmissionWhereInput) {
+		return await prisma.submission.findMany({
+			where,
 			include: {
 				fields: false,
-				user: false,
+				user: true,
 			}
 		});
 	}
