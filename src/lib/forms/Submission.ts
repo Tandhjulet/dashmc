@@ -38,7 +38,7 @@ export class Submission {
 	private _fields: FieldWithId<ISubmissionField>[] = [];
 	private _virtual: boolean = true;
 
-	static PAGE_SIZE = 3;
+	static PAGE_SIZE = 20;
 
 	static async getSubmissionsFromCursor(cursor?: string, backwards?: boolean, filter?: Prisma.SubmissionWhereInput) {
 		return await prisma.submission.findMany({

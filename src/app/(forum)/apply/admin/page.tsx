@@ -69,7 +69,7 @@ export default function ApplicationAdmin() {
 		<div className="sm:px-10 md:px-20 pt-14 sm:py-14">
 			<Link
 				href="/dashboard"
-				className="px-4 py-1 bg-gray-200 dark:bg-gray-800/30 rounded-xl inline-flex gap-2 items-center opacity-90 mb-2"
+				className="max-sm:mx-5 px-4 py-1 bg-gray-200 dark:bg-gray-800/30 rounded-xl inline-flex gap-2 items-center opacity-90 mb-2"
 			>
 				<IoArrowUndoSharp className="text-black dark:text-white" />
 				<span className="text-black dark:text-white">Tilbage</span>
@@ -88,7 +88,7 @@ export default function ApplicationAdmin() {
 			</span>
 
 			<div className="flex flex-col lg:grid grid-cols-3 mt-12 h-full gap-6 max-sm:px-5">
-				<div className="sticky top-0 col-start-3 row-start-1 bg-gray-300/30 dark:bg-gray-800/25 rounded-lg p-4">
+				<div className="h-fit sticky top-0 col-start-3 row-start-1 bg-gray-300/30 dark:bg-gray-800/25 rounded-lg p-4">
 					<h3 className="font-semibold">
 						Filtrer
 					</h3>
