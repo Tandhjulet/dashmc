@@ -13,10 +13,33 @@
   </a>
 </p>
 
+## Introduction
+This is a full-stack web application built using modern tooling, including NextJS, Typescript, Prisma and MDX (for static pages). Using MariaDB and Redis it's a super-fast, yet modern panel. It is not available for commercial use, as per our license.
+
+### Features
+- Built-in minecraft and discord verification
+- OAuth for Discord (verified accounts) and Google
+- Forum pages created dynamically
+- Multiple roles for users
+- Uses Redis and caching features of NextJS for maximum speed
+- *...and so much more!*
+
+## Requirements
+This application requires Node.js 20 (or higher) to run. You can use nvm (or alternatively download the pre-built package from Node.js' website), to install the required version of Node.js.
+
+## Installation
+Ensure you have working Redis and MariaDB/MySQL installations installed. The forum works unanimously with either database technology. Remember to fill out the `.env.example` file with your environment variables.
+
+Use `npm run build` followed by `npm run start` to build and run the application. Use a process management tool (like `pm2`) to ensure the applications runs continuesly. 
+
+> [!CAUTION]
+> Remember to filter ports of MySQL and **especially** Redis-installations. Redis is unsafe by default, and it is thus imperative to close/filter the ports through firewalls such as `ufw` or `iptables`.
+
+
+
 ### ⚠️ WIP ⚠️
 - Ratelimit
-- Icon for forms
-- Form visibility
+- Better containerization
 
 ## Security
 If you believe you have found a vulnerability in DashMC, we highly encourage you to disclose this responsibly. Please do NOT open a public issue, as you will expose the issue. Thank you.
