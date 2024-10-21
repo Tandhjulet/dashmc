@@ -28,16 +28,14 @@ This is a full-stack web application built using modern tooling, including NextJ
 This application requires Node.js 20 (or higher) to run. You can use nvm (or alternatively download the pre-built package from Node.js' website), to install the required version of Node.js.
 
 ## Installation
-Ensure you have working Redis and MariaDB/MySQL installations installed. The forum works unanimously with either database technology. Remember to fill out the `.env.example` file with your environment variables.
+Ensure you have working Redis and MariaDB/MySQL installations installed. The forum works unanimously with either database technology. Remember to fill out the `.env.example` file with your environment variables. Rename it to `.env` afterwards, for the environment variables to take effect.
 
 Use `npm run build` followed by `npm run start` to build and run the application. Use a process management tool (like `pm2`) to ensure the applications runs continuesly. 
 
 > [!CAUTION]
 > Remember to filter ports of MySQL and **especially** Redis-installations. Redis is unsafe by default, and it is thus imperative to close/filter the ports through firewalls such as `ufw` or `iptables`.
 
-
-
-### ⚠️ WIP ⚠️
+## ⚠️ WIP ⚠️
 - Ratelimit
 - Better containerization
 
