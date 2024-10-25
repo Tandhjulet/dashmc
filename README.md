@@ -35,6 +35,8 @@ Use `npm run build` followed by `npm run start` to build and run the application
 > [!CAUTION]
 > Remember to filter ports of MySQL and **especially** Redis-installations. Redis is unsafe by default, and it is thus imperative to close/filter the ports through firewalls such as `ufw` or `iptables`.
 
+To be able to access the site, you will need to set up account verification. This requires a trusted token, shared between your minecraft server and this web server. You can generate a key of length 32 through `openssl rand -base64 32`, but it is entirely up to you. The token *is sensitive, and should be handled as such*!
+
 ## ⚠️ WIP ⚠️
 - Ratelimit
 - Better containerization
