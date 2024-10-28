@@ -62,29 +62,30 @@ export async function PATCH(req: Request) {
 
 	if(verify !== "Minecraft" && verify !== "Discord") {
 		return Response.json(
-			{success: false},
 			{
-				status: 400,
-			}
+				success: false,
+				message: "Ukendt verifikationstype"
+			}, { status: 400 }
 		);
 	}
 
 	const session = await auth();
 	if(!session?.user || !session?.user.email) {
 		return Response.json(
-			{success: false},
 			{
-				status: 401,
-			}
+				success: false,
+				message: "Du er ikke logget ind."
+			}, { status: 401 }
 		)
 	}
 
 	if(code.length !== 6) {
 		return Response.json(
-			{success: false},
 			{
-				status: 400,
-			}
+				success: false,
+				message: "Ugyldig kode."
+			},
+			{ status: 400 }
 		)
 	}
 
@@ -105,7 +106,10 @@ export async function PATCH(req: Request) {
 		// Verify that the user whom created the token is also the one
 		// trying to 'claim' it
 		if(session.user.email !== parsed.email)
-			return Response.json({success: false}, { status: 401 });
+			return Response.json({
+					success: false,
+					message: "Denne kode er ikke genereret til dig."
+				}, { status: 401 });
 
 		if(verify === "Minecraft") {
 			await prisma.user.create({
@@ -131,7 +135,11 @@ export async function PATCH(req: Request) {
 		}
 	}
 
-	return Response.json(parsed)
+	return Response.json({
+		...parsed,
+		success: true,
+		message: "Du er blevet verificeret."
+	})
 }
 
 // Verify code
@@ -143,11 +151,17 @@ export async function PUT(req: Request) {
 	const result = await client.get(`otp-${verify}:${code}`);
 
 	if(!result)
-		return Response.json({ success: false })
+		return Response.json({
+			success: false,
+			message: `Koden er invalid for ${verify}-verifikation.`
+		})
 
 	const parsed: OTPCode = JSON.parse(result);
 	if(parsed.forAccount !== username && verify == "Minecraft")
-		return Response.json({ success: false })
+		return Response.json({
+			success: false,
+			message: "Koden er genereret for en anden konto."
+		})
 
 	const updated = JSON.stringify({
 		...parsed,
@@ -160,5 +174,6 @@ export async function PUT(req: Request) {
 
 	return Response.json({
 		success: true,
+		message: "Koden er verificeret."
 	})
 }
