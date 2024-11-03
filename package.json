@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "discord:compile": "cd ./verification/discord && cargo build",
+    "discord:run": "cd ./verification/discord && cargo run",
+    "discord:check": "cd ./verification/discord && cargo check"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
