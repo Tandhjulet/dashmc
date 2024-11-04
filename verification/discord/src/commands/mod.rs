@@ -29,7 +29,7 @@ pub async fn verify(
 		.title(format!("Link af konto {}", author.name))
 		.color(Color::RED);
 
-	if let Err(_) = code.parse::<u32>() {
+	if code.parse::<u32>().is_err() || code.len() != 6 {
 		embed = embed.description("Din kode er invalid.");
 		ctx.send(poise::CreateReply::default()
 			.embed(embed)
@@ -52,9 +52,14 @@ pub async fn verify(
 	let res = client.put(url)
 							.bearer_auth(env::var("OTP_VERIFICATION_TOKEN").expect("Expected OTP_VERIFICATION_TOKEN to be present."))
 							.json(&body)
-							.send().await?;
+							.send().await.expect("Unable to send HTTP request.");
 
-	let res = res.json::<VerificationResponse>().await?;
+	let res = res.json::<VerificationResponse>().await.unwrap_or(
+			VerificationResponse {
+				success: false,
+				message: String::from("Der opstod en fejl. Svaret fra forummet kunne ikke indlæses."),
+			}
+		);
 
 	if !res.success {
 		embed = embed.description(res.message);
