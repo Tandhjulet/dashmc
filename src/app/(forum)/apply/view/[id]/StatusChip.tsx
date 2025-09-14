@@ -1,6 +1,6 @@
 "use client";
 
-import Popper from "@/components/popper/Popper";
+import Popper from "@/components/Popper/Popper";
 import { $Enums } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
@@ -8,7 +8,7 @@ import { FaCheck, FaXmark } from "react-icons/fa6";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const ChipInner = memo(function getInner({ status }: { status: $Enums.SubmissionStatus }) {
-	switch(status) {
+	switch (status) {
 		case "Accepted":
 			return (
 				<div className="bg-green-500/20 inline-flex items-center gap-2 text-green-500 px-2 py-1 rounded-lg">
@@ -42,23 +42,23 @@ interface Props {
 export const StatusChip = memo(function StatusChip(props: Props) {
 	const router = useRouter();
 
-	if(!props.isAdmin)
+	if (!props.isAdmin)
 		return <ChipInner status={props.status} />;
 
 	const updateStatus = async (newStatus: $Enums.SubmissionStatus) => {
-		if(newStatus === props.status)
+		if (newStatus === props.status)
 			return;
 
 		const body = {
 			status: newStatus,
 			submissionId: props.submissionId
 		};
-		
+
 		(await fetch("/api/form/submission/status", {
 			method: "PUT",
 			body: JSON.stringify(body)
 		})).json().then((res) => {
-			if(res.success) {
+			if (res.success) {
 				router.refresh();
 			}
 		})

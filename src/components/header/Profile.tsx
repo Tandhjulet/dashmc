@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
-import Popper from "../popper/Popper";
+import Popper from "../Popper/Popper";
 import { RiStackLine, RiUserAddLine, RiUserForbidLine } from "react-icons/ri";
 import { FiLogIn } from "react-icons/fi";
 import { signOut } from "next-auth/react";

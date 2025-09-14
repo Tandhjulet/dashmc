@@ -3,7 +3,7 @@
 import {  HTMLAttributes, memo, useMemo } from "react";
 import { IconType } from "react-icons/lib";
 import * as Icons from './icons/index'
-import Popper from "../popper/Popper";
+import Popper from "../Popper/Popper";
 
 type IconPack = () => {[id: string]: IconType};
 

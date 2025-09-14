@@ -1,7 +1,7 @@
 "use client";
 
 import useModal from "@/components/Modal";
-import Popper from "@/components/popper/Popper";
+import Popper from "@/components/Popper/Popper";
 import { Role } from "@prisma/client";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";

@@ -50,9 +50,9 @@ pub async fn verify(
 	};
 
 	let res = client.put(url)
-							.bearer_auth(env::var("OTP_VERIFICATION_TOKEN").expect("Expected OTP_VERIFICATION_TOKEN to be present."))
-							.json(&body)
-							.send().await.expect("Unable to send HTTP request.");
+		.bearer_auth(env::var("OTP_VERIFICATION_TOKEN").expect("Expected OTP_VERIFICATION_TOKEN to be present."))
+		.json(&body)
+		.send().await.expect("Unable to send HTTP request.");
 
 	let res = res.json::<VerificationResponse>().await.unwrap_or(
 			VerificationResponse {
