@@ -236,7 +236,7 @@ export default async function Dashboard() {
 
 							<div className="grow" />
 							<span className="text-xs">
-								<RoleChip role={user?.role} />
+								<RoleChip role={user!.role!} />
 							</span>
 						</div>
 
