@@ -2,113 +2,114 @@
 // to generate a migration file and regenerate the prisma client
 
 datasource db {
-    provider	= "mysql"
-    url			= env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 generator client {
-    provider	= "prisma-client-js"
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 model User {
-    id			String		@id @default(cuid())
+    id String @id @default(cuid())
 
-    email		String		@unique
-	username	String		@db.TinyText
-	gameUUID	String		@db.TinyText
+    email    String @unique
+    username String @db.TinyText
+    gameUUID String @db.TinyText
 
-	discordId	String?		@db.TinyText
-	role		Role		@default(USER)
+    discordId String? @db.TinyText
+    role      Role    @default(USER)
 
-    createdAt	DateTime	@default(now())
-    updatedAt	DateTime	@updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-	forms		Form[]
+    forms Form[]
 
-    submissions	Submission[]
+    submissions Submission[]
 }
 
 enum Role {
-	USER
-	HELPER
-	MOD
-	ADMIN
+    USER
+    HELPER
+    MOD
+    ADMIN
 }
 
 // FORMS
 
 enum FieldType {
-	Section
-	Checkbox
-	TextArea
-	Text
-	Radio
+    Section
+    Checkbox
+    TextArea
+    Text
+    Radio
 }
 
 model Fields {
-	id				Int			@id @default(autoincrement())
-	form			Form		@relation(fields: [formId], references: [id])
-	formId			String			
+    id     Int    @id @default(autoincrement())
+    form   Form   @relation(fields: [formId], references: [id])
+    formId String
 
-	title			String		@db.Text
-	subtitle		String?		@db.MediumText
-	required		Boolean		@default(false)
-	type			FieldType	@default(TextArea)
+    title    String    @db.Text
+    subtitle String?   @db.MediumText
+    required Boolean   @default(false)
+    type     FieldType @default(TextArea)
 }
 
 model Form {
-	id				String		@id @default(cuid())
+    id String @id @default(cuid())
 
-	name			String		@unique
-	subtitle		String		@db.MediumText
+    name     String @unique
+    subtitle String @db.MediumText
 
-	icon			String		@db.Text
-	visible			Boolean
+    icon    String  @db.Text
+    visible Boolean
 
-	createdBy		User		@relation(fields: [ownerId], references: [id])
-	ownerId			String
-	
-	category 		String		@db.Text
-	fields			Fields[]
+    createdBy User   @relation(fields: [ownerId], references: [id])
+    ownerId   String
 
-	createdAt		DateTime	@default(now())
-    updatedAt		DateTime	@updatedAt
+    category String   @db.Text
+    fields   Fields[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 // FORM SUBMISSIONS
 
 enum SubmissionStatus {
-	Waiting
-	Accepted
-	Rejected
+    Waiting
+    Accepted
+    Rejected
 }
 
 model Submission {
-	id				String				@id @default(cuid())
+    id String @id @default(cuid())
 
-	user			User				@relation(fields: [userId], references: [id])
-	userId			String
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
 
-	category 		String				@db.Text
-	name			String				@db.Text
-	subtitle		String				@db.MediumText
-	status			SubmissionStatus 	@default(Waiting)
+    category String           @db.Text
+    name     String           @db.Text
+    subtitle String           @db.MediumText
+    status   SubmissionStatus @default(Waiting)
 
-	fields			SubmissionField[]
+    fields SubmissionField[]
 
-	createdAt		DateTime			@default(now())
+    createdAt DateTime @default(now())
 }
 
 model SubmissionField {
-	id				Int					@id @default(autoincrement())
+    id Int @id @default(autoincrement())
 
-	submission		Submission			@relation(fields: [submissionId], references: [id])
-	submissionId	String	
+    submission   Submission @relation(fields: [submissionId], references: [id])
+    submissionId String
 
-	answer			String				@db.MediumText
-	
-	title			String				@db.Text
-	subtitle		String?				@db.MediumText
-	required		Boolean				@default(false)
-	type			FieldType
+    answer String @db.MediumText
+
+    title    String    @db.Text
+    subtitle String?   @db.MediumText
+    required Boolean   @default(false)
+    type     FieldType
 }

@@ -28,21 +28,22 @@ const getSubmission = (id: string) => unstable_cache(
 	{ revalidate: false, tags: [`submission:${id}`] }
 )()
 
-export default async function View({
-	params,
-}: {
-	params: { id: string }
-}) {
-	const session = await auth();
-	if(!session)
+export default async function View(
+    props: {
+        params: Promise<{ id: string }>
+    }
+) {
+    const params = await props.params;
+    const session = await auth();
+    if(!session)
 		redirect("/");
-	
-	const submission = await getSubmission(params.id);
-	
-	if(!submission.userId)
+
+    const submission = await getSubmission(params.id);
+
+    if(!submission.userId)
 		throw new Error("userId missing");
 
-	if(
+    if(
 		!session.user?.dbId || (
 		submission.userId !== session.user?.dbId &&
 		session.user?.role === "USER")) {
@@ -56,7 +57,7 @@ export default async function View({
 		)
 	}
 
-	return (
+    return (
 		<div className="w-full max-w-[1250px] grid grid-cols-4 gap-2 mx-auto py-12 px-2 phone:px-6 sm:px-12">
 			<main className="w-full h-fit bg-gray-300/30 dark:bg-gray-800/30 col-span-4 lg:col-span-3 px-4 rounded-md shrink">
 				<h1 className="text-2xl font-bold tracking-tight mt-6 mb-2 text-blue-600">

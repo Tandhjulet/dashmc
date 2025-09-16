@@ -1,9 +1,9 @@
-import createMDX from '@next/mdx'
+import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-	transpilePackages: ['next-mdx-remote'],
+	transpilePackages: ["next-mdx-remote"],
 	output: "standalone",
 
 	images: {
@@ -12,13 +12,11 @@ const nextConfig = {
 				protocol: "https",
 				hostname: "minotar.net",
 				pathname: "/helm/**",
-			}
+			},
 		],
-	}
+	},
 };
 
-const withMDX = createMDX({
-
-})
+const withMDX = createMDX({});
 
 export default withMDX(nextConfig);

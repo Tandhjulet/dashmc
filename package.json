@@ -1,46 +1,50 @@
 {
-  "name": "dashmc",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "discord:compile": "cd ./verification/discord && cargo build",
-    "discord:run": "cd ./verification/discord && cargo run",
-    "discord:check": "cd ./verification/discord && cargo check"
-  },
-  "prisma": {
-    "schema": "./src/prisma/schema.prisma"
-  },
-  "dependencies": {
-    "@mdx-js/loader": "^3.0.1",
-    "@mdx-js/react": "^3.0.1",
-    "@next/mdx": "^14.2.13",
-    "@prisma/client": "^5.20.0",
-    "@types/mdx": "^2.0.13",
-    "dashmc": "file:",
-    "gray-matter": "^4.0.3",
-    "next": "14.2.13",
-    "next-auth": "^5.0.0-beta.22",
-    "next-mdx-remote": "^5.0.0",
-    "next-themes": "^0.3.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-icons": "^5.3.0",
-    "redis": "^4.7.0",
-    "sharp": "^0.33.5"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.13",
-    "postcss": "^8",
-    "prisma": "^5.20.0",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+	"name": "dashmc",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"discord:compile": "cd ./verification/discord && cargo build",
+		"discord:run": "cd ./verification/discord && cargo run",
+		"discord:check": "cd ./verification/discord && cargo check"
+	},
+	"prisma": {
+		"schema": "./src/prisma/schema.prisma"
+	},
+	"dependencies": {
+		"@mdx-js/loader": "^3.0.1",
+		"@mdx-js/react": "^3.0.1",
+		"@next/mdx": "15.5.3",
+		"@prisma/client": "^5.20.0",
+		"@types/mdx": "^2.0.13",
+		"dashmc": "file:",
+		"gray-matter": "^4.0.3",
+		"next": "15.5.3",
+		"next-auth": "^5.0.0-beta.22",
+		"next-mdx-remote": "^5.0.0",
+		"next-themes": "^0.4.6",
+		"react": "19.1.1",
+		"react-dom": "19.1.1",
+		"react-icons": "^5.3.0",
+		"redis": "^4.7.0",
+		"sharp": "^0.33.5"
+	},
+	"devDependencies": {
+		"@types/node": "^20",
+		"@types/react": "19.1.13",
+		"@types/react-dom": "19.1.9",
+		"eslint": "^8",
+		"eslint-config-next": "15.5.3",
+		"postcss": "^8",
+		"prisma": "^5.22.0",
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5"
+	},
+	"overrides": {
+		"@types/react": "19.1.13",
+		"@types/react-dom": "19.1.9"
+	}
 }

@@ -5,23 +5,24 @@ import { redirect } from "next/navigation";
 import VerifyUsername from "./VerifyUsername";
 import { baseUrl } from "@/app/sitemap";
 
-export default async function Verify({
-	searchParams
-}: {
-	searchParams?: { [key: string]: string };
-}) {
+export default async function Verify(
+	props: {
+		searchParams?: Promise<{ [key: string]: string }>;
+	}
+) {
+	const searchParams = await props.searchParams;
 	const session = await auth();
-	if(session && session.user?.email) {
+	if (session && session.user?.email) {
 		const userExists = session.user.username;
 
-		if(userExists) {
+		if (userExists) {
 			redirect("/");
 		} else {
 			return (
 				<VerifyUsername
-					callback={(res) => {
+					callback={async (res) => {
 						"use server";
-						if(res.exists) {
+						if (res.exists) {
 							// Ensures redirects can only happen to local pages
 							redirect(new URL(
 								decodeURIComponent((searchParams?.prevUrl) ?? "/"),
@@ -30,8 +31,8 @@ export default async function Verify({
 						} else {
 							redirect("/verify");
 						}
-					}					
-				} />
+					}
+					} />
 			)
 		}
 	} else {

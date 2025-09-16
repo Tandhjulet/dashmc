@@ -44,7 +44,7 @@ export default async function RootLayout({
 	const session = await auth();
 
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${poppins.className} antialiased min-h-screen overflow-x-hidden thin-scrollbar`}
 			>

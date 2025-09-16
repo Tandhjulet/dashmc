@@ -53,10 +53,10 @@ const STATIC_LINKS: {
 
 export default async function Dashboard() {
 	const session = await auth();
-	if(!session?.user?.dbId) {
+	if (!session?.user?.dbId) {
 		return (
-				<span>Der opstod en fejl.</span>
-			)
+			<span>Der opstod en fejl.</span>
+		)
 	}
 
 	const user = await getUser(session.user.dbId);
@@ -92,7 +92,7 @@ export default async function Dashboard() {
 							<div className="h-[225px] flex justify-center items-center">
 								<span className="text-gray-700 dark:text-gray-400">
 									Du har ingen ansøgninger
-								</span>	
+								</span>
 							</div>
 						) : user?.submissions.toReversed().map((submission, i) => (
 							<Link
@@ -170,7 +170,7 @@ export default async function Dashboard() {
 							{user?.discordId ? "Du har forbundet din discord konto." : "Din discord konto er ikke blevet forbundet."}
 						</p>
 					</span>
-					
+
 					{user?.discordId ? (
 						<span className="mt-4 text-sm text-center text-gray-700 dark:text-gray-500">
 							Du er logget ind som:
@@ -246,7 +246,7 @@ export default async function Dashboard() {
 							<span className="text-gray-700 dark:text-gray-400 font-bold text-sm">{user?.username}</span>
 						</div>
 					</div>
-					
+
 					<div className="text-center text-xs mt-7">
 						Er der noget galt?
 						<br />
@@ -272,7 +272,7 @@ export default async function Dashboard() {
 								</span>
 							</Link>
 						</nav>
-						
+
 						<span className="text-gray-800 text-sm text-center my-4 dark:text-gray-500">
 							DashMC &copy; 2024
 							<br />
@@ -303,7 +303,7 @@ export default async function Dashboard() {
 							</span>
 						</Link>
 					</nav>
-					
+
 					<span className="text-gray-800 text-sm text-center my-4 dark:text-gray-500">
 						DashMC &copy; 2024
 						<br />

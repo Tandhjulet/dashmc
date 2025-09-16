@@ -14,7 +14,7 @@ export default function Popper(props: Props) {
 	} = props;
 
 	return (
-		<div className="relative group/popper">
+		<div className="relative group/popper mt-1">
 
 			{children}
 			{/* Pretty hacky, but its the simplest way to make group hover still work whilst offsetting the popper. */}
