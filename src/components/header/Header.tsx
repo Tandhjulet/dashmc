@@ -6,6 +6,7 @@ import PhoneHeader from "./PhoneHeader";
 import ThemeButton from "./ThemeButton";
 import Profile from "./Profile";
 import { auth } from "@/auth";
+import Link from "next/link";
 
 export default async function Header() {
 	const session = await auth();
@@ -26,7 +27,7 @@ export default async function Header() {
 					</a>
 				</div>
 
-				<a href="/" className="ml-6 sm:ml-0">
+				<Link href="/" className="ml-6 sm:ml-0">
 					<Image
 						src={"/image.png"}
 						width={64}
@@ -35,7 +36,7 @@ export default async function Header() {
 
 						className="select-none"
 					/>
-				</a>
+				</Link>
 
 				<div className="inline-flex items-center gap-3 grow basis-0 justify-end mr-6">
 					<a href="https://butik.dashmc.net/" className="font-semibold">
@@ -46,12 +47,12 @@ export default async function Header() {
 					</a>
 
 					<ThemeButton />
-					
+
 					<Profile session={session} />
 				</div>
 			</nav>
 			<nav className="sm:hidden inline-flex w-full justify-between items-center text-sm">
-				<a href="/" className="ml-6 z-50">
+				<Link href="/" className="ml-6 z-50">
 					<Image
 						src={"/image.png"}
 						width={64}
@@ -60,7 +61,7 @@ export default async function Header() {
 
 						className="select-none"
 					/>
-				</a>
+				</Link>
 
 				<PhoneHeader session={session} />
 			</nav>

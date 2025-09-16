@@ -1,6 +1,6 @@
 "use server";
 
-import { getConfig } from "@/app/api/admin/motd/route";
+import { getConfig } from "@/lib/config";
 import MotdEditor from "./MotdEditor";
 import UserEditor from "./UserEditor";
 
