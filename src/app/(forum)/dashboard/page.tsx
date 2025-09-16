@@ -73,6 +73,15 @@ export default async function Dashboard() {
 				({user?.gameUUID})
 			</span>
 
+			<div className="my-3">
+				<Link
+					href="/dashboard/admin"
+					className="text-sm bg-blue-600 py-1 px-4 rounded-lg"
+				>
+					Gå til administrationspanel
+				</Link>
+			</div>
+
 			<div className="flex flex-col lg:grid grid-cols-3 mt-12 h-full gap-6 max-sm:px-5">
 				<div className="col-span-2 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
 					<h3 className="font-semibold">
@@ -258,7 +267,7 @@ export default async function Dashboard() {
 
 				<div className="max-sm:hidden bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">
 					<div className="w-full flex flex-col py-2 items-center gap-2">
-						<a href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</a>
+						<Link href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</Link>
 
 						<nav className="mx-12 w-full max-w-[300px] text-center">
 							<Link
@@ -289,7 +298,7 @@ export default async function Dashboard() {
 
 			<div className="sm:hidden bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg mt-12">
 				<div className="w-full flex flex-col py-2 items-center gap-2">
-					<a href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</a>
+					<Link href="/" className="text-2xl font-extrabold text-blue-600 my-2">DashMC</Link>
 
 					<nav className="mx-12 w-full max-w-[300px] text-center">
 						<Link

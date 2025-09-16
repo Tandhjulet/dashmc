@@ -6,11 +6,11 @@ import { StatusChip } from "../view/[id]/StatusChip";
 import { IoArrowUndoSharp } from "react-icons/io5";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { useSession } from "next-auth/react";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ISubmission, Submission } from "@/lib/forms/Submission";
 import { $Enums } from "@prisma/client";
 
-type APIResponse = {success: true, submissions: ISubmission[]} | {success: false}
+type APIResponse = { success: true, submissions: ISubmission[] } | { success: false }
 
 // route is protected by middleware, so no need to check auth here aswell
 export default function ApplicationAdmin() {
@@ -41,28 +41,28 @@ export default function ApplicationAdmin() {
 
 			return await next.json();
 		}
-		
+
 		fetchNext().then((res: APIResponse) => {
-			if(!res.success)
+			if (!res.success)
 				return;
 			// don't do anything if end has been reached
-			if(res.submissions.length === 0) {
+			if (res.submissions.length === 0) {
 				setLastCursor(submissions.at(-1)?.id)
 				return;
 			}
 			setSubmissions(res.submissions);
-			if(!first) 
+			if (!first)
 				setFirstCursor(res.submissions[0]?.id);
 		})
 	}, [submissions]);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		setLastCursor(undefined);
 		setFirstCursor(undefined);
 		setSubmissions([]);
 
 		fetchPage(undefined, false, filter);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filter])
 
 	return (
@@ -103,7 +103,7 @@ export default function ApplicationAdmin() {
 									defaultChecked={true}
 
 									onChange={(e) => {
-										if(e.target.checked) {
+										if (e.target.checked) {
 											setFilter([...filter, status])
 										} else {
 											setFilter(
@@ -133,7 +133,7 @@ export default function ApplicationAdmin() {
 							<div className="h-[225px] flex justify-center items-center">
 								<span className="text-gray-700 dark:text-gray-400">
 									Ingen ansøgninger
-								</span>	
+								</span>
 							</div>
 						) : submissions.map((submission, i) => (
 							<Link
@@ -189,7 +189,7 @@ export default function ApplicationAdmin() {
 						</button>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	)

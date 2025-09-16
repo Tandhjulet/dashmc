@@ -44,7 +44,7 @@ export default auth(async (req) => {
 		}
 	}
 
-	if(nextUrl.pathname.startsWith("/apply/admin")) {
+	if(nextUrl.pathname.startsWith("/apply/admin") || nextUrl.pathname.startsWith("/dashboard/admin")) {
 		if(req.auth?.user?.role !== "ADMIN")
 			Response.json({
 				message: "Insufficient authorization supplied."
