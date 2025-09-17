@@ -79,17 +79,6 @@ export default auth(async (req) => {
 				{ status: 401 }
 			);
 	}
-
-	if (isProtected) {
-		return Response.redirect(
-			new URL(
-				`/api/auth/validate?redirect=${encodeURIComponent(
-					nextUrl.pathname
-				)}`,
-				nextUrl.origin
-			)
-		);
-	}
 });
 
 export const config = {

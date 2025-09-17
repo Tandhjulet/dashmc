@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { validateRole } from "@/lib/auth";
 import { saveConfig } from "@/lib/config";
 import { Role } from "@prisma/client";
 import createDOMPurify from "dompurify";
@@ -15,7 +16,11 @@ export async function POST(req: Request) {
 	} = await req.json();
 
 	const session = await auth();
-	if (session?.user?.role !== Role.ADMIN) {
+
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
