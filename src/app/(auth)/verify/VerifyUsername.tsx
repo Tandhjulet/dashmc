@@ -9,7 +9,7 @@ import { OTPCode } from "@/app/api/verify/code/route";
 export default function VerifyUsername({
 	callback,
 }: {
-	callback?: (success: OTPCode & {exists: true} | {exists: false}) => void;
+	callback?: (success: OTPCode & { exists: true } | { exists: false }) => void;
 }) {
 	const [username, setUsername] = useState<string>();
 
@@ -18,12 +18,12 @@ export default function VerifyUsername({
 		setUsername(uname);
 	}, []);
 
-	if(username) {
+	if (username) {
 		return (
 			<AwaitingVerification
 				callback={(res) => {
-					if(!res.exists) setUsername(undefined);
-					if(callback) callback(res);
+					if (!res.exists) setUsername(undefined);
+					if (callback) callback(res);
 				}}
 				username={username}
 				verify="Minecraft"
@@ -38,7 +38,7 @@ export default function VerifyUsername({
 			<p className="max-w-[500px] text-center dark:text-gray-100">
 				For at du kan oprette dig på DashMCs hjemmeside, skal vi bruge dit minecraft-brugernavn.
 			</p>
-			
+
 			<form
 				className="my-6 inline-flex group"
 				noValidate
