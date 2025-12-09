@@ -4,13 +4,10 @@ import { useCallback, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import AwaitingVerification from "./AwaitingVerification";
-import { OTPCode } from "@/app/api/verify/code/route";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-export default function VerifyUsername({
-	callback,
-}: {
-	callback?: (success: OTPCode & {exists: true} | {exists: false}) => void;
-}) {
+export default function VerifyUsername() {
 	const [username, setUsername] = useState<string>();
 
 	const onSubmit = useCallback((e: FormData) => {
@@ -18,12 +15,18 @@ export default function VerifyUsername({
 		setUsername(uname);
 	}, []);
 
-	if(username) {
+	const router = useRouter();
+	const params = useSearchParams();
+
+	if (username) {
 		return (
 			<AwaitingVerification
 				callback={(res) => {
-					if(!res.exists) setUsername(undefined);
-					if(callback) callback(res);
+					if (!res.exists) setUsername(undefined);
+
+					if (res.exists) {
+						router.push(new URL(decodeURIComponent(params.get("prevUrl") ?? "/"), window.location.origin).pathname);
+					} else router.push("/verify");
 				}}
 				username={username}
 				verify="Minecraft"
@@ -38,7 +41,7 @@ export default function VerifyUsername({
 			<p className="max-w-[500px] text-center dark:text-gray-100">
 				For at du kan oprette dig på DashMCs hjemmeside, skal vi bruge dit minecraft-brugernavn.
 			</p>
-			
+
 			<form
 				className="my-6 inline-flex group"
 				noValidate

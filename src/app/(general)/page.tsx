@@ -1,10 +1,10 @@
+import { getConfig } from "@/lib/config";
 import Image from "next/image";
 import { HTMLAttributes, memo } from "react";
 import { FaLock } from "react-icons/fa6";
 import { IoGameController } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
 import { PiChatsCircleDuotone } from "react-icons/pi";
-import { getConfig } from "../api/admin/motd/route";
 
 export const metadata = {
 	title: 'Hjem',

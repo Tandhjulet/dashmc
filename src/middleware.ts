@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
-import { prisma } from "./prisma/prisma";
 
 if (!process.env.OTP_VERIFICATION_TOKEN) {
 	throw new Error(
@@ -79,17 +78,6 @@ export default auth(async (req) => {
 				},
 				{ status: 401 }
 			);
-	}
-
-	if (isProtected) {
-		return Response.redirect(
-			new URL(
-				`/api/auth/validate?redirect=${encodeURIComponent(
-					nextUrl.pathname
-				)}`,
-				nextUrl.origin
-			)
-		);
 	}
 });
 

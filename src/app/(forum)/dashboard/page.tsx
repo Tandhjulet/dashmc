@@ -13,6 +13,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { BsCheck, BsClipboard2Check, BsX } from "react-icons/bs";
 import Image from "next/image";
 import { RoleChip } from "./RoleChip";
+import { Role } from "@prisma/client";
 
 const getUser = (id: string) => unstable_cache(
 	async () => {
@@ -73,14 +74,16 @@ export default async function Dashboard() {
 				({user?.gameUUID})
 			</span>
 
-			<div className="my-3">
-				<Link
-					href="/dashboard/admin"
-					className="text-sm bg-blue-600 py-1 px-4 rounded-lg"
-				>
-					Gå til administrationspanel
-				</Link>
-			</div>
+			{user?.role === Role.ADMIN && (
+				<div className="my-3">
+					<Link
+						href="/dashboard/admin"
+						className="text-sm bg-blue-600 py-1 px-4 rounded-lg"
+					>
+						Gå til administrationspanel
+					</Link>
+				</div>
+			)}
 
 			<div className="flex flex-col lg:grid grid-cols-3 mt-12 h-full gap-6 max-sm:px-5">
 				<div className="col-span-2 bg-gray-300/30 dark:bg-gray-800/25 p-4 rounded-lg">

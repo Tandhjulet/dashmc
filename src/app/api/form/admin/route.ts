@@ -1,28 +1,38 @@
 import { auth } from "@/auth";
+import { validateRole } from "@/lib/auth";
 import { Form } from "@/lib/forms/Form";
 import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
-	const { name, subtitle, category, visible, selectedIcon }: {
-		name: string,
-		subtitle: string,
-		category: string,
-		visible: boolean,
-		selectedIcon: string,
+	const {
+		name,
+		subtitle,
+		category,
+		visible,
+		selectedIcon,
+	}: {
+		name: string;
+		subtitle: string;
+		category: string;
+		visible: boolean;
+		selectedIcon: string;
 	} = await req.json();
 
-	if(!name || !subtitle || !category || !selectedIcon) {
+	if (!name || !subtitle || !category || !selectedIcon) {
 		return Response.json(
-			{success: false},
+			{ success: false },
 			{
 				status: 400,
 			}
-		)
+		);
 	}
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN || !session.user.dbId) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
@@ -33,22 +43,22 @@ export async function POST(req: Request) {
 
 	const form = new Form(name, subtitle, category);
 	const couldAttach = await form.attachOwner({
-		id: session.user.dbId
+		id: session.user.dbId,
 	});
-	if(!couldAttach) {
+	if (!couldAttach) {
 		return Response.json(
-			{success: false},
+			{ success: false },
 			{
 				status: 500,
 			}
-		)
+		);
 	}
 	form.visible = visible;
 	form.icon = selectedIcon;
-	
+
 	const id = await form.save();
 
-	revalidateTag('form');
+	revalidateTag("form");
 
 	return Response.json({
 		success: !!id,
@@ -57,26 +67,42 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-	const { name, subtitle, category, visible, selectedIcon, formId }: {
-		name: string,
-		subtitle: string,
-		category: string,
-		visible: boolean,
-		selectedIcon: string,
-		formId: string,
+	const {
+		name,
+		subtitle,
+		category,
+		visible,
+		selectedIcon,
+		formId,
+	}: {
+		name: string;
+		subtitle: string;
+		category: string;
+		visible: boolean;
+		selectedIcon: string;
+		formId: string;
 	} = await req.json();
 
-	if(!name || !subtitle || !category || !selectedIcon || !formId) {
+	if (
+		!name ||
+		!subtitle ||
+		!category ||
+		!selectedIcon ||
+		!formId
+	) {
 		return Response.json(
-			{success: false},
+			{ success: false },
 			{
 				status: 400,
 			}
-		)
+		);
 	}
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN || !session.user.dbId) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
@@ -90,10 +116,10 @@ export async function PUT(req: Request) {
 		category,
 		icon: selectedIcon,
 		subtitle,
-		visible
+		visible,
 	});
 
-	revalidateTag('form');
+	revalidateTag("form");
 	revalidateTag(`form:${formId}`);
 
 	return Response.json({
@@ -106,21 +132,24 @@ export async function DELETE(req: Request) {
 	const { id } = await req.json();
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
-			{success: false},
+			{ success: false },
 			{
 				status: 401,
 			}
-		)
+		);
 	}
 
 	const success = await Form.delete(id);
 
-	revalidateTag('form');
-	revalidateTag(`form:${id}`)
+	revalidateTag("form");
+	revalidateTag(`form:${id}`);
 
 	return Response.json({
 		success,
-	})
+	});
 }

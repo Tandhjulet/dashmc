@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { validateRole } from "@/lib/auth";
 import { Field } from "@/lib/forms/Field";
 import { $Enums, Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
@@ -18,17 +19,20 @@ export async function POST(req: Request) {
 		formCuid: string;
 	} = await req.json();
 
-	if(!title || !type || !formCuid) {
+	if (!title || !type || !formCuid) {
 		return Response.json(
 			{ success: false },
 			{
 				status: 400,
 			}
-		)
+		);
 	}
-	
+
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
@@ -37,7 +41,13 @@ export async function POST(req: Request) {
 		);
 	}
 
-	const field = new Field(title, type, formCuid, subtitle, required);
+	const field = new Field(
+		title,
+		type,
+		formCuid,
+		subtitle,
+		required
+	);
 	const savedField = await field.save();
 
 	revalidateTag(`form:${formCuid}`);
@@ -45,18 +55,21 @@ export async function POST(req: Request) {
 	return Response.json({
 		success: true,
 		id: savedField?.id,
-	})
+	});
 }
 
 export async function DELETE(req: Request) {
 	const {
 		id,
 	}: {
-		id: number,
+		id: number;
 	} = await req.json();
 
 	const session = await auth();
-	if(session?.user?.role !== Role.ADMIN) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
@@ -71,5 +84,5 @@ export async function DELETE(req: Request) {
 
 	return Response.json({
 		success: true,
-	})
+	});
 }

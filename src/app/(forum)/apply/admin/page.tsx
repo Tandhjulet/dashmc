@@ -12,7 +12,6 @@ import { $Enums } from "@prisma/client";
 
 type APIResponse = { success: true, submissions: ISubmission[] } | { success: false }
 
-// route is protected by middleware, so no need to check auth here aswell
 export default function ApplicationAdmin() {
 	const { data } = useSession();
 

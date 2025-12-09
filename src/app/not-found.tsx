@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 
 export default function NotFound() {
@@ -10,10 +11,10 @@ export default function NotFound() {
 				siden som du leder efter.
 			</p>
 
-			<a href="/" className="inline-flex items-center py-4 px-6 bg-blue-600 gap-3 text-white rounded-full mt-12">
+			<Link href="/" className="inline-flex items-center py-4 px-6 bg-blue-600 gap-3 text-white rounded-full mt-12">
 				<FaArrowLeft />
 				Gå hjem
-			</a>
+			</Link>
 		</div>
 	)
 }

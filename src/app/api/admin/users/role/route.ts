@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { validateRole } from "@/lib/auth";
 import { prisma } from "@/prisma/prisma";
 import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
@@ -13,7 +14,10 @@ export async function PUT(req: Request) {
 	} = await req.json();
 
 	const session = await auth();
-	if (session?.user?.role !== Role.ADMIN) {
+	if (
+		!session?.user ||
+		!(await validateRole(session.user, [Role.ADMIN]))
+	) {
 		return Response.json(
 			{ success: false },
 			{
